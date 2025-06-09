@@ -20,13 +20,6 @@ public class UserService implements UserServiceImpl{
     @Autowired
     PasswordEncoder passwordEncoder;
     
-//    public List<Map<Long, Object>> getAllUser(){
-//        return userRepositoty.findAllUser();
-//    }
-//    public List<User> getAllUser(){
-//        return userRepositoty.findAll();
-//    }
-    
     @Override
     public Page<User> getPageUser(Pageable pageable){
         return userRepository.findAll(pageable);

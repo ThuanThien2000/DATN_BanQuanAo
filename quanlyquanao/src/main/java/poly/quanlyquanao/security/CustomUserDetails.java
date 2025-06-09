@@ -57,5 +57,12 @@ public class CustomUserDetails implements UserDetails{
         return user.getStatus() == 1; // chỉ cho phép user có status = 1
 //        return UserDetails.super.isEnabled();
     }
-    
+
+//    public String getRole() {
+//        return user.getRole().getRoleName();
+//    }
+//
+//    public User getUserEntity() {
+//        return this.user;
+//    }
 }
