@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import poly.quanlyquanao.model.User;
 
 @Repository
-public interface UserRepositoty extends JpaRepository<User, Long>{
+public interface UserRepository extends JpaRepository<User, Long>{
 //    @Query(value = """
 //    select 
 //    username, password, fullname, phonenumber, address, email, registrationdate

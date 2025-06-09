@@ -9,13 +9,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import poly.quanlyquanao.model.User;
-import poly.quanlyquanao.repository.UserRepositoty;
+import poly.quanlyquanao.repository.UserRepository;
 import poly.quanlyquanao.service.Impl.UserServiceImpl;
 
 @Service
 public class UserService implements UserServiceImpl{
     @Autowired
-    UserRepositoty userRepositoty;
+    UserRepository userRepository;
     
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -29,7 +29,7 @@ public class UserService implements UserServiceImpl{
     
     @Override
     public Page<User> getPageUser(Pageable pageable){
-        return userRepositoty.findAll(pageable);
+        return userRepository.findAll(pageable);
     }
     
     @Override
@@ -39,17 +39,17 @@ public class UserService implements UserServiceImpl{
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        return userRepositoty.save(user);
+        return userRepository.save(user);
     }
 
     @Override
     public List<User> findByStatusOne() {
-        return userRepositoty.findByStatusOne();
+        return userRepository.findByStatusOne();
     }
 
     @Override
     public User updateUser(Long id, User updatedUser) {
-        Optional<User> optionalUser = userRepositoty.findById(id);
+        Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User existingUser = optionalUser.get();
 
@@ -67,7 +67,7 @@ public class UserService implements UserServiceImpl{
             existingUser.setRole(updatedUser.getRole());
             existingUser.setStatus(updatedUser.getStatus());
 
-            return userRepositoty.save(existingUser);
+            return userRepository.save(existingUser);
         } else {
             throw new RuntimeException("Không tìm thấy người dùng với id: " + id);
         }
@@ -76,16 +76,16 @@ public class UserService implements UserServiceImpl{
     // tìm đơn
     @Override
     public User getUserById(Long id) {
-        return userRepositoty.findById(id)
+        return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng với id: "+ id));
     }
 
     @Override
     public void deleteUser(Long id) {
-        if (!userRepositoty.existsById(id)) {
+        if (!userRepository.existsById(id)) {
             throw new RuntimeException("Không tìm thấy người dùng với id: " + id);
         }
-        userRepositoty.deleteById(id);
+        userRepository.deleteById(id);
     }
 
 }

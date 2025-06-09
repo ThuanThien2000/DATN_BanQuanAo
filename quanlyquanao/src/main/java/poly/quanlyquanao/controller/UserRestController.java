@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import poly.quanlyquanao.model.User;
 import poly.quanlyquanao.service.Impl.UserServiceImpl;
-//import poly.quanlyquanao.service.UserService;
 
 @RestController
 @RequestMapping("/api/user")
