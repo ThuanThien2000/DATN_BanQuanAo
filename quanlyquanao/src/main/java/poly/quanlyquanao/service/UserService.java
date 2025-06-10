@@ -30,6 +30,7 @@ public class UserService implements UserServiceImpl{
         if (user.getRegistrationdate() == null) {
             user.setRegistrationdate(LocalDateTime.now());
         }
+        
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return userRepository.save(user);

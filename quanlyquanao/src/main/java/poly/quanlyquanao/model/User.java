@@ -7,7 +7,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,10 +36,9 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "roleid")
     private Role role;
-    
-//    private String verificationToken;
-//    private Timestamp tokenCreationTime;
-    
+
     private Integer status;
 
+    private String verificationToken;
+    private Timestamp tokenCreationTime;
 }
