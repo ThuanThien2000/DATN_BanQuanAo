@@ -39,6 +39,6 @@ public class User {
 
     private Integer status;
 
-    private String verificationToken;
-    private Timestamp tokenCreationTime;
+    private String emailVerificationToken; // chuẩn bị cho chức năng Email Verification Token, hiện tại thuộc tính này chưa được sử dụng
+    private Timestamp tokenCreationTime; // Thời gian tạo token, cài này giống cái trên
 }
