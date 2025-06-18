@@ -48,10 +48,10 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 // Thứ tự từ cụ thể đến tổng quát
-                .requestMatchers("/api/user/delete/**").hasRole("ADMIN")
-                .requestMatchers("/api/user/**").hasAnyRole("ADMIN", "STAFF")
+//                .requestMatchers("/api/user/delete/**").hasRole("ADMIN")
+//                .requestMatchers("/api/user/**").hasAnyRole("ADMIN", "STAFF")
 
-                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/user/**").permitAll()
 //                .anyRequest().permitAll()
             )
             .sessionManagement(session -> session
