@@ -35,4 +35,5 @@ public class Product implements Serializable {
     private String imgUrl;
 
     private Integer status;
+    // Tai bat dau
 }
