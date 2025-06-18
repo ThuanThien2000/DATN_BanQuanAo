@@ -1,12 +1,6 @@
 package poly.quanlyquanao.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -26,19 +20,32 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(unique = true, nullable = false)
     private String username;
+
+    @Column(nullable = false)
     private String password;
+
     private String fullname;
+
     private String phonenumber;
     private String address;
+
+    @Column(unique = true)
     private String email;
+
     private LocalDateTime registrationdate;
+
     @ManyToOne
-    @JoinColumn(name = "roleid")
+    @JoinColumn(name = "roleid", nullable = false)
     private Role role;
+
+    private String emailVerificationToken;
+    private Timestamp tokenCreationTime;
 
     private Integer status;
 
-    private String emailVerificationToken; // chuẩn bị cho chức năng Email Verification Token, hiện tại thuộc tính này chưa được sử dụng
-    private Timestamp tokenCreationTime; // Thời gian tạo token, cài này giống cái trên
+    //    @Column(nullable = false)
+    private Boolean gender;
 }
