@@ -48,4 +48,5 @@ public class User {
 
     //    @Column(nullable = false)
     private Boolean gender;
+    // Chính thức sửa lỗi
 }
