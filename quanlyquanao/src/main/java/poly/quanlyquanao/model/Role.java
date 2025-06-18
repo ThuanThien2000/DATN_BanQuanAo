@@ -21,4 +21,5 @@ public class Role {
     private String roleName;
 
     private Integer status;
+    // Kien: them moi vao
 }
