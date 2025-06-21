@@ -3,7 +3,6 @@ package poly.quanlyquanao.model;
 import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "Product_detail")
@@ -12,6 +11,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+//@ToString(exclude = {"product"}) // Loại trừ mối quan hệ
 public class ProductDetail implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,12 +29,6 @@ public class ProductDetail implements Serializable{
 
     @Column(nullable = false, length = 50)
     private String size;
-
-    @Column(nullable = false, length = 50)
-    private String material;
-
-    @Column(nullable = false, precision = 18, scale = 2)
-    private BigDecimal price;
 
     @Column(columnDefinition = "NVARCHAR(MAX)")
     private String description;
