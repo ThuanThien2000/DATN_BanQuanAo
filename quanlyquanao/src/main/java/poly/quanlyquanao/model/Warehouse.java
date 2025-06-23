@@ -5,8 +5,7 @@ import lombok.*;
 
 @Entity
 @Table(name = "Warehouse")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -22,5 +21,4 @@ public class Warehouse {
     private String address;
 
     private Integer status;
-
 }
