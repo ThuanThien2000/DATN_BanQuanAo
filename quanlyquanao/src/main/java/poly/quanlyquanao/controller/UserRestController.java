@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import poly.quanlyquanao.model.User;
-import poly.quanlyquanao.service.Impl.UserServiceImpl;
+import poly.quanlyquanao.service.Impl.IUserService;
 
 @RestController
 @RequestMapping("/api/user")
 public class UserRestController {
     @Autowired
-    UserServiceImpl _userService;
+    IUserService _userService;
 
     @GetMapping("/page")
     public Page<User> getPageUser(
@@ -69,4 +69,5 @@ public class UserRestController {
         _userService.deleteUser(id);
         return ResponseEntity.ok("Đã xóa thành công");
     }
+
 }

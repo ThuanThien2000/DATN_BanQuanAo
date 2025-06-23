@@ -36,6 +36,9 @@ public class Product implements Serializable {
     @Column(nullable = false, length = 50)
     private String material;
 
+    @Column(columnDefinition = "NVARCHAR(MAX)")
+    private String description;
+
     @Column(nullable = false, precision = 18, scale = 2)
     private BigDecimal price;
 

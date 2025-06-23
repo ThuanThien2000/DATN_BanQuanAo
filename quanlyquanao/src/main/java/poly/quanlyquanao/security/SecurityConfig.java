@@ -51,7 +51,7 @@ public class SecurityConfig {
 //                .requestMatchers("/api/user/delete/**").hasRole("ADMIN")
 //                .requestMatchers("/api/user/**").hasAnyRole("ADMIN", "STAFF")
 
-                .requestMatchers("/api/user/**").permitAll()
+                .requestMatchers("/api/**").permitAll()
 //                .anyRequest().permitAll()
             )
             .sessionManagement(session -> session

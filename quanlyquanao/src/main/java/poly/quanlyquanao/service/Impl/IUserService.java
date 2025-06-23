@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import poly.quanlyquanao.model.User;
 
 
-public interface UserServiceImpl {
+public interface IUserService {
     Page<User> getPageUser(Pageable pageable);
     User add(User user);
     List<User> findByStatusOne();

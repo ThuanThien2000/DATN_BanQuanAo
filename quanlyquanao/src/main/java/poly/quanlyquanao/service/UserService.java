@@ -10,10 +10,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import poly.quanlyquanao.model.User;
 import poly.quanlyquanao.repository.UserRepository;
-import poly.quanlyquanao.service.Impl.UserServiceImpl;
 
 @Service
-public class UserService implements UserServiceImpl{
+public class UserService implements poly.quanlyquanao.service.Impl.IUserService {
     @Autowired
     UserRepository userRepository;
     
