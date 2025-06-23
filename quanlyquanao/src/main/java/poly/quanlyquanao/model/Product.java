@@ -7,12 +7,11 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "Product")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-//@ToString(exclude = {"productDetails", "reviews"}) // Loại trừ các mối quan hệ
+@ToString(exclude = {"productDetails", "reviews"}) // Loại trừ các mối quan hệ
 public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

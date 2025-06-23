@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/product-detail") // Endpoint cho ProductDetail
+@CrossOrigin(origins = "*")
 public class ProductDetailRestController {
 
     @Autowired
