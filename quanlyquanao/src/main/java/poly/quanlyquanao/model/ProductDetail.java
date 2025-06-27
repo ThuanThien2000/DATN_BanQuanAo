@@ -3,6 +3,7 @@ package poly.quanlyquanao.model;
 import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "Product_detail")
@@ -11,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-//@ToString(exclude = {"product"}) // Loại trừ mối quan hệ
+//@ToString(exclude = {"product", "inventories", "invoiceDetails"}) // Loại trừ mối quan hệ
 public class ProductDetail implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,4 +38,10 @@ public class ProductDetail implements Serializable{
     private String imgUrl;
 
     private Integer status;
+
+    @OneToMany(mappedBy = "productDetail", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Inventory> inventories;
+
+    @OneToMany(mappedBy = "productDetail", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<InvoiceDetail> invoiceDetails;
 }

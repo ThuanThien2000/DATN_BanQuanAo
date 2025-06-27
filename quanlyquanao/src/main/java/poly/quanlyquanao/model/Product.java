@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Entity
 @Table(name = "Product")
@@ -11,7 +12,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = {"productDetails", "reviews"}) // Loại trừ các mối quan hệ
+//@ToString(exclude = {"category", "productDetails", "reviews", "images"}) // Loại trừ các mối quan hệ để tránh lỗi thông báo
 public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,8 +27,9 @@ public class Product implements Serializable {
     @Column(nullable = false, length = 50)
     private String brand;
 
-    @Column(nullable = false, length = 50)
-    private String category;
+    @ManyToOne // Mối quan hệ nhiều-một với Category
+    @JoinColumn(name = "category_id", nullable = false) // Khóa ngoại tới bảng Category
+    private Category category; // Thay thế 'category' String bằng đối tượng Category
 
     @Column(name = "user_type", nullable = false, length = 50)
     private String userType;
@@ -41,12 +43,14 @@ public class Product implements Serializable {
     @Column(nullable = false, precision = 18, scale = 2)
     private BigDecimal price;
 
-    @Column(name = "img_url_one", columnDefinition = "VARCHAR(MAX)")
-    private String imgUrlOne;
-    @Column(name = "img_url_two", columnDefinition = "VARCHAR(MAX)")
-    private String imgUrlTwo;
-    @Column(name = "img_url_three", columnDefinition = "VARCHAR(MAX)")
-    private String imgUrlThree;
-
     private Integer status;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ProductDetail> productDetails;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Review> reviews;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Image> images; // Mối quan hệ với bảng Images mới
 }
