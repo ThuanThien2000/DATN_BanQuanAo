@@ -29,7 +29,5 @@ public class Image implements Serializable {
 
     @Column(name = "order_index")
     private Integer orderIndex;
-
-    @Column(name = "status")
-    private Integer status;
+    
 }
