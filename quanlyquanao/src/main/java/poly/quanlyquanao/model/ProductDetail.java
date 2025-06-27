@@ -25,13 +25,10 @@ public class ProductDetail implements Serializable{
     private Product product;
 
     @Column(nullable = false, length = 50)
-    private String color;
+    private String style;
 
     @Column(nullable = false, length = 50)
     private String size;
-
-    @Column(columnDefinition = "NVARCHAR(MAX)")
-    private String description;
 
     @Column(name = "inventory_quantity", nullable = false)
     private Integer inventoryQuantity = 0;

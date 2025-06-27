@@ -7,12 +7,11 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "Product")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-//@ToString(exclude = {"productDetails", "reviews"}) // Loại trừ các mối quan hệ
+@ToString(exclude = {"productDetails", "reviews"}) // Loại trừ các mối quan hệ
 public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +34,9 @@ public class Product implements Serializable {
 
     @Column(nullable = false, length = 50)
     private String material;
+
+    @Column(columnDefinition = "NVARCHAR(MAX)")
+    private String description;
 
     @Column(nullable = false, precision = 18, scale = 2)
     private BigDecimal price;
