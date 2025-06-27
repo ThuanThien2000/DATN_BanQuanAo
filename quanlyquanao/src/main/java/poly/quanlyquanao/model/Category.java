@@ -20,9 +20,6 @@ public class Category implements Serializable {
     @Column(name = "category_name", unique = true, nullable = false, columnDefinition = "NVARCHAR(255)")
     private String categoryName;
 
-    @Column(name = "description", columnDefinition = "NVARCHAR(MAX)")
-    private String description;
-
     @Column(name = "status")
     private Integer status;
 
