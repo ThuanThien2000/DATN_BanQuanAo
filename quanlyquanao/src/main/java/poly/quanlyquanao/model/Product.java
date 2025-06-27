@@ -8,10 +8,10 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Product")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+//@Data
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Builder
 //@ToString(exclude = {"category", "productDetails", "reviews", "images"}) // Loại trừ các mối quan hệ để tránh lỗi thông báo
 public class Product implements Serializable {
     @Id
@@ -53,4 +53,121 @@ public class Product implements Serializable {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Image> images; // Mối quan hệ với bảng Images mới
+
+    public Product(String productCode, String productName, String brand, Category category, String userType, String material, String description, BigDecimal price, Integer status) {
+        this.productCode = productCode;
+        this.productName = productName;
+        this.brand = brand;
+        this.category = category;
+        this.userType = userType;
+        this.material = material;
+        this.description = description;
+        this.price = price;
+        this.status = status;
+    }
+    public Product() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Set<ProductDetail> getProductDetails() {
+        return productDetails;
+    }
+
+    public void setProductDetails(Set<ProductDetail> productDetails) {
+        this.productDetails = productDetails;
+    }
+
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public Set<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(Set<Image> images) {
+        this.images = images;
+    }
 }

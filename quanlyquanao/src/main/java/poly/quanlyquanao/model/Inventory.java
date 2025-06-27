@@ -8,11 +8,11 @@ import java.time.LocalDateTime;
 @Table(name = "Inventory", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"product_detail_id", "warehouse_id"})
 })
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+//@Getter
+//@Setter
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Builder
 public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
