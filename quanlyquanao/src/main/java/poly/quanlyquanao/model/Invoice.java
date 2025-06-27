@@ -5,6 +5,7 @@ import lombok.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "Invoice")
@@ -58,6 +59,14 @@ public class Invoice implements Serializable {
     @Column(name = "total_amount", nullable = false, precision = 18, scale = 2)
     private BigDecimal totalAmount;
 
+    @ManyToOne // Bổ sung mối quan hệ cho assigned_staff_id
+    @JoinColumn(name = "assigned_staff_id") // Có thể null
+    private User assignedStaff; // Dùng tên khác để phân biệt với 'user' là khách hàng
+
     @Column(nullable = false)
     private Integer status;
+
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<InvoiceDetail> invoiceDetails;
+
 }
