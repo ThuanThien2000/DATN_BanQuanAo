@@ -6,12 +6,12 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "Images") // Tên bảng là Images
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@ToString(exclude = {"product"}) // Loại trừ mối quan hệ
+//@Getter
+//@Setter
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Builder
+//@ToString(exclude = {"product"}) // Loại trừ mối quan hệ
 public class Image implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,5 +29,52 @@ public class Image implements Serializable {
 
     @Column(name = "order_index")
     private Integer orderIndex;
-    
+
+    public Image(String imageUrl, Product product, Boolean isMain, Integer orderIndex) {
+        this.imageUrl = imageUrl;
+        this.product = product;
+        this.isMain = isMain;
+        this.orderIndex = orderIndex;
+    }
+    public Image() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public Boolean getMain() {
+        return isMain;
+    }
+
+    public Integer getOrderIndex() {
+        return orderIndex;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public void setMain(Boolean main) {
+        isMain = main;
+    }
+
+    public void setOrderIndex(Integer orderIndex) {
+        this.orderIndex = orderIndex;
+    }
 }

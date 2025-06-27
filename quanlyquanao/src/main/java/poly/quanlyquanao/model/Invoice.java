@@ -9,11 +9,11 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Invoice")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+//@Getter
+//@Setter
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Builder
 public class Invoice implements Serializable {
 
     @Id

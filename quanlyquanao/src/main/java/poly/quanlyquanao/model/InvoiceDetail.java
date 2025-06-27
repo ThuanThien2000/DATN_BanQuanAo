@@ -9,11 +9,11 @@ import java.math.BigDecimal;
 @Table(name = "Invoicedetail", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"invoice_id", "productdetail_id"})
 })
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+//@Getter
+//@Setter
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Builder
 public class InvoiceDetail implements Serializable {
 
     @Id

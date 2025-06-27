@@ -6,11 +6,11 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "Payment_method")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+//@Getter
+//@Setter
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Builder
 public class PaymentMethod implements Serializable {
 
     @Id
@@ -22,4 +22,34 @@ public class PaymentMethod implements Serializable {
 
     @Column(nullable = false)
     private Integer status = 1;
+
+    public PaymentMethod(String namePaymentMethod, Integer status) {
+        this.namePaymentMethod = namePaymentMethod;
+        this.status = status;
+    }
+    public PaymentMethod() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNamePaymentMethod() {
+        return namePaymentMethod;
+    }
+
+    public void setNamePaymentMethod(String namePaymentMethod) {
+        this.namePaymentMethod = namePaymentMethod;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 }
