@@ -50,7 +50,6 @@ public class User {
     private Integer status;
 
     public User(String username, String password, String fullname, Boolean gender, String phonenumber, String address, String email, LocalDateTime registrationdate, Role role, String emailVerificationToken, Timestamp tokenCreationTime, Integer status) {
-        this.id = id;
         this.username = username;
         this.password = password;
         this.fullname = fullname;
