@@ -29,7 +29,6 @@ public class UserService implements poly.quanlyquanao.service.Impl.IUserService 
         if (user.getRegistrationdate() == null) {
             user.setRegistrationdate(LocalDateTime.now());
         }
-        
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return userRepository.save(user);
@@ -53,7 +52,9 @@ public class UserService implements poly.quanlyquanao.service.Impl.IUserService 
             if (updatedUser.getPassword() != null && !updatedUser.getPassword().isBlank()) {
                 existingUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
             }
+
             existingUser.setFullname(updatedUser.getFullname());
+            existingUser.setGender(updatedUser.getGender());
             existingUser.setPhonenumber(updatedUser.getPhonenumber());
             existingUser.setAddress(updatedUser.getAddress());
             existingUser.setEmail(updatedUser.getEmail());

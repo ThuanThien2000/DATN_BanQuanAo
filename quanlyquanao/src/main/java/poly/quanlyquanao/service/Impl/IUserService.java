@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import poly.quanlyquanao.model.User;
 
-
 public interface IUserService {
     Page<User> getPageUser(Pageable pageable);
     User add(User user);

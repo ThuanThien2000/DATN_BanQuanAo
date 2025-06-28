@@ -29,6 +29,9 @@ public class User {
 
     private String fullname;
 
+    @Column(nullable = false)
+    private Boolean gender;
+
     private String phonenumber;
     private String address;
 
@@ -46,14 +49,12 @@ public class User {
 
     private Integer status;
 
-    @Column(nullable = false)
-    private Boolean gender;
-
-    public User(String username, String password, String fullname, String phonenumber, String address, String email, LocalDateTime registrationdate, Role role, String emailVerificationToken, Timestamp tokenCreationTime, Integer status, Boolean gender) {
+    public User(String username, String password, String fullname, Boolean gender, String phonenumber, String address, String email, LocalDateTime registrationdate, Role role, String emailVerificationToken, Timestamp tokenCreationTime, Integer status) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.fullname = fullname;
+        this.gender = gender;
         this.phonenumber = phonenumber;
         this.address = address;
         this.email = email;
@@ -62,7 +63,6 @@ public class User {
         this.emailVerificationToken = emailVerificationToken;
         this.tokenCreationTime = tokenCreationTime;
         this.status = status;
-        this.gender = gender;
     }
     public User() {}
 
@@ -96,6 +96,14 @@ public class User {
 
     public void setFullname(String fullname) {
         this.fullname = fullname;
+    }
+
+    public Boolean getGender() {
+        return gender;
+    }
+
+    public void setGender(Boolean gender) {
+        this.gender = gender;
     }
 
     public String getPhonenumber() {
@@ -162,11 +170,5 @@ public class User {
         this.status = status;
     }
 
-    public Boolean getGender() {
-        return gender;
-    }
 
-    public void setGender(Boolean gender) {
-        this.gender = gender;
-    }
 }

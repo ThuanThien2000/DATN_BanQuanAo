@@ -47,8 +47,9 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-
+            // chưa phân quyền, công khai tất cả
                 .requestMatchers("/api/**").permitAll()
+            // Hãy bắt đầu phân quyền chỗ này
 
             )
             .sessionManagement(session -> session
