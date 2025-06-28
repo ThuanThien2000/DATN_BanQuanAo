@@ -19,7 +19,11 @@ public class CategoryServiceImpl implements CategoryService {
     public Category save(Category category) {
         return categoryRepository.save(category);
     }
-
+    @Override
+    public List<Category> getByStatus(int status) {
+        return categoryRepository.findByStatus(status);
+    }
+    
     @Override
     public Category update(Long id, Category category) {
         Optional<Category> existing = categoryRepository.findById(id);

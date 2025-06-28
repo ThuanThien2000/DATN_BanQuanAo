@@ -42,7 +42,7 @@ public class CategoryController {
         return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
     }
     
-    //xóa danh mục localhost:8080/api/category/delete(id muốn xóa)
+    //xóa danh mục chuyển thành hết hàng localhost:8080/api/category/delete(id muốn xóa)
     @DeleteMapping("/delete/{id}") 
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         Category category = categoryService.getById(id);
@@ -52,5 +52,11 @@ public class CategoryController {
         category.setStatus(0); // Chuyển status về 0 để soft delete
         categoryService.save(category); // Lưu lại thay đổi
         return ResponseEntity.noContent().build();
+    }
+    
+    //tìm danh mục theo trạng thái hết hay còn hàng
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<Category>> getByStatus(@PathVariable int status) {
+        return ResponseEntity.ok(categoryService.getByStatus(status));
     }
 }

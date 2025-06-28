@@ -10,4 +10,5 @@ public interface CategoryService {
     void delete(Long id);
     Category getById(Long id);
     List<Category> getAll();
+    List<Category> getByStatus(int status);
 }
