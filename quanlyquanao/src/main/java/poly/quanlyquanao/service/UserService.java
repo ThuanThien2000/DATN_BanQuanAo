@@ -1,5 +1,6 @@
 package poly.quanlyquanao.service;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import poly.quanlyquanao.model.Role;
 import poly.quanlyquanao.model.User;
 import poly.quanlyquanao.repository.UserRepository;
 
@@ -80,6 +82,51 @@ public class UserService implements poly.quanlyquanao.service.Impl.IUserService 
             throw new RuntimeException("Không tìm thấy người dùng với id: " + id);
         }
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public User registerUser(User user) {
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+            throw new RuntimeException("Tên đăng nhập đã tồn tại");
+        }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRegistrationdate(LocalDateTime.now());
+
+        Role defaultRole = new Role();
+        defaultRole.setId(3L); // ID vai trò mặc định là 2
+        user.setRole(defaultRole);
+
+        user.setStatus(0); // Đăng ký mặc định là 0
+
+        String token = java.util.UUID.randomUUID().toString();
+        user.setEmailVerificationToken(token);
+        user.setTokenCreationTime(Timestamp.valueOf(LocalDateTime.now()));
+
+        return userRepository.save(user);
+    }
+
+    @Override
+    public String verifyUser(String token) {
+        Optional<User> optionalUser = userRepository.findByEmailVerificationToken(token);
+        if (optionalUser.isEmpty()) {
+            return "Token không hợp lệ hoặc đã hết hạn.";
+        }
+
+        User user = optionalUser.get();
+
+        // Kiểm tra thời hạn token (ví dụ: 24 giờ)
+        LocalDateTime creationTime = user.getTokenCreationTime().toLocalDateTime();
+        if (creationTime.plusHours(24).isBefore(LocalDateTime.now())) {
+            return "Token đã hết hạn. Vui lòng đăng ký lại.";
+        }
+
+        user.setStatus(1); // Đã kích hoạt
+        user.setEmailVerificationToken(null); // Xóa token
+        user.setTokenCreationTime(null);
+
+        userRepository.save(user);
+        return "Tài khoản của bạn đã được xác minh thành công!";
     }
 
 }

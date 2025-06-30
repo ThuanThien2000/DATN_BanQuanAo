@@ -12,8 +12,11 @@ import org.springframework.security.core.Authentication;
 
 import org.springframework.web.bind.annotation.*;
 
+import poly.quanlyquanao.model.User;
 import poly.quanlyquanao.security.CustomUserDetails;
 import poly.quanlyquanao.security.JwtUtil;
+import poly.quanlyquanao.service.EmailService;
+import poly.quanlyquanao.service.Impl.IUserService;
 
 @CrossOrigin(origins = "*") // hoặc chỉ định frontend cụ thể
 @RestController
@@ -24,6 +27,12 @@ public class AuthController {
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    IUserService userService;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> user) {
@@ -41,6 +50,34 @@ public class AuthController {
             return ResponseEntity.ok(Map.of("token", token));
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(401).body(Map.of("error", "Sai tên đăng nhập hoặc mật khẩu"));
+        }
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody User user) {
+        try {
+            User saveUser = userService.registerUser(user);
+
+            if(saveUser.getEmail() != null && !saveUser.getEmail().isBlank()) {
+                emailService.sendVerificationEmail(saveUser.getEmail(), saveUser.getEmailVerificationToken());
+            }
+
+            return ResponseEntity.ok(Map.of(
+                    "message", "Đăng ký thành công! Vui lòng kiểm tra email để xác minh tài khoản."
+            ));
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/verify")
+    public ResponseEntity<?> verifyEmail(@RequestParam("token") String token) {
+        String result = userService.verifyUser(token);
+
+        if (result.contains("thành công")) {
+            return ResponseEntity.ok(Map.of("message", result));
+        } else {
+            return ResponseEntity.badRequest().body(Map.of("error", result));
         }
     }
 }

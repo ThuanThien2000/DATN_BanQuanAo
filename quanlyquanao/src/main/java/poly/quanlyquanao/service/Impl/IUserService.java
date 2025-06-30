@@ -12,4 +12,7 @@ public interface IUserService {
     User updateUser(Long id, User updatedUser);
     User getUserById(Long id);
     void deleteUser(Long id);
+
+    User registerUser(User user);
+    String verifyUser(String token);
 }
