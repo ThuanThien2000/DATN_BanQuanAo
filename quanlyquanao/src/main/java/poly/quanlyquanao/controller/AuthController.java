@@ -44,10 +44,16 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(username, password));
 
             CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+            String role = userDetails.getAuthorities().stream().findFirst().get().getAuthority(); // ví dụ: "ROLE_ADMIN"
 
-            String token = jwtUtil.generateToken(userDetails.getUsername());
+            String token = jwtUtil.generateTokenWithRole(userDetails.getUsername(), role);
 
-            return ResponseEntity.ok(Map.of("token", token));
+            return ResponseEntity.ok(Map.of(
+                    "token", token,
+                    "username", userDetails.getUsername(),
+                    "role", role
+            ));
+
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(401).body(Map.of("error", "Sai tên đăng nhập hoặc mật khẩu"));
         }
