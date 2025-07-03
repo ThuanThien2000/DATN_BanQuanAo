@@ -1,21 +1,25 @@
 package poly.quanlyquanao.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import poly.quanlyquanao.model.ProductDetail;
-import poly.quanlyquanao.repository.ProductDetailRepository;
+
+import poly.quanlyquanao.model.Product;
+import poly.quanlyquanao.repository.ProductRepository;
 
 @Service
 public class ShopService {
 	
 	@Autowired
-    private ProductDetailRepository productDetailRepository;
+	private ProductRepository productRepository;
 
-	public Page<ProductDetail> filter(Long categoryId, Double minPrice, Double maxPrice, String size, String style, int page) {
-        Pageable pageable = PageRequest.of(page, 5);
-        return productDetailRepository.filterWithPaging(categoryId, minPrice, maxPrice, size, style, pageable);
-    }
+	public List<Product> filterProducts(Long categoryId, Double minPrice, Double maxPrice, String size, String style, int page) {
+		 Pageable pageable = PageRequest.of(page, 5);
+	    return productRepository.filterProducts(categoryId, minPrice, maxPrice, size, style, pageable);
+	}
+
+
 }
