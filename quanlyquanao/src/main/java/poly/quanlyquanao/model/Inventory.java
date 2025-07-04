@@ -32,14 +32,18 @@ public class Inventory {
     @Column(name = "last_updated_at")
     private LocalDateTime lastUpdatedAt;
 
+    @Column(name = "import_date", nullable = false)
+    private LocalDateTime importDate;
+
     private Integer status;
 
-    public Inventory(ProductDetail productDetail, Warehouse warehouse, Integer quantity, LocalDateTime lastUpdatedAt, Integer status) {
+    public Inventory(ProductDetail productDetail, Warehouse warehouse, Integer quantity, LocalDateTime lastUpdatedAt, Integer status, LocalDateTime importDate) {
         this.productDetail = productDetail;
         this.warehouse = warehouse;
         this.quantity = quantity;
         this.lastUpdatedAt = lastUpdatedAt;
         this.status = status;
+        this.importDate = importDate;
     }
     public Inventory() {}
 
@@ -89,5 +93,13 @@ public class Inventory {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public LocalDateTime getImportDate() {
+        return importDate;
+    }
+
+    public void setImportDate(LocalDateTime importDate) {
+        this.importDate = importDate;
     }
 }
