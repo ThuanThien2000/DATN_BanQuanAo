@@ -2,7 +2,6 @@ package poly.quanlyquanao.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import poly.quanlyquanao.model.Inventory;
 
 import java.time.LocalDate;
 import java.util.List;
