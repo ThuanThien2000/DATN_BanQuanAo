@@ -32,15 +32,12 @@ public class ProductDetail implements Serializable{
     private String size;
 
     @Column(name = "inventory_quantity", nullable = false)
-    private Integer inventoryQuantity = 0;
+    private Integer inventoryQuantity;
 
     @Column(name = "imgUrl", columnDefinition = "VARCHAR(MAX)")
     private String imgUrl;
 
     private Integer status;
-
-    @OneToMany(mappedBy = "productDetail", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Inventory> inventories;
 
     @OneToMany(mappedBy = "productDetail", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<InvoiceDetail> invoiceDetails;
@@ -118,14 +115,6 @@ public class ProductDetail implements Serializable{
 
     public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    public Set<Inventory> getInventories() {
-        return inventories;
-    }
-
-    public void setInventories(Set<Inventory> inventories) {
-        this.inventories = inventories;
     }
 
     public Set<InvoiceDetail> getInvoiceDetails() {
