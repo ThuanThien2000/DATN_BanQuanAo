@@ -27,8 +27,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     
     @Query("SELECT DISTINCT p FROM Product p JOIN FETCH p.productDetails pd WHERE " +
     	       "(:categoryId IS NULL OR p.category.id = :categoryId) AND " +
-    	       "(:minPrice IS NULL OR pd.price >= :minPrice) AND " +
-    	       "(:maxPrice IS NULL OR pd.price <= :maxPrice) AND " +
+    	       "(:minPrice IS NULL OR pd.price >= :minPrice) AND " + // sai chỗ này
+    	       "(:maxPrice IS NULL OR pd.price <= :maxPrice) AND " + // sai chỗ này
     	       "(:size IS NULL OR pd.size = :size) AND (" +
     	       "(:styles IS NULL OR :styles = '') OR (" +
     	       "LOWER(pd.style) LIKE LOWER(CONCAT('%', :styles, '%'))" +

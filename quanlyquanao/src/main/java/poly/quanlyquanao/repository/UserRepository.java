@@ -18,8 +18,8 @@ public interface UserRepository extends JpaRepository<User, Long>{
 //    """, nativeQuery = true)
 //    List<Map<Long, Object>> findAllUser();
 
-    @Override
-    Page<User> findAll(Pageable pagealble);
+//    @Override
+//    Page<User> findAll(Pageable pagealble);
 
     @Query("SELECT u from User u WHERE u.status = 1")
     List<User> findByStatusOne();
