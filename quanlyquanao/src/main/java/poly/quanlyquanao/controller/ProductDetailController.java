@@ -43,11 +43,11 @@ public class ProductDetailController {
         return detail != null ? ResponseEntity.ok(detail) : ResponseEntity.notFound().build();
     }
 
-    // ✅ Lấy danh sách theo Product ID localhost:8080/api/product-details/by-product/{productId}
-    @GetMapping("/by-product/{productId}")
-    public ResponseEntity<List<ProductDetail>> getByProductId(@PathVariable Long productId) {
-        return ResponseEntity.ok(service.getByProductId(productId));
-    }
+    // ✅ Lấy danh sách theo Product ID kể cả còn hoạt động hay không localhost:8080/api/product-details/by-product/{productId}
+//    @GetMapping("/by-product/{productId}")
+//    public ResponseEntity<List<ProductDetail>> getByProductId(@PathVariable Long productId) {
+//        return ResponseEntity.ok(service.getByProductId(productId));
+//    }
 
     // ✅ Lấy danh sách còn hoạt động theo Product ID localhost:8080/api/product-details/active/by-product/1
     @GetMapping("/active/by-product/{productId}")
