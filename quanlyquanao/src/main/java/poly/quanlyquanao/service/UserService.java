@@ -20,8 +20,8 @@ public class UserService implements poly.quanlyquanao.service.Impl.IUserService 
     PasswordEncoder passwordEncoder;
     
     @Override
-    public Page<User> getPageUser(Pageable pageable){
-        return userRepository.findAll(pageable);
+    public List<User> findAll(){
+        return userRepository.findAll();
     }
     
     @Override

@@ -18,12 +18,17 @@ public class UserRestController {
     @Autowired
     IUserService _userService;
 
-    @GetMapping("/page")
-    public Page<User> getPageUser(
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "3") int size){
-        Pageable pageable = PageRequest.of(page, size);
-        return _userService.getPageUser(pageable);
+//    @GetMapping("/page")
+//    public Page<User> getPageUser(
+//        @RequestParam(defaultValue = "0") int page,
+//        @RequestParam(defaultValue = "3") int size){
+//        Pageable pageable = PageRequest.of(page, size);
+//        return _userService.getPageUser(pageable);
+//    }
+
+    @GetMapping("/list")
+    public List<User> list() {
+        return _userService.findAll();
     }
     
     @PostMapping("/add")

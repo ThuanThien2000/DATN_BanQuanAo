@@ -12,11 +12,11 @@ import poly.quanlyquanao.service.Impl.IInvoiceDetailService;
 public class InvoiceDetailService implements IInvoiceDetailService{
 	@Autowired
 	InvoiceDetailRepository invoiceDetailRepository;
-	@Override
-	public List<InvoiceDetail> findAllInvoiceDetaiByProductID(Long productID) {
-		// TODO Auto-generated method stub
-		return invoiceDetailRepository.findAllByStatusAndProduct_Id(1, productID);
-	}
+//	@Override
+//	public List<InvoiceDetail> findAllInvoiceDetaiByProductID(Long productID) {
+//		// TODO Auto-generated method stub
+//		return invoiceDetailRepository.findAllByStatusAndProduct_Id(1, productID);
+//	}
 
 	@Override
 	public InvoiceDetail getInvoiceDetailById(Long id) {
