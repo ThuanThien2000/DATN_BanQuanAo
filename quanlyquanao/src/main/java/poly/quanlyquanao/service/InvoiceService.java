@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import poly.quanlyquanao.model.Invoice;
 import poly.quanlyquanao.service.Impl.IInvoiceServiceImpl;
+import poly.quanlyquanao.repository.InvoiceRepository;
 @Service
 public class InvoiceService implements IInvoiceServiceImpl{
     @Autowired
