@@ -43,6 +43,9 @@ public class Product implements Serializable {
     @Column(nullable = false, precision = 18, scale = 2)
     private BigDecimal price;
 
+    @Column(name = "is_featured")
+    private Boolean isFeatured = false;
+
     private Integer status;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
