@@ -8,24 +8,16 @@ import poly.quanlyquanao.service.ReviewService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/reviews")
+@RequestMapping("/api/product/{productId}/review")
 public class ReviewController {
 	
 	@Autowired
 	private ReviewService reviewService;
 	
-	@GetMapping
-	public List<Review> getAllReviews() {
-        return reviewService.getAll();
-    }
-	
-	@GetMapping("/product/{productId}")
-	public List<Review> getByProduct(@PathVariable Long productId) {
+	// GET: Lấy tất cả review của 1 sản phẩm (dành cho admin)
+    @GetMapping
+    public List<Review> getReviewsByProduct(@PathVariable Long productId) {
         return reviewService.getByProductId(productId);
     }
-	
-	@GetMapping("/approved")
-    public List<Review> getApprovedReviews() {
-        return reviewService.getByStatusOne();
-    }
+
 }
