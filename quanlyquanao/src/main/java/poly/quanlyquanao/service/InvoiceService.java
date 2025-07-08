@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import poly.quanlyquanao.model.Invoice;
+import poly.quanlyquanao.repository.InvoiceRepository;
 import poly.quanlyquanao.service.Impl.IInvoiceServiceImpl;
 @Service
 public class InvoiceService implements IInvoiceServiceImpl{
@@ -33,5 +34,11 @@ public class InvoiceService implements IInvoiceServiceImpl{
 	    } else {
 	        System.out.println("Invoice with id " + id + " does not exist.");
 	    }
+	}
+
+	@Override
+	public Invoice getInvoiceById(Long id) {
+		return invoiceRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Không tìm thấy Invoice với id: "+ id));
 	}
 }
