@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface ProductDetailService {
     ProductDetail addByProductId(Long productId, ProductDetail productDetail);
-    ProductDetail update(Long id, ProductDetail productDetail);
-    boolean softDelete(Long id);
-    ProductDetail findById(Long id);
+    ProductDetail update(Long productId, Long detailId, ProductDetail productDetail);
+    boolean softDelete(Long productId, Long detailId);
+    ProductDetail findById(Long productId, Long detailId);
     List<ProductDetail> getByProductId(Long productId);
     List<ProductDetail> getActiveByProductId(Long productId);
 }
