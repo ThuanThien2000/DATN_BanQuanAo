@@ -1,6 +1,6 @@
 package poly.quanlyquanao.service;
 import poly.quanlyquanao.model.ProductDetail;
-import poly.quanlyquanao.repository.ShopDetailsRepository;
+import poly.quanlyquanao.repository.ProductDetailRepository;
 import poly.quanlyquanao.service.Impl.IShopDetailsServiceImpl;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ShopDetailsService implements IShopDetailsServiceImpl{
 	@Autowired
-	ShopDetailsRepository shopDetailsRepository;
+	ProductDetailRepository shopDetailsRepository;
 	@Override
 	public List<ProductDetail> findByProductId(Long productId) {
 		// TODO Auto-generated method stub
