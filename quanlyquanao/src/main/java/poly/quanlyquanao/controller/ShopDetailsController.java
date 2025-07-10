@@ -18,12 +18,12 @@ public class ShopDetailsController {
 	public List<ProductDetail> getPDByProductId(@PathVariable Long productId){
 		return shopDetailsService.findByProductId(productId);
 	}
-	@GetMapping("?size={size}&imageName={imageName}")
+	@GetMapping("/filter")
 	public ProductDetail getSelectedProductDetail(
-		    @PathVariable Long productId,
-		    @RequestParam String size,
-		    @RequestParam String imageName
-			) {
-		return shopDetailsService.findSelectedProductDetail(productId, size, imageName);
+	    @PathVariable Long productId,
+	    @RequestParam String size,
+	    @RequestParam String style
+	) {
+	    return shopDetailsService.findSelectedProductDetail(productId, size, style);
 	}
 }

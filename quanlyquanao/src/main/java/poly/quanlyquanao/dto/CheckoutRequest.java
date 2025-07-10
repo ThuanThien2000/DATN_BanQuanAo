@@ -1,26 +1,28 @@
 package poly.quanlyquanao.dto;
+
 import java.util.List;
 
-import poly.quanlyquanao.model.Invoice;
-import poly.quanlyquanao.model.InvoiceDetail;
-
 public class CheckoutRequest {
-    private Invoice invoice;
-    private List<InvoiceDetail> invoiceDetails;
+    private InvoiceInfo invoiceInfo;
+    private List<CartItem> items;
+	public CheckoutRequest() {
+	}
+	public CheckoutRequest(InvoiceInfo invoiceInfo, List<CartItem> items) {
+		super();
+		this.invoiceInfo = invoiceInfo;
+		this.items = items;
+	}
+	public InvoiceInfo getInvoiceInfo() {
+		return invoiceInfo;
+	}
+	public void setInvoiceInfo(InvoiceInfo invoiceInfo) {
+		this.invoiceInfo = invoiceInfo;
+	}
+	public List<CartItem> getItems() {
+		return items;
+	}
+	public void setItems(List<CartItem> items) {
+		this.items = items;
+	}
 
-    public Invoice getInvoice() {
-        return invoice;
-    }
-
-    public void setInvoice(Invoice invoice) {
-        this.invoice = invoice;
-    }
-
-    public List<InvoiceDetail> getInvoiceDetails() {
-        return invoiceDetails;
-    }
-
-    public void setInvoiceDetails(List<InvoiceDetail> invoiceDetails) {
-        this.invoiceDetails = invoiceDetails;
-    }
 }
