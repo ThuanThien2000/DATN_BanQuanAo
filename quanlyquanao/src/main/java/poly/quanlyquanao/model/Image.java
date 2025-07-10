@@ -24,57 +24,47 @@ public class Image implements Serializable {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product; // Mối quan hệ nhiều-một với Product
 
-    @Column(name = "is_main")
-    private Boolean isMain = false; // Mặc định là false (0 trong SQL Server BIT)
+    @Column(name = "status")
+    private int status ;
 
-    @Column(name = "order_index")
-    private Integer orderIndex;
+    public Image() {
+    }
 
-    public Image(String imageUrl, Product product, Boolean isMain, Integer orderIndex) {
+    public Image(String imageUrl, Product product, int status) {
         this.imageUrl = imageUrl;
         this.product = product;
-        this.isMain = isMain;
-        this.orderIndex = orderIndex;
+        this.status = status;
     }
-    public Image() {}
 
     public Long getId() {
         return id;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public Boolean getMain() {
-        return isMain;
-    }
-
-    public Integer getOrderIndex() {
-        return orderIndex;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Product getProduct() {
+        return product;
     }
 
     public void setProduct(Product product) {
         this.product = product;
     }
 
-    public void setMain(Boolean main) {
-        isMain = main;
+    public int getStatus() {
+        return status;
     }
 
-    public void setOrderIndex(Integer orderIndex) {
-        this.orderIndex = orderIndex;
+    public void setStatus(int status) {
+        this.status = status;
     }
 }
