@@ -15,22 +15,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import poly.quanlyquanao.model.Invoice;
 import poly.quanlyquanao.service.Impl.IInvoiceServiceImpl;
+import poly.quanlyquanao.service.Impl.IUserUpdateInvoiceImpl;
 
 @RestController
 @RequestMapping("/api/user/invoice/{invoiceId}/show_update")
 @CrossOrigin(origins = "*")
-public class UserUpdateInvoice {
+public class UserUpdateInvoiceController {
 	@Autowired
-    private IInvoiceServiceImpl invoiceService;
+    private IUserUpdateInvoiceImpl updateInvoiceService;
     @GetMapping("")
     public ResponseEntity<?> getUserInvoiceUpdate(@PathVariable("invoiceId") Long invoiceId){
-    	return ResponseEntity.ok(invoiceService.getInvoiceById(invoiceId));
+    	return ResponseEntity.ok(updateInvoiceService.getInvoiceById(invoiceId));
     }
     @PutMapping("/cancel")
     public ResponseEntity<?> updateInvoiceStatus(@PathVariable("invoiceId") Long invoiceId) {
         try {
-            invoiceService.updateInvoiceStatus(invoiceId, 0);
-            return new ResponseEntity<>("Cập nhật trạng thái hóa đơn thành công!", HttpStatus.OK);
+        	updateInvoiceService.userCancelInvoice(invoiceId);
+            return new ResponseEntity<>("Hủy hóa đơn thành công!", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Không tìm thấy hóa đơn với id là " + invoiceId, HttpStatus.NOT_FOUND);
         }
