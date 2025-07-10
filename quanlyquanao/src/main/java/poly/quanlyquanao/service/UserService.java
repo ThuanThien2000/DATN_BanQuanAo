@@ -129,4 +129,17 @@ public class UserService implements poly.quanlyquanao.service.Impl.IUserService 
         return "Tài khoản của bạn đã được xác minh thành công!";
     }
 
+    @Override
+    public void changePassword(String username, String oldPass, String newPass) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
+
+        if (!passwordEncoder.matches(oldPass, user.getPassword())) {
+            throw new RuntimeException("Mật khẩu cũ không đúng");
+        }
+
+        user.setPassword(passwordEncoder.encode(newPass));
+        userRepository.save(user);
+    }
+
 }

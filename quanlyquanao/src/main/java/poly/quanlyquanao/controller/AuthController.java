@@ -9,9 +9,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import org.springframework.web.bind.annotation.*;
 
+import poly.quanlyquanao.dto.ChangePasswordRequest;
 import poly.quanlyquanao.model.User;
 import poly.quanlyquanao.security.CustomUserDetails;
 import poly.quanlyquanao.security.JwtUtil;
@@ -84,6 +86,17 @@ public class AuthController {
             return ResponseEntity.ok(Map.of("message", result));
         } else {
             return ResponseEntity.badRequest().body(Map.of("error", result));
+        }
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request, Authentication authentication) {
+        try {
+            String username = authentication.getName();
+            userService.changePassword(username, request.getOldPassword(), request.getNewPassword());
+            return ResponseEntity.ok(Map.of("message", "Đổi mật khẩu thành công!"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
     }
 }

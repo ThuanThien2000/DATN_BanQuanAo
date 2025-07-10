@@ -15,4 +15,5 @@ public interface IUserService {
 
     User registerUser(User user);
     String verifyUser(String token);
+    void changePassword(String username, String oldPass, String newPass);
 }
