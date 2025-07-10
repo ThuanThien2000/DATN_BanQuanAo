@@ -10,7 +10,6 @@ public class InvoiceInfo {
     private Long paymentMethodId;
     private Long voucherId;
     private Long assignedStaffId;
-    private BigDecimal shippingFee;
 	public InvoiceInfo() {
 	}
 	public InvoiceInfo(String fullname, String phonenumber, String email, String deliveryAddress, Long paymentMethodId,
@@ -23,7 +22,6 @@ public class InvoiceInfo {
 		this.paymentMethodId = paymentMethodId;
 		this.voucherId = voucherId;
 		this.assignedStaffId = assignedStaffId;
-		this.shippingFee = shippingFee;
 	}
 	public String getFullname() {
 		return fullname;
@@ -66,12 +64,6 @@ public class InvoiceInfo {
 	}
 	public void setAssignedStaffId(Long assignedStaffId) {
 		this.assignedStaffId = assignedStaffId;
-	}
-	public BigDecimal getShippingFee() {
-		return shippingFee;
-	}
-	public void setShippingFee(BigDecimal shippingFee) {
-		this.shippingFee = shippingFee;
 	}
     
 }

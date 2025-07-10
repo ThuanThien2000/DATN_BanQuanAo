@@ -16,7 +16,7 @@ import poly.quanlyquanao.service.Impl.ICheckoutServiceImpl;
 
 @Service
 public class CheckoutService implements ICheckoutServiceImpl {
-
+	private static final BigDecimal DEFAULT_SHIPPING_FEE = BigDecimal.valueOf(35000);
     @Autowired
     private InvoiceRepository invoiceRepository;
 
@@ -78,7 +78,7 @@ public class CheckoutService implements ICheckoutServiceImpl {
         invoice.setEmail(invoiceInfo.getEmail());
         invoice.setDeliveryAddress(invoiceInfo.getDeliveryAddress());
         invoice.setPaymentMethod(method);
-        invoice.setShippingFee(invoiceInfo.getShippingFee() != null ? invoiceInfo.getShippingFee() : BigDecimal.ZERO);
+        invoice.setShippingFee(DEFAULT_SHIPPING_FEE);
         invoice.setVoucher(voucher);
         invoice.setAssignedStaff(staff);
         invoice.setStatus(1);
