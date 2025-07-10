@@ -28,6 +28,10 @@ public class InvoiceController {
     public List<Invoice> getTodayInvoices() {
         return invoiceService.getTodayInvoice();
     }
+    @GetMapping("/id")
+    public ResponseEntity<?> getInvoiceById(@PathVariable("id") Long id){
+    	return ResponseEntity.ok(invoiceService.getInvoiceById(id));
+    }
     @PutMapping("/update-status/{id}")
     public ResponseEntity<?> updateInvoiceStatus(@PathVariable("id") Long id, @RequestParam("status") Integer status) {
         try {

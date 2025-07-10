@@ -35,4 +35,10 @@ public class InvoiceService implements IInvoiceServiceImpl{
 	        System.out.println("Invoice with id " + id + " does not exist.");
 	    }
 	}
+
+	@Override
+	public Invoice getInvoiceById(Long id) {
+		return invoiceRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Không tìm thấy Invoice với id: "+ id));
+	}
 }
