@@ -4,7 +4,6 @@ import java.util.List;
 
 import poly.quanlyquanao.model.InvoiceDetail; 
 public interface IInvoiceDetailService {
-//	List<InvoiceDetail> findAllInvoiceDetaiByProductID(Long productID); // Đánh dấu sai code
+	List<InvoiceDetail> findAllInvoiceDetaiByInvoiceID(Long invoiceID); 
 	InvoiceDetail getInvoiceDetailById(Long id);
-	void solfDeleteInvoiceDetail(Long id);
 }
