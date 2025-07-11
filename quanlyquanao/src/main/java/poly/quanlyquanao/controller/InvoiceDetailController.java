@@ -20,8 +20,16 @@ public class InvoiceDetailController {
 	public List<InvoiceDetail> getAllByInvoiceID(@PathVariable("invoice_id") Long invoiceId) {
 		return invoiceDetailService.findAllInvoiceDetaiByInvoiceID(invoiceId);
 	}
-	@GetMapping("/{id}")
-	public ResponseEntity getInvoiceDetailById(@PathVariable("id") Long id) {
-		return ResponseEntity.ok(invoiceDetailService.getInvoiceDetailById(id));
-	}
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getInvoiceDetailById(
+            @PathVariable("invoice_id") Long invoiceId,
+            @PathVariable("id") Long detailId) {
+        try {
+            InvoiceDetail detail = invoiceDetailService.getInvoiceDetailById(invoiceId, detailId);
+            return ResponseEntity.ok(detail);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("error", e.getMessage()));
+        }
+    }
 }

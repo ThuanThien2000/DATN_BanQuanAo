@@ -5,5 +5,5 @@ import java.util.List;
 import poly.quanlyquanao.model.InvoiceDetail; 
 public interface IInvoiceDetailService {
 	List<InvoiceDetail> findAllInvoiceDetaiByInvoiceID(Long invoiceID); 
-	InvoiceDetail getInvoiceDetailById(Long id);
+	InvoiceDetail getInvoiceDetailById(Long invoiceId, Long invoiceDetailId);
 }
