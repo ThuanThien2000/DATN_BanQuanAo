@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Invoice")
 //@Getter
@@ -195,6 +197,7 @@ public class Invoice implements Serializable {
     private Integer status;
 
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Set<InvoiceDetail> invoiceDetails;
 
 }
