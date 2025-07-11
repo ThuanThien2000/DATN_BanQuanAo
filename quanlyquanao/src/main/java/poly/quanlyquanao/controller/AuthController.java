@@ -99,4 +99,26 @@ public class AuthController {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
     }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> payload) {
+        try {
+            userService.generateResetToken(payload.get("email"));
+            return ResponseEntity.ok(Map.of("message", "Đã gửi email đặt lại mật khẩu."));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestParam("token") String token,
+                                           @RequestBody Map<String, String> payload) {
+        try {
+            userService.resetPassword(token, payload.get("newPassword"));
+            return ResponseEntity.ok(Map.of("message", "Đổi mật khẩu thành công!"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
 }

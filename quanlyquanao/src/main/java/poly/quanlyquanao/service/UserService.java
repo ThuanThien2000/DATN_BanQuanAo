@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +22,9 @@ public class UserService implements poly.quanlyquanao.service.Impl.IUserService 
     
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    EmailService emailService;
     
     @Override
     public Page<User> getPageUser(Pageable pageable){
@@ -142,4 +147,37 @@ public class UserService implements poly.quanlyquanao.service.Impl.IUserService 
         userRepository.save(user);
     }
 
+    @Override
+    public void generateResetToken(String email) {
+        Optional<User> userOpt = userRepository.findByEmail(email);
+        if (userOpt.isEmpty()) {
+            throw new RuntimeException("Không tìm thấy email này.");
+        }
+
+        User user = userOpt.get();
+        String token = UUID.randomUUID().toString();
+        user.setEmailVerificationToken(token);
+        user.setTokenCreationTime(Timestamp.valueOf(LocalDateTime.now()));
+        userRepository.save(user);
+
+        // Gửi email
+        emailService.sendResetPasswordEmail(user.getEmail(), token);
+    }
+
+    @Override
+    public void resetPassword(String token, String newPassword) {
+        User user = userRepository.findByEmailVerificationToken(token)
+                .orElseThrow(() -> new RuntimeException("Token không hợp lệ"));
+
+        LocalDateTime createdTime = user.getTokenCreationTime().toLocalDateTime();
+        if (createdTime.plusHours(1).isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Token đã hết hạn.");
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setEmailVerificationToken(null);
+        user.setTokenCreationTime(null);
+
+        userRepository.save(user);
+    }
 }

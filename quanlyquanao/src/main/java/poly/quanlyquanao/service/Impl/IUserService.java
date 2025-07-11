@@ -16,4 +16,6 @@ public interface IUserService {
     User registerUser(User user);
     String verifyUser(String token);
     void changePassword(String username, String oldPass, String newPass);
+    void generateResetToken(String email);
+    void resetPassword(String token, String newPassword);
 }
