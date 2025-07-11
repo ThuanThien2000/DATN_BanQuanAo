@@ -1,5 +1,7 @@
 package poly.quanlyquanao.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,10 @@ import poly.quanlyquanao.service.Impl.IInvoiceServiceImpl;
 public class UserUpdateInvoice {
 	@Autowired
     private IInvoiceServiceImpl invoiceService;
-	
+    @GetMapping("")
+    public ResponseEntity<?> getUserInvoiceUpdate(@PathVariable("invoiceId") Long invoiceId){
+    	return ResponseEntity.ok(invoiceService.getInvoiceById(invoiceId));
+    }
     @PutMapping("/cancel")
     public ResponseEntity<?> updateInvoiceStatus(@PathVariable("invoiceId") Long invoiceId) {
         try {
