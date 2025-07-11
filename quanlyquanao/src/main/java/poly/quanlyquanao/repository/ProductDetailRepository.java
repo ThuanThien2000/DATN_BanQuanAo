@@ -17,5 +17,12 @@ public interface ProductDetailRepository extends JpaRepository<ProductDetail, Lo
 
     @Query("SELECT pd FROM ProductDetail pd WHERE pd.product.id = :productId AND pd.status = 1")
     List<ProductDetail> findActiveByProductId(Long productId);
+    
+	@Query(value = "SELECT * FROM product_detail WHERE product_id = :productId AND size = :size AND img_url LIKE CONCAT('%', :imageName, '%') LIMIT 1", nativeQuery = true)
+	ProductDetail findSelectedProductDetail(
+	    @Param("productId") Long productId,
+	    @Param("size") String size,
+	    @Param("imageName") String imageName
+	);
 
 }
