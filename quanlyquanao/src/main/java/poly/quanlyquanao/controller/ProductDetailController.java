@@ -9,49 +9,60 @@ import poly.quanlyquanao.service.ProductDetailService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/product-details")
+@RequestMapping("/api/product/{productId}/details")
 public class ProductDetailController {
 
     @Autowired
     private ProductDetailService service;
 
-    // ✅ Thêm biến thể theo productId localhost:8080/api/product-details/add/1
-    @PostMapping("/add/{productId}")
-    public ResponseEntity<ProductDetail> add(@PathVariable Long productId, @RequestBody ProductDetail detail) {
-        ProductDetail created = service.addByProductId(productId, detail);
-        return created != null ? ResponseEntity.ok(created) : ResponseEntity.badRequest().build();
-    }
-
-    // ✅ Cập nhật biến thể localhost:8080/api/product-details/update/{id}
-    @PutMapping("/update/{id}") 
-    public ResponseEntity<ProductDetail> update(@PathVariable Long id, @RequestBody ProductDetail detail) {
-        ProductDetail updated = service.update(id, detail);
-        return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
-    }
-
-    // ✅ Xoá mềm biến thể localhost:8080/api/product-details/delete/{id}
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
-        boolean deleted = service.softDelete(id);
-        return deleted ? ResponseEntity.ok("Deleted") : ResponseEntity.notFound().build();
-    }
-
-    // ✅ Xem chi tiết biến thể localhost:8080/api/product-details/{id}
-    @GetMapping("/{id}")
-    public ResponseEntity<ProductDetail> findById(@PathVariable Long id) {
-        ProductDetail detail = service.findById(id);
-        return detail != null ? ResponseEntity.ok(detail) : ResponseEntity.notFound().build();
-    }
-
-    // ✅ Lấy danh sách theo Product ID localhost:8080/api/product-details/by-product/{productId}
-    @GetMapping("/by-product/{productId}")
-    public ResponseEntity<List<ProductDetail>> getByProductId(@PathVariable Long productId) {
+    // Lấy tất cả biến thể theo productId
+    // GET: locolhost:8080/api/product/{productId}/details
+    @GetMapping
+    public ResponseEntity<List<ProductDetail>> getByProductId(@PathVariable("productId") Long productId) {
         return ResponseEntity.ok(service.getByProductId(productId));
     }
 
-    // ✅ Lấy danh sách còn hoạt động theo Product ID localhost:8080/api/product-details/active/by-product/1
-    @GetMapping("/active/by-product/{productId}")
-    public ResponseEntity<List<ProductDetail>> getActiveByProductId(@PathVariable Long productId) {
+    // Lấy danh sách biến thể còn hoạt động theo productId
+    // GET: locolhost:8080/api/product/{productId}/details/active
+    @GetMapping("/active")
+    public ResponseEntity<List<ProductDetail>> getActiveByProductId(@PathVariable("productId") Long productId) {
         return ResponseEntity.ok(service.getActiveByProductId(productId));
+    }
+
+    // Thêm biến thể cho productId
+    // POST: locolhost:8080/api/product/{productId}/details/add
+    @PostMapping("/add")
+    public ResponseEntity<ProductDetail> add(@PathVariable("productId") Long productId,
+                                             @RequestBody ProductDetail detail) {
+        ProductDetail created = service.addByProductId(productId, detail);
+        return created != null ? ResponseEntity.ok(created) : ResponseEntity.badRequest().body(null);
+    }
+
+    //  Cập nhật biến thể theo detailId
+    // PUT: locolhost:8080/api/product/{productId}/details/update/{detailId}
+    @PutMapping("/update/{detailId}")
+    public ResponseEntity<ProductDetail> update(@PathVariable("productId") Long productId,
+                                                @PathVariable("detailId") Long detailId,
+                                                @RequestBody ProductDetail detail) {
+        ProductDetail updated = service.update(productId, detailId, detail);
+        return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
+    }
+
+    // Xoá mềm biến thể theo detailId
+    // DELETE: locolhost:8080/api/product/{productId}/details/delete/{detailId}
+    @DeleteMapping("/delete/{detailId}")
+    public ResponseEntity<String> delete(@PathVariable("productId") Long productId,
+                                         @PathVariable("detailId") Long detailId) {
+        boolean deleted = service.softDelete(productId, detailId);
+        return deleted ? ResponseEntity.ok("Deleted") : ResponseEntity.notFound().build();
+    }
+
+    //Xem chi tiết biến thể theo detailId
+    // GET: locolhost:8080/api/product/{productId}/details/{detailId}
+    @GetMapping("/{detailId}")
+    public ResponseEntity<ProductDetail> findById(@PathVariable("productId") Long productId,
+                                                  @PathVariable("detailId") Long detailId) {
+        ProductDetail detail = service.findById(productId, detailId);
+        return detail != null ? ResponseEntity.ok(detail) : ResponseEntity.notFound().build();
     }
 }

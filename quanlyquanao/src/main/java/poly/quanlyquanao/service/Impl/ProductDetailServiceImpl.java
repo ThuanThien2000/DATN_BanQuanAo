@@ -25,37 +25,37 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         if (product == null) return null;
 
         productDetail.setProduct(product);
-        productDetail.setStatus(1);
+        productDetail.setStatus(1); // còn hoạt động
         return productDetailRepository.save(productDetail);
     }
 
     @Override
-    public ProductDetail update(Long id, ProductDetail detail) {
-        ProductDetail existing = productDetailRepository.findById(id).orElse(null);
-        
-        if (existing != null) {
-            existing.setSize(detail.getSize());
-            existing.setStyle(detail.getStyle());
-            existing.setInventoryQuantity(detail.getInventoryQuantity());
+    public ProductDetail update(Long productId, Long detailId, ProductDetail detail) {
+        ProductDetail existing = productDetailRepository.findById(detailId).orElse(null);
 
-            // ✅ Gọi price từ Product gắn với ProductDetail
-            if (detail.getProduct() != null && detail.getProduct().getPrice() != null) {
-                Product product = existing.getProduct();
-                product.setPrice(detail.getProduct().getPrice());
-                productRepository.save(product); // nhớ inject productRepository
-            }
-
-            return productDetailRepository.save(existing);
+        if (existing == null || !existing.getProduct().getId().equals(productId)) {
+            return null; // Không tìm thấy hoặc không đúng sản phẩm
         }
 
-        return null;
+        existing.setSize(detail.getSize());
+        existing.setStyle(detail.getStyle());
+        existing.setInventoryQuantity(detail.getInventoryQuantity());
+
+        // Nếu muốn cập nhật giá sản phẩm chung
+        if (detail.getProduct() != null && detail.getProduct().getPrice() != null) {
+            Product product = existing.getProduct();
+            product.setPrice(detail.getProduct().getPrice());
+            productRepository.save(product);
+        }
+
+        return productDetailRepository.save(existing);
     }
 
     @Override
-    public boolean softDelete(Long id) {
-        ProductDetail detail = productDetailRepository.findById(id).orElse(null);
-        if (detail != null) {
-            detail.setStatus(0);
+    public boolean softDelete(Long productId, Long detailId) {
+        ProductDetail detail = productDetailRepository.findById(detailId).orElse(null);
+        if (detail != null && detail.getProduct().getId().equals(productId)) {
+            detail.setStatus(0); // đánh dấu đã xoá mềm
             productDetailRepository.save(detail);
             return true;
         }
@@ -63,8 +63,9 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     }
 
     @Override
-    public ProductDetail findById(Long id) {
-        return productDetailRepository.findById(id).orElse(null);
+    public ProductDetail findById(Long productId, Long detailId) {
+        ProductDetail detail = productDetailRepository.findById(detailId).orElse(null);
+        return (detail != null && detail.getProduct().getId().equals(productId)) ? detail : null;
     }
 
     @Override
