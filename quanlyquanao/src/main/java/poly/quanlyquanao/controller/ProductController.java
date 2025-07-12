@@ -25,7 +25,7 @@ public class ProductController {
     // Thêm sản phẩm mới localhost:8080/api/products/add
     @PostMapping("/add")
     public ResponseEntity<Product> createProduct(@RequestBody ProductDTO productDTO) {
-    	
+        
         return ResponseEntity.ok(productService.createProduct(productDTO));
     }
 
@@ -46,7 +46,7 @@ public class ProductController {
     // Xem chi tiết sản phẩm – localhost:8080/api/products/detail/1
     @GetMapping("/detail/{id}")
     public ResponseEntity<ProductDTO> getProduct(@PathVariable Long id) {
-    	ProductDTO productDTO = productService.getProductById(id);
+        ProductDTO productDTO = productService.getProductById(id);
         return productDTO != null ? ResponseEntity.ok(productDTO) : ResponseEntity.notFound().build();
     }
 
@@ -58,6 +58,23 @@ public class ProductController {
     @GetMapping("/categories")
     public ResponseEntity<List<CategoryDTO>> getAll() {
         return ResponseEntity.ok(categoryService.getAllDTO());
+    }
+    @PutMapping("/feature/{id}")
+    public ResponseEntity<String> featureProduct(@PathVariable Long id) {
+        boolean success = productService.featureProduct(id);
+        if (!success) {
+            // Có thể do đã đủ 8 sản phẩm featured hoặc không tìm thấy sản phẩm
+            return ResponseEntity.badRequest().body("Không thể đánh dấu nổi bật: đã đủ 10 sản phẩm hoặc sản phẩm không tồn tại/không hoạt động.");
+        }
+        return ResponseEntity.ok("Product featured successfully");
+    }
+    @PutMapping("/unfeature/{id}")
+    public ResponseEntity<String> unfeatureProduct(@PathVariable Long id) {
+        boolean success = productService.unfeatureProduct(id);
+        if (!success) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok("Product unfeatured successfully");
     }
     // Cảnh báo sản phẩm sắp hết hàng localhost:8080/api/products/low-stock?threshold=5
     @GetMapping("/lowstock")

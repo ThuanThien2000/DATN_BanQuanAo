@@ -24,6 +24,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT pd.product FROM ProductDetail pd WHERE pd.inventoryQuantity < :threshold")
     List<Product> findLowStockProducts(@Param("threshold") int threshold);
+
+    @Query("SELECT p FROM Product p WHERE p.isFeatured = true AND p.status = 1")
+    List<Product> findFeaturedProducts();   
+    @Query("SELECT COUNT(p) FROM Product p WHERE p.isFeatured = true AND p.status = 1")
+    long countFeaturedProducts();   
+    
     
 //    @Query("SELECT DISTINCT p FROM Product p JOIN FETCH p.productDetails pd WHERE " +
 //    	       "(:categoryId IS NULL OR p.category.id = :categoryId) AND " +

@@ -13,5 +13,7 @@ public interface ProductService {
     ProductDTO getProductById(Long id);
     List<Product> getAllActiveProducts();
     List<ProductDTO> getAllActiveProductDTOs();
-    List<Product> getLowStockProducts(int threshold);
+    List<Product> getLowStockProducts(int threshold);   
+    boolean featureProduct(Long id);
+    boolean unfeatureProduct(Long id);
 }

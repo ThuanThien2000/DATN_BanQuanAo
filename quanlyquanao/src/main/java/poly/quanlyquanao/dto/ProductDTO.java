@@ -14,27 +14,50 @@ public class ProductDTO {
     private String categoryName;
     private String userType;
     private String material;
+    private String description;
     private BigDecimal price;
     private Boolean isFeatured;
-    private Set<ImageDTO> imageUrls; // image đầu
+    private Set<ImageDTO> imageUrls; 
+    private Integer status; // Trạng thái của sản phẩm
 
     public ProductDTO() {}
 
-    public ProductDTO(Long id, String productCode, String productName, String brand, Long categoryId, String categoryName, String userType, String material, BigDecimal price, Boolean isFeatured, Set<ImageDTO> imageUrls) {
-        this.id = id;
-        this.productCode = productCode;
-        this.productName = productName;
-        this.brand = brand;
-        this.categoryId = categoryId;
-        this.categoryName = categoryName;
-        this.userType = userType;
-        this.material = material;
-        this.price = price;
-        this.isFeatured = isFeatured;
-        this.imageUrls = imageUrls;
-    }
+    public ProductDTO(Long id, String productCode, String productName, String brand, Long categoryId,
+			String categoryName, String userType, String material, String description, BigDecimal price,
+			Boolean isFeatured, Set<ImageDTO> imageUrls, Integer status) {
+		super();
+		this.id = id;
+		this.productCode = productCode;
+		this.productName = productName;
+		this.brand = brand;
+		this.categoryId = categoryId;
+		this.categoryName = categoryName;
+		this.userType = userType;
+		this.material = material;
+		this.description = description;
+		this.price = price;
+		this.isFeatured = isFeatured;
+		this.imageUrls = imageUrls;
+		this.status = status;
+	}
 
-    public Long getId() {
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public Long getId() {
         return id;
     }
 

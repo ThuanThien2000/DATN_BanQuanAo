@@ -45,9 +45,11 @@ public class ProductServiceImpl implements ProductService {
             product.getCategory() != null ? product.getCategory().getCategoryName() : null,
             product.getUserType(),
             product.getMaterial(),
+            product.getDescription(),
             product.getPrice(),
             product.getIsFeatured(),
-            imageDTOs
+            imageDTOs,
+            product.getStatus()
         );
     }
 
@@ -80,6 +82,7 @@ public class ProductServiceImpl implements ProductService {
         product.setUserType(productDTO.getUserType());
         product.setMaterial(productDTO.getMaterial());
         product.setPrice(productDTO.getPrice());
+        product.setDescription(productDTO.getDescription());
         product.setIsFeatured(productDTO.getIsFeatured());
         product.setStatus(1);
         // Xử lý images nếu có
@@ -130,6 +133,7 @@ public class ProductServiceImpl implements ProductService {
             product.setMaterial(productDTO.getMaterial());
             product.setPrice(productDTO.getPrice());
             product.setIsFeatured(productDTO.getIsFeatured());
+            product.setDescription(productDTO.getDescription());
             // Xử lý images nếu có (chỉ cập nhật repo, không thêm vào product)
             if (productDTO.getImageUrls() != null) {
                 // Soft delete all old images
@@ -159,6 +163,39 @@ public class ProductServiceImpl implements ProductService {
             return updated;
         }
         return null;
+    }
+    @Override
+    public boolean featureProduct(Long id) {
+        Optional<Product> optional = productRepository.findById(id);
+        if (optional.isPresent()) {
+            Product product = optional.get();
+            if (product.getStatus() == 1) { // Chỉ đánh dấu nếu sản phẩm còn hoạt động
+                // Đếm số sản phẩm đang featured
+                long featuredCount = productRepository.countFeaturedProducts();
+                // Nếu sản phẩm này chưa được featured và đã đủ 8 sản phẩm featured thì không cho phép
+                if (!Boolean.TRUE.equals(product.getIsFeatured()) && featuredCount >= 10) {
+                    return false;
+                }
+                product.setIsFeatured(true);
+                productRepository.save(product);
+                return true;
+            }
+        }
+        return false;
+    }   
+
+    @Override
+    public boolean unfeatureProduct(Long id) {
+        Optional<Product> optional = productRepository.findById(id);
+        if (optional.isPresent()) {
+            Product product = optional.get();
+            if (product.getStatus() == 1) { // Chỉ bỏ đánh dấu nếu sản phẩm còn hoạt động
+                product.setIsFeatured(false);
+                productRepository.save(product);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
