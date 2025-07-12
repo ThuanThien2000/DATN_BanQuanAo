@@ -41,10 +41,9 @@ public class ProductDetailController {
     //  Cập nhật biến thể theo detailId
     // PUT: locolhost:8080/api/product/{productId}/details/update/{detailId}
     @PutMapping("/update/{detailId}")
-    public ResponseEntity<ProductDetail> update(@PathVariable("productId") Long productId,
-                                                @PathVariable("detailId") Long detailId,
+    public ResponseEntity<ProductDetail> update(@PathVariable("detailId") Long id,
                                                 @RequestBody ProductDetail detail) {
-        ProductDetail updated = service.update(productId, detailId, detail);
+        ProductDetail updated = service.update(id, detail);
         return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
     }
 
@@ -60,9 +59,8 @@ public class ProductDetailController {
     //Xem chi tiết biến thể theo detailId
     // GET: locolhost:8080/api/product/{productId}/details/{detailId}
     @GetMapping("/{detailId}")
-    public ResponseEntity<ProductDetail> findById(@PathVariable("productId") Long productId,
-                                                  @PathVariable("detailId") Long detailId) {
-        ProductDetail detail = service.findById(productId, detailId);
+    public ResponseEntity<ProductDetail> findById(@PathVariable("detailId") Long id) {
+        ProductDetail detail = service.findById(id);
         return detail != null ? ResponseEntity.ok(detail) : ResponseEntity.notFound().build();
     }
 }

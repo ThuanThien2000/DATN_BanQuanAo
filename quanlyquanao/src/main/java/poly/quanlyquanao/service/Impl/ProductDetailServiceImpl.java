@@ -30,10 +30,10 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     }
 
     @Override
-    public ProductDetail update(Long productId, Long detailId, ProductDetail detail) {
+    public ProductDetail update(Long detailId, ProductDetail detail) {
         ProductDetail existing = productDetailRepository.findById(detailId).orElse(null);
 
-        if (existing == null || !existing.getProduct().getId().equals(productId)) {
+        if (existing == null) {
             return null; // Không tìm thấy hoặc không đúng sản phẩm
         }
 
@@ -63,9 +63,9 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     }
 
     @Override
-    public ProductDetail findById(Long productId, Long detailId) {
-        ProductDetail detail = productDetailRepository.findById(detailId).orElse(null);
-        return (detail != null && detail.getProduct().getId().equals(productId)) ? detail : null;
+    public ProductDetail findById(Long id) {
+        ProductDetail detail = productDetailRepository.findById(id).orElse(null);
+        return (detail != null) ? detail : null;
     }
 
     @Override
