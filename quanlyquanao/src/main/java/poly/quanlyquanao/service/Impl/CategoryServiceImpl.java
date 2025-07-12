@@ -1,4 +1,7 @@
+
 package poly.quanlyquanao.service.Impl;
+
+import poly.quanlyquanao.dto.CategoryDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +14,15 @@ import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
+
+    @Override
+    public List<CategoryDTO> getAllDTO() {
+        List<Category> categories = getAll();
+        return categories.stream().map(category -> new CategoryDTO(
+            category.getId(),
+            category.getCategoryName()
+        )).toList();
+    }
 
     @Autowired
     private CategoryRepository categoryRepository;

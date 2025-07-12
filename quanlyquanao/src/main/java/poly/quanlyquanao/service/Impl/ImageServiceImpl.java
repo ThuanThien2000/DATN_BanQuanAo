@@ -12,6 +12,16 @@ import java.util.List;
 
 @Service
 public class ImageServiceImpl implements ImageService {
+    @Override
+    public List<Image> addImages(Long productId, List<Image> images) {
+        Product product = productRepository.findById(productId).orElse(null);
+        if (product == null || images == null || images.isEmpty()) return null;
+        for (Image image : images) {
+            image.setProduct(product);
+            image.setStatus(1);
+        }
+        return imageRepository.saveAll(images);
+    }
 
     @Autowired
     private ImageRepository imageRepository;
