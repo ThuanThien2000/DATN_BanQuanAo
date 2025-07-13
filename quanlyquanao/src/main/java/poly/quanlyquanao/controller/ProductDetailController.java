@@ -3,6 +3,8 @@ package poly.quanlyquanao.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import poly.quanlyquanao.dto.ProductDetailDTO;
 import poly.quanlyquanao.model.ProductDetail;
 import poly.quanlyquanao.service.ProductDetailService;
 
@@ -10,22 +12,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/product/{productId}/details")
+@CrossOrigin(origins = "*")
 public class ProductDetailController {
 
     @Autowired
     private ProductDetailService service;
 
-    // Lấy tất cả biến thể theo productId
-    // GET: locolhost:8080/api/product/{productId}/details
-    @GetMapping
-    public ResponseEntity<List<ProductDetail>> getByProductId(@PathVariable("productId") Long productId) {
-        return ResponseEntity.ok(service.getByProductId(productId));
-    }
-
-    // Lấy danh sách biến thể còn hoạt động theo productId
-    // GET: locolhost:8080/api/product/{productId}/details/active
-    @GetMapping("/active")
-    public ResponseEntity<List<ProductDetail>> getActiveByProductId(@PathVariable("productId") Long productId) {
+    @GetMapping("")
+    public ResponseEntity<List<ProductDetailDTO>> getActiveByProductId(@PathVariable("productId") Long productId) {
         return ResponseEntity.ok(service.getActiveByProductId(productId));
     }
 
@@ -33,7 +27,7 @@ public class ProductDetailController {
     // POST: locolhost:8080/api/product/{productId}/details/add
     @PostMapping("/add")
     public ResponseEntity<ProductDetail> add(@PathVariable("productId") Long productId,
-                                             @RequestBody ProductDetail detail) {
+                                             @RequestBody ProductDetailDTO detail) {
         ProductDetail created = service.addByProductId(productId, detail);
         return created != null ? ResponseEntity.ok(created) : ResponseEntity.badRequest().body(null);
     }
@@ -42,7 +36,7 @@ public class ProductDetailController {
     // PUT: locolhost:8080/api/product/{productId}/details/update/{detailId}
     @PutMapping("/update/{detailId}")
     public ResponseEntity<ProductDetail> update(@PathVariable("detailId") Long id,
-                                                @RequestBody ProductDetail detail) {
+                                                @RequestBody ProductDetailDTO detail) {
         ProductDetail updated = service.update(id, detail);
         return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
     }
@@ -59,8 +53,8 @@ public class ProductDetailController {
     //Xem chi tiết biến thể theo detailId
     // GET: locolhost:8080/api/product/{productId}/details/{detailId}
     @GetMapping("/{detailId}")
-    public ResponseEntity<ProductDetail> findById(@PathVariable("detailId") Long id) {
-        ProductDetail detail = service.findById(id);
+    public ResponseEntity<ProductDetailDTO> findById(@PathVariable("detailId") Long id) {
+        ProductDetailDTO detail = service.findById(id);
         return detail != null ? ResponseEntity.ok(detail) : ResponseEntity.notFound().build();
     }
 }

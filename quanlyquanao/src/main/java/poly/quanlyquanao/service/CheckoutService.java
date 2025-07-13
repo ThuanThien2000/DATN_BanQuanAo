@@ -24,7 +24,7 @@ public class CheckoutService implements ICheckoutServiceImpl {
     private InvoiceDetailRepository invoiceDetailRepository;
 
     @Autowired
-    private ProductDetailService productDetailService;
+    private ProductDetailRepository productDetailRepository;
 
     @Autowired
     private PaymentMethodRepository paymentMethodRepository;
@@ -90,7 +90,8 @@ public class CheckoutService implements ICheckoutServiceImpl {
         List<InvoiceDetail> invoiceDetails = new ArrayList<>();
 
         for (CartItem item : items) {
-            ProductDetail productDetail = productDetailService.findById(item.getProductDetailId());
+            ProductDetail productDetail = productDetailRepository.findById(item.getProductDetailId())
+                    .orElseThrow(() -> new RuntimeException("Sản phẩm không tồn tại"));
 
             // Kiểm tra tồn kho
             if (productDetail.getInventoryQuantity() < item.getQuantity()) {
@@ -114,7 +115,7 @@ public class CheckoutService implements ICheckoutServiceImpl {
 
             // Trừ kho
             productDetail.setInventoryQuantity(productDetail.getInventoryQuantity() - quantity);
-            productDetailService.update(productDetail.getId(), productDetail);
+            productDetailRepository.save( productDetail);
 
             // Cộng vào tổng hóa đơn
             totalAmount = totalAmount.add(totalPrice);

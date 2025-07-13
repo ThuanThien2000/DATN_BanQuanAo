@@ -12,6 +12,8 @@ import java.util.List;
 
 @Repository
 public interface ProductDetailRepository extends JpaRepository<ProductDetail, Long> {
+
+    boolean existsByProductDetailCode(String productDetailCode);
     
     List<ProductDetail> findByProductId(Long productId);
 

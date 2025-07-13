@@ -2,6 +2,8 @@ package poly.quanlyquanao.service.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import poly.quanlyquanao.dto.ProductDetailDTO;
 import poly.quanlyquanao.model.Product;
 import poly.quanlyquanao.model.ProductDetail;
 import poly.quanlyquanao.repository.ProductDetailRepository;
@@ -13,6 +15,20 @@ import java.util.List;
 @Service
 public class ProductDetailServiceImpl implements ProductDetailService {
 
+    private ProductDetailDTO toDTO(ProductDetail detail) {
+        if (detail == null) return null;
+        return new ProductDetailDTO(
+            detail.getId(),
+            detail.getProductDetailCode(),
+            detail.getProduct() != null ? detail.getProduct().getId() : null,
+            detail.getStyle(),
+            detail.getSize(),
+            detail.getInventoryQuantity(),
+            detail.getImgUrl(),
+            detail.getStatus()
+        );
+    }
+
     @Autowired
     private ProductDetailRepository productDetailRepository;
 
@@ -20,35 +36,34 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     private ProductRepository productRepository;
 
     @Override
-    public ProductDetail addByProductId(Long productId, ProductDetail productDetail) {
+    public ProductDetail addByProductId(Long productId, ProductDetailDTO productDetailDTO) {
         Product product = productRepository.findById(productId).orElse(null);
         if (product == null) return null;
-
-        productDetail.setProduct(product);
-        productDetail.setStatus(1); // còn hoạt động
-        return productDetailRepository.save(productDetail);
+        ProductDetail detail = new ProductDetail();
+        detail.setProduct(product);
+        detail.setProductDetailCode(productDetailDTO.getProductDetailCode());
+        detail.setStyle(productDetailDTO.getStyle());
+        detail.setSize(productDetailDTO.getSize());
+        detail.setInventoryQuantity(productDetailDTO.getInventoryQuantity());
+        detail.setImgUrl(productDetailDTO.getImgUrl());
+        detail.setStatus(1); // còn hoạt động
+        ProductDetail saved = productDetailRepository.save(detail);
+        return saved;
     }
 
     @Override
-    public ProductDetail update(Long detailId, ProductDetail detail) {
+    public ProductDetail update(Long detailId, ProductDetailDTO detailDTO) {
         ProductDetail existing = productDetailRepository.findById(detailId).orElse(null);
-
         if (existing == null) {
-            return null; // Không tìm thấy hoặc không đúng sản phẩm
+            return null;
         }
+        existing.setSize(detailDTO.getSize());
+        existing.setStyle(detailDTO.getStyle());
+        existing.setInventoryQuantity(detailDTO.getInventoryQuantity());
+        existing.setImgUrl(detailDTO.getImgUrl());
 
-        existing.setSize(detail.getSize());
-        existing.setStyle(detail.getStyle());
-        existing.setInventoryQuantity(detail.getInventoryQuantity());
-
-        // Nếu muốn cập nhật giá sản phẩm chung
-        if (detail.getProduct() != null && detail.getProduct().getPrice() != null) {
-            Product product = existing.getProduct();
-            product.setPrice(detail.getProduct().getPrice());
-            productRepository.save(product);
-        }
-
-        return productDetailRepository.save(existing);
+        ProductDetail saved = productDetailRepository.save(existing);
+        return saved;
     }
 
     @Override
@@ -63,18 +78,14 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     }
 
     @Override
-    public ProductDetail findById(Long id) {
+    public ProductDetailDTO findById(Long id) {
         ProductDetail detail = productDetailRepository.findById(id).orElse(null);
-        return (detail != null) ? detail : null;
+        return toDTO(detail);
     }
 
     @Override
-    public List<ProductDetail> getByProductId(Long productId) {
-        return productDetailRepository.findByProductId(productId);
-    }
-
-    @Override
-    public List<ProductDetail> getActiveByProductId(Long productId) {
-        return productDetailRepository.findActiveByProductId(productId);
+    public List<ProductDetailDTO> getActiveByProductId(Long productId) {
+        List<ProductDetail> details = productDetailRepository.findActiveByProductId(productId);
+        return details.stream().map(this::toDTO).toList();
     }
 }
