@@ -2,11 +2,11 @@ package poly.quanlyquanao.service.Impl;
 
 import java.util.List;
 
-import poly.quanlyquanao.model.Invoice;
+import poly.quanlyquanao.dto.InvoiceDTO;
 
 public interface IInvoiceServiceImpl {
-	List<Invoice> getAllInvoice();
-	List<Invoice> getTodayInvoice();
-	Invoice getInvoiceById(Long id);
+	List<InvoiceDTO> getAllInvoice();
+	List<InvoiceDTO> getTodayInvoice();
+	InvoiceDTO getInvoiceById(Long id);
 	void updateInvoiceStatus(Long id, Integer status);
 }

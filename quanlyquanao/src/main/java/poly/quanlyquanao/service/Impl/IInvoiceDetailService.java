@@ -2,8 +2,8 @@ package poly.quanlyquanao.service.Impl;
 
 import java.util.List;
 
-import poly.quanlyquanao.model.InvoiceDetail; 
+import poly.quanlyquanao.dto.InvoiceDetailDTO;
 public interface IInvoiceDetailService {
-	List<InvoiceDetail> findAllInvoiceDetaiByInvoiceID(Long invoiceID); 
-	InvoiceDetail getInvoiceDetailById(Long invoiceId, Long invoiceDetailId);
+	List<InvoiceDetailDTO> findAllInvoiceDetaiByInvoiceID(Long invoiceID);
+	InvoiceDetailDTO getInvoiceDetailById(Long invoiceId, Long invoiceDetailId);
 }

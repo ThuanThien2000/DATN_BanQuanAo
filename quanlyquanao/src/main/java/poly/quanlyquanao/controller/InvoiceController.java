@@ -7,11 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import poly.quanlyquanao.dto.InvoiceDTO;
 import poly.quanlyquanao.model.Invoice;
 import poly.quanlyquanao.service.Impl.IInvoiceServiceImpl;
 
 @RestController
-@RequestMapping("/api/admin/invoice")
+@RequestMapping("/api/invoice")
 @CrossOrigin(origins = "*")
 public class InvoiceController {
 	@Autowired
@@ -19,17 +20,17 @@ public class InvoiceController {
 
     // Get all invoices
     @GetMapping("/all")
-    public List<Invoice> getAllInvoices() {
+    public List<InvoiceDTO> getAllInvoices() {
         return invoiceService.getAllInvoice();
     }
 
     // Get today's invoices
     @GetMapping("/today")
-    public List<Invoice> getTodayInvoices() {
+    public List<InvoiceDTO> getTodayInvoices() {
         return invoiceService.getTodayInvoice();
     }
     @GetMapping("/{id}")
-    public ResponseEntity<?> getInvoiceById(@PathVariable("id") Long id){
+    public ResponseEntity<InvoiceDTO> getInvoiceById(@PathVariable("id") Long id){
     	return ResponseEntity.ok(invoiceService.getInvoiceById(id));
     }
     @PutMapping("/{id}/update-status")
