@@ -9,7 +9,9 @@ public class ProductDetailMapper {
         return new ProductDetailDTO(
             detail.getId(),
             detail.getProductDetailCode(),
-            detail.getProduct() != null ? detail.getProduct().getId() : null,
+            detail.getProduct() != null ? detail.getProduct().getProductCode() : null,
+            detail.getProduct() != null ? detail.getProduct().getProductName() : null,
+            detail.getProduct() != null ? detail.getProduct().getPrice() : null,
             detail.getStyle(),
             detail.getSize(),
             detail.getInventoryQuantity(),
