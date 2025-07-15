@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import poly.quanlyquanao.dto.ProductDetailDTO;
+import poly.quanlyquanao.mapper.ProductDetailMapper;
 import poly.quanlyquanao.model.Product;
 import poly.quanlyquanao.model.ProductDetail;
 import poly.quanlyquanao.repository.ProductDetailRepository;
@@ -15,19 +16,6 @@ import java.util.List;
 @Service
 public class ProductDetailServiceImpl implements ProductDetailService {
 
-    private ProductDetailDTO toDTO(ProductDetail detail) {
-        if (detail == null) return null;
-        return new ProductDetailDTO(
-            detail.getId(),
-            detail.getProductDetailCode(),
-            detail.getProduct() != null ? detail.getProduct().getId() : null,
-            detail.getStyle(),
-            detail.getSize(),
-            detail.getInventoryQuantity(),
-            detail.getImgUrl(),
-            detail.getStatus()
-        );
-    }
 
     @Autowired
     private ProductDetailRepository productDetailRepository;
@@ -80,12 +68,12 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     @Override
     public ProductDetailDTO findById(Long id) {
         ProductDetail detail = productDetailRepository.findById(id).orElse(null);
-        return toDTO(detail);
+        return ProductDetailMapper.toDTO(detail);
     }
 
     @Override
     public List<ProductDetailDTO> getActiveByProductId(Long productId) {
         List<ProductDetail> details = productDetailRepository.findActiveByProductId(productId);
-        return details.stream().map(this::toDTO).toList();
+        return details.stream().map(ProductDetailMapper::toDTO).toList();
     }
 }
