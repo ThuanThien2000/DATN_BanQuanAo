@@ -24,5 +24,10 @@ public interface ProductDetailRepository extends JpaRepository<ProductDetail, Lo
     List<ProductDetail> findActiveByProductId(Long productId);
     
     ProductDetail findFirstByProduct_IdAndSizeAndStyle(Long productId, String size, String style);
+    ProductDetail findFirstByProduct_IdAndStyleAndStatusAndImgUrlIsNotNullOrderByIdAsc(
+    	    Long productId,
+    	    String style,
+    	    int status
+    	);
 
 }

@@ -27,16 +27,45 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     public ProductDetail addByProductId(Long productId, ProductDetailDTO productDetailDTO) {
         Product product = productRepository.findById(productId).orElse(null);
         if (product == null) return null;
+
+        // Xử lý ảnh: nếu DTO có ảnh thì dùng, không thì tìm ảnh theo style
+        String imgUrl = productDetailDTO.getImgUrl();
+        if (imgUrl == null || imgUrl.isEmpty()) {
+            ProductDetail existingDetail = productDetailRepository
+                    .findFirstByProduct_IdAndStyleAndStatusAndImgUrlIsNotNullOrderByIdAsc(productId, productDetailDTO.getStyle(), 1);
+            if (existingDetail != null) {
+                imgUrl = existingDetail.getImgUrl();
+            }
+        }
+
+        // Sinh mã productDetailCode
+        String productDetailCode = generateProductDetailCode(product.getProductCode(), productDetailDTO.getStyle(), productDetailDTO.getSize());
+        // Kiểm tra trùng mã
+        if (productDetailRepository.existsByProductDetailCode(productDetailCode)) {
+            throw new RuntimeException("Đã tồn tại ProductDetail style: " + productDetailDTO.getStyle() + ", size: " + productDetailDTO.getSize() + " cho sản phẩm: " + product.getProductName());
+        }
+        // Tạo mới ProductDetail
         ProductDetail detail = new ProductDetail();
         detail.setProduct(product);
-        detail.setProductDetailCode(productDetailDTO.getProductDetailCode());
+        detail.setProductDetailCode(productDetailCode);
         detail.setStyle(productDetailDTO.getStyle());
         detail.setSize(productDetailDTO.getSize());
+        if (productDetailDTO.getInventoryQuantity() == null || productDetailDTO.getInventoryQuantity() <= 0) {
+            throw new RuntimeException("Tồn kho phải lớn hơn 0!");
+        }
         detail.setInventoryQuantity(productDetailDTO.getInventoryQuantity());
-        detail.setImgUrl(productDetailDTO.getImgUrl());
+        detail.setImgUrl(imgUrl);
         detail.setStatus(1); // còn hoạt động
-        ProductDetail saved = productDetailRepository.save(detail);
-        return saved;
+
+        return productDetailRepository.save(detail);
+
+    }
+
+    // Hàm sinh mã productDetailCode từ productCode, style, size
+    private String generateProductDetailCode(String productCode, String style, String size) {
+        String stylePart = (style != null) ? style.replaceAll("\\s+", "").toUpperCase() : "";
+        String sizePart = (size != null) ? size.replaceAll("\\s+", "").toUpperCase() : "";
+        return productCode + stylePart + sizePart;
     }
 
     @Override
@@ -45,8 +74,9 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         if (existing == null) {
             return null;
         }
-        existing.setSize(detailDTO.getSize());
-        existing.setStyle(detailDTO.getStyle());
+        if (detailDTO.getInventoryQuantity() == null || detailDTO.getInventoryQuantity() <= 0) {
+            throw new RuntimeException("Tồn kho phải lớn hơn 0!");
+        }
         existing.setInventoryQuantity(detailDTO.getInventoryQuantity());
         existing.setImgUrl(detailDTO.getImgUrl());
 
