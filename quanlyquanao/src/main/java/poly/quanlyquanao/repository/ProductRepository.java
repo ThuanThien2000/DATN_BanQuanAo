@@ -29,21 +29,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT COUNT(p) FROM Product p WHERE p.isFeatured = true AND p.status = 1")
     long countFeaturedProducts();   
     
-    
-//    @Query("SELECT DISTINCT p FROM Product p JOIN FETCH p.productDetails pd WHERE " +
-//    	       "(:categoryId IS NULL OR p.category.id = :categoryId) AND " +
-//    	       "(:minPrice IS NULL OR pd.price >= :minPrice) AND " + // sai chỗ này
-//    	       "(:maxPrice IS NULL OR pd.price <= :maxPrice) AND " + // sai chỗ này
-//    	       "(:size IS NULL OR pd.size = :size) AND (" +
-//    	       "(:styles IS NULL OR :styles = '') OR (" +
-//    	       "LOWER(pd.style) LIKE LOWER(CONCAT('%', :styles, '%'))" +
-//    	       "))")
-//    	List<Product> filterProducts(
-//    	        @Param("categoryId") Long categoryId,
-//    	        @Param("minPrice") Double minPrice,
-//    	        @Param("maxPrice") Double maxPrice,
-//    	        @Param("size") String size,
-//    	        @Param("styles") String styles,
-//    	        Pageable pageable);
+    List<Product> findTop4ByCategory_IdAndStatusOrderByIdDesc(Long categoryId, Integer status);
 
 }

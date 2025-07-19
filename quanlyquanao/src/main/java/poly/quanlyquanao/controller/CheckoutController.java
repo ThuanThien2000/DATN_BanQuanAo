@@ -25,11 +25,11 @@ public class CheckoutController {
     @GetMapping("/get-product-detail")
     public ResponseEntity<?> getProductDetailByCode(@RequestParam String productDetailCode) {
         try {
-            ProductDetailDTO productDTO = checkoutService.getProductDetailDTOByPDCode(productDetailCode);
-            if (productDTO == null) {
+            ProductDetailDTO productDetailDTO = checkoutService.getProductDetailDTOByPDCode(productDetailCode);
+            if (productDetailDTO == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Product not found"));
             }
-            return ResponseEntity.ok(productDTO);
+            return ResponseEntity.ok(productDetailDTO);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", e.getMessage()));
         }

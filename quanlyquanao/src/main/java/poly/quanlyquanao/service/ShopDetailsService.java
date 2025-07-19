@@ -1,8 +1,10 @@
 package poly.quanlyquanao.service;
 import poly.quanlyquanao.dto.ProductDTO;
 import poly.quanlyquanao.dto.ProductDetailDTO;
+import poly.quanlyquanao.dto.ProductInfo;
 import poly.quanlyquanao.dto.StyleDTO;
 import poly.quanlyquanao.mapper.ProductDetailMapper;
+import poly.quanlyquanao.mapper.ProductInfoMapper;
 import poly.quanlyquanao.mapper.ProductMapper;
 import poly.quanlyquanao.model.Product;
 import poly.quanlyquanao.model.ProductDetail;
@@ -66,4 +68,12 @@ public class ShopDetailsService implements IShopDetailsServiceImpl{
 				.map(ProductMapper::toProductDTO)
 				.orElse(null);
 	}
+	@Override
+	public List<ProductInfo> findRelatedProductsByCategoryId(Long categoryId) {
+		return productRepository.findTop4ByCategory_IdAndStatusOrderByIdDesc(categoryId,1)
+				.stream()
+				.map(ProductInfoMapper::toProductInfo)
+				.toList();
+	}
+
 }
