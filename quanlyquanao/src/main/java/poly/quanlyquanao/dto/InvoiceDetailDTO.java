@@ -2,21 +2,33 @@ package poly.quanlyquanao.dto;
 
 import java.math.BigDecimal;
 
+
 public class InvoiceDetailDTO {
     private Long id;
-    private Long invoiceId;
+    private String invoiceCode;
     private Long productDetailId;
+    private String productName;
+    private String productDetailCode;
+    private String imgUrl;
+    private String size;
+    private String style;
     private Integer quantity;
     private BigDecimal price;
     private BigDecimal totalPrice;
     private Integer status;
 
+
     public InvoiceDetailDTO() {}
 
-    public InvoiceDetailDTO(Long id, Long invoiceId, Long productDetailId, Integer quantity, BigDecimal price, BigDecimal totalPrice, Integer status) {
+    public InvoiceDetailDTO(Long id, String invoiceCode, Long productDetailId, String productName, String productDetailCode, String imgUrl, String size, String style, Integer quantity, BigDecimal price, BigDecimal totalPrice, Integer status) {
         this.id = id;
-        this.invoiceId = invoiceId;
+        this.invoiceCode = invoiceCode;
         this.productDetailId = productDetailId;
+        this.productName = productName;
+        this.productDetailCode = productDetailCode;
+        this.imgUrl = imgUrl;
+        this.size = size;
+        this.style = style;
         this.quantity = quantity;
         this.price = price;
         this.totalPrice = totalPrice;
@@ -25,10 +37,20 @@ public class InvoiceDetailDTO {
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-    public Long getInvoiceId() { return invoiceId; }
-    public void setInvoiceId(Long invoiceId) { this.invoiceId = invoiceId; }
+    public String getInvoiceCode() { return invoiceCode; }
+    public void setInvoiceCode(String invoiceCode) { this.invoiceCode = invoiceCode; }
     public Long getProductDetailId() { return productDetailId; }
     public void setProductDetailId(Long productDetailId) { this.productDetailId = productDetailId; }
+    public String getProductName() { return productName; }
+    public void setProductName(String productName) { this.productName = productName; }
+    public String getProductDetailCode() { return productDetailCode; }
+    public void setProductDetailCode(String productDetailCode) { this.productDetailCode = productDetailCode; }
+    public String getImgUrl() { return imgUrl; }
+    public void setImgUrl(String imgUrl) { this.imgUrl = imgUrl; }
+    public String getSize() { return size; }
+    public void setSize(String size) { this.size = size; }
+    public String getStyle() { return style; }
+    public void setStyle(String style) { this.style = style; }
     public Integer getQuantity() { return quantity; }
     public void setQuantity(Integer quantity) { this.quantity = quantity; }
     public BigDecimal getPrice() { return price; }

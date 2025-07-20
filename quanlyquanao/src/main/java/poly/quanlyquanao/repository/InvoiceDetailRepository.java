@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import poly.quanlyquanao.model.InvoiceDetail;
 
 public interface InvoiceDetailRepository extends JpaRepository<InvoiceDetail, Long>{
-	List<InvoiceDetail> findAllByInvoice_IdAndStatus(Long invoiceId, int status);
-	Optional<InvoiceDetail> findByInvoice_IdAndId(Long invoiceId, Long invoiceDetailId);
+	List<InvoiceDetail> findAllByInvoice_InvoiceCodeAndStatus(String invoiceCode, int status);
+	Optional<InvoiceDetail> findByInvoice_InvoiceCodeAndId(String invoiceCode, Long invoiceDetailId);
 }

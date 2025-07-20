@@ -6,7 +6,6 @@ import poly.quanlyquanao.dto.InvoiceDTO;
 
 public interface IInvoiceServiceImpl {
 	List<InvoiceDTO> getAllInvoice();
-	List<InvoiceDTO> getTodayInvoice();
 	InvoiceDTO getInvoiceById(Long id);
 	void updateInvoiceStatus(Long id, Integer status);
 }

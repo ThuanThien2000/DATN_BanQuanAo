@@ -27,21 +27,21 @@ public class UserUpdateInvoiceService implements IUserUpdateInvoiceImpl {
     private ProductDetailRepository productDetailRepository;
 
     @Override
-    public Invoice getInvoiceById(Long id) {
-        return invoiceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy Invoice với id: " + id));
+    public Invoice getInvoiceById(String invoiceCode) {
+        return invoiceRepository.findByInvoiceCode(invoiceCode)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy Invoice với id: " + invoiceCode));
     }
 
     @Override
     @Transactional
-    public void userCancelInvoice(Long id) {
-        Invoice invoice = invoiceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy Invoice với id: " + id));
+    public void userCancelInvoice(String invoiceCode) {
+        Invoice invoice = invoiceRepository.findByInvoiceCode(invoiceCode)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy Invoice với id: " + invoiceCode));
 
         invoice.setStatus(0);
         invoiceRepository.save(invoice);
 
-        List<InvoiceDetail> invoiceDetailList = invoiceDetailRepository.findAllByInvoice_IdAndStatus(id, 1);
+        List<InvoiceDetail> invoiceDetailList = invoiceDetailRepository.findAllByInvoice_InvoiceCodeAndStatus(invoiceCode, 1);
         for (InvoiceDetail invoiceDetail : invoiceDetailList) {
             ProductDetail productDetail = invoiceDetail.getProductDetail();
 
