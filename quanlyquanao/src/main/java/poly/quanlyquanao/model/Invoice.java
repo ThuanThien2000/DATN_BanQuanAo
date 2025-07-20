@@ -139,6 +139,39 @@ public class Invoice implements Serializable {
 	public Set<InvoiceDetail> getInvoiceDetails() {
 		return invoiceDetails;
 	}
+public Invoice() {
+	}
+	public Invoice(Long id, String invoiceCode, User user, String fullname, String phonenumber, String email,
+			String deliveryAddress, String description, PaymentMethod paymentMethod, LocalDateTime creationDate,
+			BigDecimal shippingFee, Voucher voucher, BigDecimal discountAmount, BigDecimal totalAmount,
+			User assignedStaff, Integer status, Set<InvoiceDetail> invoiceDetails) {
+		super();
+		this.id = id;
+		this.invoiceCode = invoiceCode;
+		this.user = user;
+		this.fullname = fullname;
+		this.phonenumber = phonenumber;
+		this.email = email;
+		this.deliveryAddress = deliveryAddress;
+		this.description = description;
+		this.paymentMethod = paymentMethod;
+		this.creationDate = creationDate;
+		this.shippingFee = shippingFee;
+		this.voucher = voucher;
+		this.discountAmount = discountAmount;
+		this.totalAmount = totalAmount;
+		this.assignedStaff = assignedStaff;
+		this.status = status;
+		this.invoiceDetails = invoiceDetails;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	public void setInvoiceDetails(Set<InvoiceDetail> invoiceDetails) {
 		this.invoiceDetails = invoiceDetails;
@@ -166,7 +199,8 @@ public class Invoice implements Serializable {
 
     @Column(name = "delivery_address", nullable = false, columnDefinition = "NVARCHAR(MAX)")
     private String deliveryAddress;
-
+    @Column(columnDefinition = "NVARCHAR(MAX)")
+    private String description;
     @ManyToOne
     @JoinColumn(name = "payment_method_id", nullable = false)
     private PaymentMethod paymentMethod;

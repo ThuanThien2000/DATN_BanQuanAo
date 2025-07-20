@@ -81,6 +81,7 @@ public class CheckoutService implements ICheckoutServiceImpl {
         invoice.setPhonenumber(invoiceInfo.getPhonenumber());
         invoice.setEmail(invoiceInfo.getEmail());
         invoice.setDeliveryAddress(invoiceInfo.getDeliveryAddress());
+                invoice.setDescription(invoiceInfo.getDescription());
         invoice.setPaymentMethod(method);
         invoice.setShippingFee(DEFAULT_SHIPPING_FEE);
         invoice.setVoucher(voucher);
@@ -88,6 +89,7 @@ public class CheckoutService implements ICheckoutServiceImpl {
         invoice.setStatus(1);
         invoice.setTotalAmount(BigDecimal.ZERO);
         invoice.setDiscountAmount(BigDecimal.ZERO);
+
         Invoice savedInvoice = invoiceRepository.save(invoice);
 
         // Danh sách chi tiết hóa đơn
