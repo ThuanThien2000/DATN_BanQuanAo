@@ -3,6 +3,7 @@ package poly.quanlyquanao.service.Impl;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import poly.quanlyquanao.dto.RegisterRequestDTO;
 import poly.quanlyquanao.model.User;
 
 public interface IUserService {
@@ -13,4 +14,11 @@ public interface IUserService {
     User updateUser(Long id, User updatedUser);
     User getUserById(Long id);
     void deleteUser(Long id);
+
+    User registerUser(RegisterRequestDTO registerRequest);
+    String verifyUser(String token);
+    void changePassword(String username, String oldPass, String newPass);
+    void generateResetToken(String email);
+    void resetPassword(String token, String newPassword);
+
 }

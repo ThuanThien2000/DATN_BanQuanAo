@@ -28,10 +28,11 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
-    // Tạo token mới từ username
-    public String generateToken(String username) {
+    // Tạo token mới từ username và thêm role để thiết lập phân quyền
+    public String generateTokenWithRole(String username, String role) {
         return Jwts.builder()
                 .setSubject(username)
+                .claim("role", role)
                 .setIssuedAt(new Date()) // Thời điểm tạo token
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs)) // Thời gian hết hạn
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
@@ -46,6 +47,11 @@ public class JwtUtil {
     // Kiểm tra token đã hết hạn chưa
     public boolean isTokenExpired(String token) {
         return getClaims(token).getExpiration().before(new Date());
+    }
+
+    // Để lấy lại role từ token:
+    public String getRoleFromToken(String token) {
+        return getClaims(token).get("role", String.class);
     }
 
     // Xác thực token có hợp lệ và đúng user không
