@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import poly.quanlyquanao.dto.RegisterRequestDTO;
+import poly.quanlyquanao.dto.UpdateProfileDTO;
 import poly.quanlyquanao.model.User;
 
 public interface IUserService {
@@ -20,5 +21,9 @@ public interface IUserService {
     void changePassword(String username, String oldPass, String newPass);
     void generateResetToken(String email);
     void resetPassword(String token, String newPassword);
+
+    // Customer
+    User getUserByUsername(String username);
+    User updateCustomerProfile(String username, UpdateProfileDTO dto);
 
 }
