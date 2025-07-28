@@ -16,10 +16,10 @@ import poly.quanlyquanao.service.ProductDetailService;
 
 import java.util.List;
 public interface IShopDetailsServiceImpl {
-	ProductDTO findProductById(Long productId);
-	List<ProductDetailDTO> findByProductId(Long productId);
-	ProductDetailDTO findSelectedProductDetail(Long productId, String size,String style);
-	List<StyleDTO> findUniqueStylesByProductId(Long productId);
-	List<String> findUniqueSizesByProductId(Long productId);
-	List<ProductInfo> findRelatedProductsByCategoryId(Long categoryId);
+	ProductDTO findProductById(String productCode);
+	List<ProductDetailDTO> findByProductCode(String productCode);
+	ProductDetailDTO findSelectedProductDetail(String productCode, String size,String style);
+	List<StyleDTO> findUniqueStylesByProductId(String productCode);
+	List<String> findUniqueSizesByProductId(String productCode);
+	List<ProductInfo> findRelatedProductsByCategoryId(String productCode);
 }

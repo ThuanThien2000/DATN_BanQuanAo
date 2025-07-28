@@ -24,24 +24,30 @@ public class ShopDetailsService implements IShopDetailsServiceImpl{
 	@Autowired
 	ProductRepository productRepository;
 	@Override
-	public List<ProductDetailDTO> findByProductId(Long productId) {
+	public List<ProductDetailDTO> findByProductCode(String productCode) {
 		// TODO Auto-generated method stub
-		return shopDetailsRepository.findByProductId(productId)
+		Product product = productRepository.findByProductCode(productCode)
+				.orElseThrow(() -> new RuntimeException("Sản phẩm không tồn tại với mã: " + productCode));
+		return shopDetailsRepository.findByProductId(product.getId())
 				.stream()
 				.map(ProductDetailMapper::toDTO)
 				.toList();
 	}
 
 	@Override
-	public ProductDetailDTO findSelectedProductDetail(Long productId, String size, String style) {
+	public ProductDetailDTO findSelectedProductDetail(String productCode, String size, String style) {
 		// TODO Auto-generated method stub
-		ProductDetail detail = shopDetailsRepository.findFirstByProduct_IdAndSizeAndStyle(productId, size, style);
+		Product product = productRepository.findByProductCode(productCode)
+				.orElseThrow(() -> new RuntimeException("Sản phẩm không tồn tại với mã: " + productCode));
+		ProductDetail detail = shopDetailsRepository.findFirstByProduct_IdAndSizeAndStyle(product.getId(), size, style);
 		return ProductDetailMapper.toDTO(detail);
 	}
 
 	@Override
-	public List<StyleDTO> findUniqueStylesByProductId(Long productId) {
-		List<ProductDetail> details = shopDetailsRepository.findByProductId(productId);
+	public List<StyleDTO> findUniqueStylesByProductId(String productCode) {
+				Product product = productRepository.findByProductCode(productCode)
+				.orElseThrow(() -> new RuntimeException("Sản phẩm không tồn tại với mã: " + productCode));
+		List<ProductDetail> details = shopDetailsRepository.findByProductId(product.getId());
 		return details.stream()
 				.filter(d -> d.getStyle() != null && !d.getStyle().isEmpty())
 				.collect(java.util.stream.Collectors.toMap(
@@ -54,8 +60,10 @@ public class ShopDetailsService implements IShopDetailsServiceImpl{
 	}
 
 	@Override
-	public List<String> findUniqueSizesByProductId(Long productId) {
-		return shopDetailsRepository.findByProductId(productId)
+	public List<String> findUniqueSizesByProductId(String productCode) {
+		Product product = productRepository.findByProductCode(productCode)
+				.orElseThrow(() -> new RuntimeException("Sản phẩm không tồn tại với mã: " + productCode));
+		return shopDetailsRepository.findByProductId(product.getId())
 				.stream()
 				.map(ProductDetail::getSize)
 				.filter(size -> size != null && !size.isEmpty())
@@ -63,14 +71,17 @@ public class ShopDetailsService implements IShopDetailsServiceImpl{
 				.toList();
 	}
 	@Override
-	public ProductDTO findProductById(Long productId) {
-		return productRepository.findById(productId)
+	public ProductDTO findProductById(String productCode) {
+		return productRepository.findByProductCode(productCode)
 				.map(ProductMapper::toProductDTO)
 				.orElse(null);
 	}
 	@Override
-	public List<ProductInfo> findRelatedProductsByCategoryId(Long categoryId) {
-		return productRepository.findTop4ByCategory_IdAndStatusOrderByIdDesc(categoryId,1)
+	public List<ProductInfo> findRelatedProductsByCategoryId(String productCode) {
+		Product product = productRepository.findByProductCode(productCode)
+				.orElseThrow(() -> new RuntimeException("Sản phẩm không tồn tại với mã: " + productCode));
+		
+		return productRepository.findTop4ByCategory_IdAndStatusOrderByIdDesc(product.getCategory().getId(),1)
 				.stream()
 				.map(ProductInfoMapper::toProductInfo)
 				.toList();

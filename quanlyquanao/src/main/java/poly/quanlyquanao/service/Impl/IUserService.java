@@ -13,6 +13,7 @@ public interface IUserService {
     List<User> findByStatusOne();
     User updateUser(Long id, User updatedUser);
     User getUserById(Long id);
+    User getUserByUsername(String username);
     void deleteUser(Long id);
 
     User registerUser(RegisterRequestDTO registerRequest);
