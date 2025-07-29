@@ -13,42 +13,42 @@ import poly.quanlyquanao.service.ShopDetailsService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/shop/{productId}")
+@RequestMapping("/api/shop/{productCode}")
 @CrossOrigin(origins = "*")
 public class ShopDetailsController {
 	@Autowired
 	ShopDetailsService shopDetailsService;
 	
 	@GetMapping("")
-	public List<ProductDetailDTO> getPDByProductId(@PathVariable Long productId){
-		return shopDetailsService.findByProductId(productId);
+	public List<ProductDetailDTO> getPDByProductId(@PathVariable String productCode){
+		return shopDetailsService.findByProductCode(productCode);
 	}
 	@GetMapping("/product")
-	public ResponseEntity<ProductDTO> getProductById(@PathVariable Long productId) {
-		ProductDTO productDTO = shopDetailsService.findProductById(productId);
+	public ResponseEntity<ProductDTO> getProductById(@PathVariable String productCode) {
+		ProductDTO productDTO = shopDetailsService.findProductById(productCode);
 		return productDTO != null ? ResponseEntity.ok(productDTO) : ResponseEntity.notFound().build();
 	}
 	@GetMapping("/filter")
 	public ProductDetailDTO getSelectedProductDetail(
-	    @PathVariable Long productId,
+	    @PathVariable String productCode,
 	    @RequestParam String size,
 	    @RequestParam String style
 	) {
-	    return shopDetailsService.findSelectedProductDetail(productId, size, style);
+	    return shopDetailsService.findSelectedProductDetail(productCode, size, style);
 	}
 	@GetMapping("/styles")
-	public ResponseEntity<List<StyleDTO>> getUniqueStyles(@PathVariable Long productId) {
-	    List<StyleDTO> uniqueStyles = shopDetailsService.findUniqueStylesByProductId(productId);
+	public ResponseEntity<List<StyleDTO>> getUniqueStyles(@PathVariable String productCode) {
+	    List<StyleDTO> uniqueStyles = shopDetailsService.findUniqueStylesByProductId(productCode);
 	    return ResponseEntity.ok(uniqueStyles);
 	}
 	@GetMapping("/sizes")
-	public ResponseEntity<List<String>> getUniqueSizes(@PathVariable Long productId) {
-	    List<String> uniqueSizes = shopDetailsService.findUniqueSizesByProductId(productId);
+	public ResponseEntity<List<String>> getUniqueSizes(@PathVariable String productCode) {
+	    List<String> uniqueSizes = shopDetailsService.findUniqueSizesByProductId(productCode);
 	    return ResponseEntity.ok(uniqueSizes);
 	}
 	@GetMapping("/related")
-	public ResponseEntity<List<ProductInfo>> getRelatedProducts(@PathVariable Long productId) {
-		List<ProductInfo> relatedProducts = shopDetailsService.findRelatedProductsByCategoryId(productId);
+	public ResponseEntity<List<ProductInfo>> getRelatedProducts(@PathVariable String productCode) {
+		List<ProductInfo> relatedProducts = shopDetailsService.findRelatedProductsByCategoryId(productCode);
 		return ResponseEntity.ok(relatedProducts);
 	}
 }

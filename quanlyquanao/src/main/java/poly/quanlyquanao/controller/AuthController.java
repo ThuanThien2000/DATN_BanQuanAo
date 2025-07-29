@@ -67,9 +67,11 @@ public class AuthController {
             if(saveUser.getEmail() != null && !saveUser.getEmail().isBlank()) {
                 emailService.sendVerificationEmail(saveUser.getEmail(), saveUser.getEmailVerificationToken());
             }
+            String role = saveUser.getRole().getRoleName();
+            String token = jwtUtil.generateTokenWithRole(saveUser.getUsername(), role);
 
             return ResponseEntity.ok(Map.of(
-                    "message", "Đăng ký thành công! Vui lòng kiểm tra email để xác minh tài khoản."
+                    "token", token
             ));
         }catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));

@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +18,7 @@ import jakarta.servlet.http.HttpServletRequest;
 //import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
@@ -37,14 +41,15 @@ import poly.quanlyquanao.dto.PaymentResDTO;
 
 @RestController
 @RequestMapping("/api/payment")
+@CrossOrigin(origins = "*")
 public class PaymentController {
-    @GetMapping("/create")
-    public ResponseEntity<?> createPayment(HttpServletRequest req) throws UnsupportedEncodingException{
+    @GetMapping("/createVNPay")
+    public ResponseEntity<?> createPayment(HttpServletRequest req, @RequestParam("total_amount") long totalAmount, @RequestParam("vnp_returnUrl") String vnpReturnUrl) throws UnsupportedEncodingException{
 
 //        String orderType = "other";
 //        long amount = Integer.parseInt(req.getParameter("amount"))*100;
 //        String bankCode = req.getParameter("bankCode");
-    	long amount = 10000000;
+    	long amount = totalAmount*100;
         
         String vnp_TxnRef = VNPayConfig.getRandomNumber(8);
         String vnp_IpAddr = VNPayConfig.getIpAddress(req);
@@ -71,7 +76,7 @@ public class PaymentController {
 //        } else {
 //            vnp_Params.put("vnp_Locale", "vn");
 //        }
-        vnp_Params.put("vnp_ReturnUrl", VNPayConfig.vnp_ReturnUrl);
+        vnp_Params.put("vnp_ReturnUrl", vnpReturnUrl);
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 
         Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("SE Asia Standard Time"));
