@@ -21,6 +21,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
 //    @Override
 //    Page<User> findAll(Pageable pagealble);
 
+    // Tìm người dùng đang hoạt động (status = 1)
     @Query("SELECT u from User u WHERE u.status = 1")
     List<User> findByStatusOne();
 
@@ -28,4 +29,11 @@ public interface UserRepository extends JpaRepository<User, Long>{
     Optional<User> findByEmailVerificationToken(String token);
     Optional<User> findByEmail(String email);
     Optional<User> findByPhonenumber(String phonenumber);
+
+    // Danh sách chỉ nhân viên đang hoạt động
+    @Query("SELECT u from User u WHERE u.role.id = 2")
+    List<User> findStaff();
+    // Danh sách chỉ khách hàng đang hoạt động
+    @Query("SELECT u from User u WHERE u.role.id = 3")
+    List<User> findCustomer();
 }

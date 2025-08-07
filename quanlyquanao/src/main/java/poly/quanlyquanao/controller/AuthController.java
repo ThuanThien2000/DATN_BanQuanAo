@@ -9,7 +9,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -59,6 +58,7 @@ public class AuthController {
             return ResponseEntity.status(401).body(Map.of("error", "Sai tên đăng nhập hoặc mật khẩu"));
         }
     }
+
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequestDTO signUpRequest) {
         try {
@@ -89,17 +89,6 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/change-password")
-    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request, Authentication authentication) {
-        try {
-            String username = authentication.getName();
-            userService.changePassword(username, request.getOldPassword(), request.getNewPassword());
-            return ResponseEntity.ok(Map.of("message", "Đổi mật khẩu thành công!"));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
-        }
-    }
-
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> payload) {
         try {
@@ -115,6 +104,18 @@ public class AuthController {
                                            @RequestBody Map<String, String> payload) {
         try {
             userService.resetPassword(token, payload.get("newPassword"));
+            return ResponseEntity.ok(Map.of("message", "Đổi mật khẩu thành công!"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    // Cần đăng nhập
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request, Authentication authentication) {
+        try {
+            String username = authentication.getName();
+            userService.changePassword(username, request.getOldPassword(), request.getNewPassword());
             return ResponseEntity.ok(Map.of("message", "Đổi mật khẩu thành công!"));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));

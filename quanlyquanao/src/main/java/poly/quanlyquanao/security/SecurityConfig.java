@@ -47,14 +47,62 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/**").permitAll() // Công khai toàn bộ đường link api
 
-//                        .requestMatchers("/api/auth/change-password",
-//                                "/api/userinvoice/my-orders",
-//                                "/api/user/profile",
-//                                "/api/user/update-profile").authenticated()
-//                        .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
-//                        .anyRequest().authenticated()
+//                    .requestMatchers("/api/**").permitAll() // Công khai toàn bộ đường link api
+
+                        // Công khai
+                        .requestMatchers(
+                            "/api/auth/**",
+                            "/api/shop/**",
+                            "/api/product/{productId}/image/all",
+                            "/api/checkout/get-product-detail",
+                            "/api/payment/**",
+                            "/api/paymentmethods/**",
+                            "/api/products/detail/**",
+                            "/api/products/lowstock",
+                            "/api/reviews",
+                            "/api/shop/{productCode}/**"
+                        )
+                        .permitAll()
+
+                        // Bất kỳ ai đăng nhập đều truy cập được tức tất cả role
+                        .requestMatchers(
+                            "/api/auth/change-password",
+                            "/api/user/profile/**",
+                            "/api/userinvoices/**",
+                            "/api/role/**",
+                            "/api/checkout/**",
+                            "/api/reviews/**"
+                        ).authenticated()
+
+                        // Customer Truy cập
+                        .requestMatchers(
+                            ""
+                        ).hasAuthority("CUSTOMER")
+
+                        // Cấp quyền trung gian cho STAFF cùng ADMIN
+                        .requestMatchers(
+                            "/api/user/admin/customer-list",
+                            "/api/products/all",
+                            "/api/category/all",
+                            "/api/category/status",
+                            "/api/category/single",
+                            "/api/invoice/**",
+                            "/api/invoice/{invoice_code}/detail/**"
+                        )
+                        .hasAnyAuthority("STAFF", "ADMIN")
+
+                        // Cấp quyền hạn chế lớn chỉ dành cho ADMIN
+                        .requestMatchers(
+                            "/api/user/admin/**", // những api còn lại trong /user/admin đều dành cho admin
+                            "/api/products/**", // những api còn lại trong products đều dành cho admin
+                            "/api/category/**", // những api còn lại trong category đều dành cho admin
+                            "/api/product/{productId}/image/**"
+
+                        )
+                        .hasAuthority("ADMIN")
+
+                        .anyRequest().permitAll() // những cái còn lại đều công khai hết
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -11,21 +11,23 @@ import java.security.Principal;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/user/profile")
 @CrossOrigin(origins = "*")
 public class CustomerController {
 
     @Autowired
     private IUserService userService;
 
-    @GetMapping("/profile")
+    //  http://localhost:8080/api/user/profile
+    @GetMapping
     public ResponseEntity<User> getProfile(Principal principal) {
         String username = principal.getName();
         User user = userService.getUserByUsername(username);
         return ResponseEntity.ok(user);
     }
 
-    @PutMapping("/update-profile")
+    //  http://localhost:8080/api/user/profile/update
+    @PutMapping("/update")
     public ResponseEntity<?> updateProfile(@RequestBody UpdateProfileDTO dto, Principal principal) {
         try {
             User updatedUser = userService.updateCustomerProfile(principal.getName(), dto);
