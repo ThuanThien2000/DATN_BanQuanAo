@@ -1,6 +1,7 @@
 package poly.quanlyquanao.service.Impl;
 
 import java.util.List;
+import java.util.Map;
 //import org.springframework.data.domain.Page;
 //import org.springframework.data.domain.Pageable;
 import poly.quanlyquanao.dto.RegisterRequestDTO;
@@ -9,7 +10,9 @@ import poly.quanlyquanao.model.User;
 
 public interface IUserService {
 //    Page<User> getPageUser(Pageable pageable);
-    List<User> findAll();
+
+    List<User> findAll(); // Role ADMIN AND STAFF
+    // Role ADMIN
     User add(User user);
     List<User> findByStatusOne();
     User updateUser(Long id, User updatedUser);
@@ -17,20 +20,28 @@ public interface IUserService {
     User getUserByUsername(String username);
 //    void deleteUser(Long id);
     User deactivateStaff(Long id);
+    User toggleUserStatus(Long id);
+    User changeUserRole(Long id, Long roleId);
+
+    // Authentication: login and register
     User registerUser(RegisterRequestDTO registerRequest);
     String verifyUser(String token);
     void changePassword(String username, String oldPass, String newPass);
     void generateResetToken(String email);
     void resetPassword(String token, String newPassword);
 
-    // Staff
+    // Staff: List and Search
     List<User> findStaff();
     List<User> searchStaff(String keyword);
-    // Customer
+
+    // Customer: List and Search
     List<User> findCustomer();
     List<User> searchCustomer(String keyword);
 
     // Profile for all authenticated
     User updateCustomerProfile(String username, UpdateProfileDTO dto);
+
+    // Statistics for User
+    Map<String, Long> getUserStatistics();
 
 }

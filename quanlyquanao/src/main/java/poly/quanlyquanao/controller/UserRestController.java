@@ -101,4 +101,38 @@ public class UserRestController {
         return _userService.searchCustomer(keyword);
     }
 
+    // Bật/tắt trạng thái người dùng
+    @PutMapping("/toggle-status/{id}")
+    public ResponseEntity<?> toggleStatus(@PathVariable Long id) {
+        try {
+            User updatedUser = _userService.toggleUserStatus(id);
+            return ResponseEntity.ok(Map.of(
+                    "message", "Đã cập nhật trạng thái người dùng",
+                    "user", updatedUser
+            ));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    // Thay đổi quyền của người dùng
+    @PutMapping("/change-role/{id}")
+    public ResponseEntity<?> changeRole(@PathVariable Long id, @RequestParam Long roleId) {
+        try {
+            User updatedUser = _userService.changeUserRole(id, roleId);
+            return ResponseEntity.ok(Map.of(
+                    "message", "Đã thay đổi vai trò người dùng",
+                    "user", updatedUser
+            ));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    // Thống kê số lượng nhân viên và khách hàng
+    @GetMapping("/statistics")
+    public ResponseEntity<Map<String, Long>> getStatistics() {
+        return ResponseEntity.ok(_userService.getUserStatistics());
+    }
+
 }
