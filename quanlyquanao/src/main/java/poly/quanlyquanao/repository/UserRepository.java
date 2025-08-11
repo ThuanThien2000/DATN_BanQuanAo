@@ -31,9 +31,35 @@ public interface UserRepository extends JpaRepository<User, Long>{
     Optional<User> findByPhonenumber(String phonenumber);
 
     // Danh sách chỉ nhân viên đang hoạt động
-    @Query("SELECT u from User u WHERE u.role.id = 2")
+    @Query("SELECT u from User u WHERE u.role.id = 2 AND u.status = 1")
     List<User> findStaff();
     // Danh sách chỉ khách hàng đang hoạt động
-    @Query("SELECT u from User u WHERE u.role.id = 3")
+    @Query("SELECT u from User u WHERE u.role.id = 3 AND u.status = 1")
     List<User> findCustomer();
+
+    // Chức năng tìm kiếm người dùng: họ tên, sđt, email của nhân viên và khách hàng.
+    // Tìm kiếm nhân viên theo từ khóa
+    @Query("""
+        SELECT u FROM User u 
+        WHERE u.role.id = 2 AND u.status = 1
+            AND (
+                LOWER(u.fullname) LIKE LOWER(CONCAT('%', :keyword, '%')) 
+                OR LOWER(u.phonenumber) LIKE LOWER(CONCAT('%', :keyword, '%')) 
+                OR LOWER(u.email) LIKE LOWER(CONCAT('%', :keyword, '%'))
+            )
+    """)
+    List<User> searchStaff(String keyword);
+
+    // Tìm kiếm khách hàng theo từ khóa
+    @Query("""
+        SELECT u FROM User u 
+        WHERE u.role.id = 3 AND u.status = 1
+            AND (
+                LOWER(u.fullname) LIKE LOWER(CONCAT('%', :keyword, '%')) 
+                OR LOWER(u.phonenumber) LIKE LOWER(CONCAT('%', :keyword, '%')) 
+                OR LOWER(u.email) LIKE LOWER(CONCAT('%', :keyword, '%'))
+            )
+    """)
+    List<User> searchCustomer(String keyword);
+
 }

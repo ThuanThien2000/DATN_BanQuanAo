@@ -76,9 +76,9 @@ public class SecurityConfig {
                         ).authenticated()
 
                         // Customer Truy cập
-                        .requestMatchers(
-                            ""
-                        ).hasAuthority("CUSTOMER")
+//                        .requestMatchers(
+//                            ""
+//                        ).hasAuthority("CUSTOMER")
 
                         // Cấp quyền trung gian cho STAFF cùng ADMIN
                         .requestMatchers(

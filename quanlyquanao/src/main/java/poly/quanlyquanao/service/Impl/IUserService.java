@@ -25,8 +25,12 @@ public interface IUserService {
 
     // Staff
     List<User> findStaff();
+    List<User> searchStaff(String keyword);
     // Customer
     List<User> findCustomer();
+    List<User> searchCustomer(String keyword);
+
+    // Profile for all authenticated
     User updateCustomerProfile(String username, UpdateProfileDTO dto);
 
 }
