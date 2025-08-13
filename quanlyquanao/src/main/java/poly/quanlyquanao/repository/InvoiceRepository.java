@@ -13,6 +13,8 @@ public interface InvoiceRepository  extends JpaRepository<Invoice,Long>{
     @Query("SELECT i FROM Invoice i ORDER BY i.id DESC")
     List<Invoice> findAllInvoice();
 
+    List<Invoice> findByStatus(Integer status);
+
     @Query("SELECT i FROM Invoice i WHERE CAST(i.creationDate AS date) = CURRENT_DATE")
     List<Invoice> findAllTodayInvoices();
 

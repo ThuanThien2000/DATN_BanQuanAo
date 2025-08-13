@@ -1,5 +1,6 @@
 package poly.quanlyquanao.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,9 @@ public class InvoiceDetailService implements IInvoiceDetailService{
 	public Invoice updateInvoiceStatus(String invoiceCode, Integer status) {
 		Invoice invoice = invoiceRepository.findByInvoiceCode(invoiceCode)
 			.orElseThrow(() -> new RuntimeException("Không tìm thấy hóa đơn với mã: " + invoiceCode));
+		if (status == 5) {
+			invoice.setPaymentDate(LocalDateTime.now());
+		}
 		invoice.setStatus(status);
 		return invoiceRepository.save(invoice);
 	}
@@ -74,7 +78,9 @@ public class InvoiceDetailService implements IInvoiceDetailService{
     public void userCancelInvoice(String invoiceCode) {
         Invoice invoice = invoiceRepository.findByInvoiceCode(invoiceCode)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy Invoice với id: " + invoiceCode));
-
+		if (invoice.getStatus() != 1) {
+			throw new RuntimeException("Chỉ có thể hủy hóa đơn có trạng thái 'Đang chờ xử lý'");
+		}
         invoice.setStatus(0);
         invoiceRepository.save(invoice);
 

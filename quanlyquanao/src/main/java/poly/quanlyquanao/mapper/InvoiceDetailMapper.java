@@ -28,6 +28,7 @@ public class InvoiceDetailMapper {
             entity.getId(),
             entity.getInvoice() != null ? entity.getInvoice().getInvoiceCode() : null,
             pd != null ? pd.getId() : null,
+            product != null ? product.getId() : null,
             product != null ? product.getProductName() : null,
             pd != null ? pd.getProductDetailCode() : null,
             imgUrl,

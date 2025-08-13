@@ -7,6 +7,7 @@ public class InvoiceDetailDTO {
     private Long id;
     private String invoiceCode;
     private Long productDetailId;
+    private Long productId;
     private String productName;
     private String productDetailCode;
     private String imgUrl;
@@ -20,10 +21,11 @@ public class InvoiceDetailDTO {
 
     public InvoiceDetailDTO() {}
 
-    public InvoiceDetailDTO(Long id, String invoiceCode, Long productDetailId, String productName, String productDetailCode, String imgUrl, String size, String style, Integer quantity, BigDecimal price, BigDecimal totalPrice, Integer status) {
+    public InvoiceDetailDTO(Long id, String invoiceCode, Long productDetailId, Long productId, String productName, String productDetailCode, String imgUrl, String size, String style, Integer quantity, BigDecimal price, BigDecimal totalPrice, Integer status) {
         this.id = id;
         this.invoiceCode = invoiceCode;
         this.productDetailId = productDetailId;
+        this.productId = productId;
         this.productName = productName;
         this.productDetailCode = productDetailCode;
         this.imgUrl = imgUrl;
@@ -43,6 +45,8 @@ public class InvoiceDetailDTO {
     public void setProductDetailId(Long productDetailId) { this.productDetailId = productDetailId; }
     public String getProductName() { return productName; }
     public void setProductName(String productName) { this.productName = productName; }
+    public Long getProductId() { return productId; }
+    public void setProductId(Long productId) { this.productId = productId; }
     public String getProductDetailCode() { return productDetailCode; }
     public void setProductDetailCode(String productDetailCode) { this.productDetailCode = productDetailCode; }
     public String getImgUrl() { return imgUrl; }
