@@ -18,8 +18,8 @@ public interface IUserService {
     User updateUser(Long id, User updatedUser);
     User getUserById(Long id);
     User getUserByUsername(String username);
-//    void deleteUser(Long id);
-    User deactivateStaff(Long id);
+    void deleteUser(Long id);
+//    User deactivateStaff(Long id);
     User toggleUserStatus(Long id);
     User changeUserRole(Long id, Long roleId);
 
