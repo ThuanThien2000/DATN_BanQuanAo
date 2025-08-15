@@ -15,11 +15,11 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Product> findByProductCode(String productCode);
     
-    @Query("SELECT p FROM Product p WHERE p.status = 1")
+    @Query("SELECT p FROM Product p WHERE p.status = 1 ORDER BY p.id DESC")
     List<Product> findAllActive();
 
-    @Query("SELECT p FROM Product p WHERE p.status = 0")
-    List<Product> findAllInactive();
+    // @Query("SELECT p FROM Product p WHERE p.status = 0")
+    // List<Product> findAllInactive();
 
     @Query("SELECT pd.product FROM ProductDetail pd WHERE pd.inventoryQuantity < :threshold")
     List<Product> findLowStockProducts(@Param("threshold") int threshold);
