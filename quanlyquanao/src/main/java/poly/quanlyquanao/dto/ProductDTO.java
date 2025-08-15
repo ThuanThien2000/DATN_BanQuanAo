@@ -16,6 +16,7 @@ public class ProductDTO {
     private String material;
     private String description;
     private BigDecimal price;
+    private Integer totalSold;
     private Boolean isFeatured;
     private Set<ImageDTO> imageUrls; 
     private Integer status; // Trạng thái của sản phẩm
@@ -23,7 +24,7 @@ public class ProductDTO {
     public ProductDTO() {}
 
     public ProductDTO(Long id, String productCode, String productName, String brand, Long categoryId,
-			String categoryName, String userType, String material, String description, BigDecimal price,
+			String categoryName, String userType, String material, String description, BigDecimal price, Integer totalSold,
 			Boolean isFeatured, Set<ImageDTO> imageUrls, Integer status) {
 		super();
 		this.id = id;
@@ -36,6 +37,7 @@ public class ProductDTO {
 		this.material = material;
 		this.description = description;
 		this.price = price;
+        this.totalSold = totalSold;
 		this.isFeatured = isFeatured;
 		this.imageUrls = imageUrls;
 		this.status = status;
@@ -127,6 +129,13 @@ public class ProductDTO {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Integer getTotalSold() {
+        return totalSold;
+    }
+    public void setTotalSold(Integer totalSold) {
+        this.totalSold = totalSold;
     }
 
     public Boolean getIsFeatured() {

@@ -34,6 +34,8 @@ public class ProductDetailDTO {
     public void setId(Long id) { this.id = id; }
     public String getProductDetailCode() { return productDetailCode; }
     public void setProductDetailCode(String productDetailCode) { this.productDetailCode = productDetailCode; }
+    public String getProductCode() { return productCode; }
+    public void setProductCode(String productCode) { this.productCode = productCode; }
     // Đã thay thế productId bằng productCode
     public String getProductName() { return productName; }
     public void setProductName(String productName) { this.productName = productName; }
