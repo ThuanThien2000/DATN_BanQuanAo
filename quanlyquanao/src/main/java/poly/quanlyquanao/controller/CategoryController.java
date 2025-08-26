@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import poly.quanlyquanao.model.Category;
+import poly.quanlyquanao.repository.CategoryRepository;
 import poly.quanlyquanao.service.CategoryService;
 
 import java.util.List;
@@ -16,10 +17,12 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+        @Autowired
+    private CategoryRepository categoryRepository;
     
     //tạo danh mục
     @PostMapping
-    public ResponseEntity<Category> create(@RequestBody Category category) {
+    public ResponseEntity<Category> create(@RequestBody CategoryDTO category) {
         return ResponseEntity.ok(categoryService.save(category));
     }
 
@@ -31,14 +34,14 @@ public class CategoryController {
     
     //lấy danh mục theo id localhost:8080/api/category/(id)
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getById(@PathVariable Long id) {
-        Category category = categoryService.getById(id);
+    public ResponseEntity<CategoryDTO> getById(@PathVariable Long id) {
+        CategoryDTO category = categoryService.getById(id);
         return category != null ? ResponseEntity.ok(category) : ResponseEntity.notFound().build();
     }
     
     //sửa danh mục localhost:8080/api/category/update/(id muốn sửa)
     @PutMapping("/update/{id}")
-    public ResponseEntity<Category> update(@PathVariable Long id, @RequestBody Category category) {
+    public ResponseEntity<Category> update(@PathVariable Long id, @RequestBody CategoryDTO category) {
         Category updated = categoryService.update(id, category);
         return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
     }
@@ -46,18 +49,18 @@ public class CategoryController {
     //xóa danh mục chuyển thành hết hàng localhost:8080/api/category/delete(id muốn xóa)
     @DeleteMapping("/delete/{id}") 
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        Category category = categoryService.getById(id);
+        Category category = categoryRepository.findById(id).orElse(null);
         if (category == null) {
             return ResponseEntity.notFound().build();
         }
         category.setStatus(0); // Chuyển status về 0 để soft delete
-        categoryService.save(category); // Lưu lại thay đổi
+        categoryRepository.save(category); // Lưu lại thay đổi
         return ResponseEntity.noContent().build();
     }
     
     //tìm danh mục theo trạng thái hết hay còn hàng
     @GetMapping("/status/{status}")
-    public ResponseEntity<List<Category>> getByStatus(@PathVariable int status) {
+    public ResponseEntity<List<CategoryDTO>> getByStatus(@PathVariable int status) {
         return ResponseEntity.ok(categoryService.getByStatus(status));
     }
 }

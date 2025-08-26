@@ -31,25 +31,13 @@ public class Voucher implements Serializable {
     @Column(name = "discount_percentage")
     private Integer discountPercentage;
 
-    @Column(name = "max_amount", precision = 18, scale = 2)
-    private BigDecimal maxAmount;
-
-    @Column(name = "min_amount", precision = 18, scale = 2)
-    private BigDecimal minAmount;
-
-    @Column(name = "usage_count")
-    private Integer usageCount;
-
     private Integer status;
 
-    public Voucher(String voucherCode, LocalDate startDate, LocalDate endDate, Integer discountPercentage, BigDecimal maxAmount, BigDecimal minAmount, Integer usageCount, Integer status) {
+    public Voucher(String voucherCode, LocalDate startDate, LocalDate endDate, Integer discountPercentage, Integer status) {
         this.voucherCode = voucherCode;
         this.startDate = startDate;
         this.endDate = endDate;
         this.discountPercentage = discountPercentage;
-        this.maxAmount = maxAmount;
-        this.minAmount = minAmount;
-        this.usageCount = usageCount;
         this.status = status;
     }
     public Voucher() {}
@@ -92,30 +80,6 @@ public class Voucher implements Serializable {
 
     public void setDiscountPercentage(Integer discountPercentage) {
         this.discountPercentage = discountPercentage;
-    }
-
-    public BigDecimal getMaxAmount() {
-        return maxAmount;
-    }
-
-    public void setMaxAmount(BigDecimal maxAmount) {
-        this.maxAmount = maxAmount;
-    }
-
-    public BigDecimal getMinAmount() {
-        return minAmount;
-    }
-
-    public void setMinAmount(BigDecimal minAmount) {
-        this.minAmount = minAmount;
-    }
-
-    public Integer getUsageCount() {
-        return usageCount;
-    }
-
-    public void setUsageCount(Integer usageCount) {
-        this.usageCount = usageCount;
     }
 
     public Integer getStatus() {
