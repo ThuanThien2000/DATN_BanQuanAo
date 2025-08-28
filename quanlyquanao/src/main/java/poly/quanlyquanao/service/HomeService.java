@@ -29,12 +29,6 @@ public class HomeService implements HomeServiceImpl {
     }
 
     @Override
-    public List<ProductInfo> getBestSellers(Integer limit) {
-        // Implementation logic here
-        return null; // Placeholder return
-    }
-
-    @Override
     public List<ProductInfo> getNewArrivals(Integer limit) {
         // Implementation logic here
         int safeLimit = (limit == null || limit < 0) ? 10 : limit; // default limit
@@ -52,20 +46,6 @@ public class HomeService implements HomeServiceImpl {
         }
         return productRepository.findAllActive().stream()
             .filter(product -> product.getUserType().equals(userType))
-            .map(ProductInfoMapper::toProductInfo)
-            .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<ProductInfo> getByLimitedUserType(String userType, Integer limit) {
-        // Implementation logic here
-        if (userType == null || userType.isEmpty()) {
-            throw new IllegalArgumentException("User type cannot be null or empty");
-        }
-        int safeLimit = (limit == null || limit < 0) ? 10 : limit; // default limit
-        return productRepository.findAllActive().stream()
-            .filter(product -> product.getUserType().equals(userType))
-            .limit(safeLimit)
             .map(ProductInfoMapper::toProductInfo)
             .collect(Collectors.toList());
     }

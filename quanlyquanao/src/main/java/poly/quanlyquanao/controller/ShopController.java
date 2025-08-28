@@ -24,9 +24,20 @@ public class ShopController {
 	public ResponseEntity<List<ProductInfo>> getALLProductInfo() {
         return ResponseEntity.ok(shopService.getAllProductInfo());
     }
-        @GetMapping("/categories")
+    @GetMapping("/search")
+    public ResponseEntity<List<ProductInfo>> searchProducts(@RequestParam(value = "keyword") String keyword) {
+        List<ProductInfo> products = shopService.searchProducts(keyword);
+        return ResponseEntity.ok(products);
+    }
+    @GetMapping("/user-type")
+    public ResponseEntity<List<ProductInfo>> getProductsByUserType(@RequestParam(value = "userType") String userType) {
+        List<ProductInfo> products = shopService.getProductsByUserType(userType);
+        return ResponseEntity.ok(products);
+    }
+    @GetMapping("/categories")
     public ResponseEntity<List<CategoryDTO>> getAll() {
         return ResponseEntity.ok(categoryService.getAllDTO());
     }
+
 
 }
