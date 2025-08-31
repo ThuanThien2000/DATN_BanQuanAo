@@ -159,14 +159,14 @@ public class StaffCheckoutService implements StaffCheckoutServiceImpl {
     }
 
     @Override
-    public UserDTO getAccountInfo(String phoneNumber) {
+    public User getAccountInfo(String phoneNumber) {
         User user = userRepository.findFirstByPhonenumberAndStatus(phoneNumber, 1)
                 .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
-        return UserMapper.toDTO(user);
+        return user;
     }
 
     @Override
-    public InvoiceDTO add(Invoice invoice) {    
+    public InvoiceDTO update(Invoice invoice) {    
         return InvoiceMapper.toDTO(invoiceRepository.save(invoice));
     } 
 
