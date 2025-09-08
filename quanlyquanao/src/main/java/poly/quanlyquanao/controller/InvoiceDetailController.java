@@ -24,4 +24,8 @@ public class InvoiceDetailController {
 	public ResponseEntity getInvoiceDetailById(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(invoiceDetailService.getInvoiceDetailById(id));
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 24e6ed3616444da2659de8f5147ef376a3049ed9

@@ -23,4 +23,8 @@ public class InvoiceDetailService implements IInvoiceDetailService{
 	    return invoiceDetailRepository.findById(id)
 	    		.orElseThrow(() -> new RuntimeException("Không tìm thấy InvoiceDetail với id: "+ id));
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 24e6ed3616444da2659de8f5147ef376a3049ed9
