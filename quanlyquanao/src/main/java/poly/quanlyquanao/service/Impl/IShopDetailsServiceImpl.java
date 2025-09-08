@@ -11,5 +11,5 @@ import poly.quanlyquanao.service.ProductDetailService;
 import java.util.List;
 public interface IShopDetailsServiceImpl {
 	List<ProductDetail> findByProductId(Long productId);
-	ProductDetail findSelectedProductDetail(Long productId, String size,String imageName);
+	ProductDetail findSelectedProductDetail(Long productId, String size,String style);
 }

@@ -7,9 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import poly.quanlyquanao.dto.CartItem;
 import poly.quanlyquanao.dto.CheckoutRequest;
+import poly.quanlyquanao.dto.InvoiceInfo;
 import poly.quanlyquanao.model.Invoice;
-import poly.quanlyquanao.model.InvoiceDetail;
 import poly.quanlyquanao.service.Impl.ICheckoutServiceImpl;
 import poly.quanlyquanao.service.Impl.IInvoiceServiceImpl;
 
@@ -19,13 +20,14 @@ import poly.quanlyquanao.service.Impl.IInvoiceServiceImpl;
 public class CheckoutController {
     @Autowired
     private ICheckoutServiceImpl checkoutService;
-	@PostMapping("/add")
+    @PostMapping("/add")
     public ResponseEntity<?> checkout(@RequestBody CheckoutRequest request) {
         try {
-            Invoice invoice = request.getInvoice();
-            List<InvoiceDetail> details = request.getInvoiceDetails();
+            InvoiceInfo getInvoiceInfo = request.getInvoiceInfo();
+            List<CartItem> details = request.getItems();
 
-            Invoice savedInvoice = checkoutService.checkoutOrder(invoice, details);
+            // ✅ Dùng biến đã khai báo thay vì class
+            Invoice savedInvoice = checkoutService.checkoutOrder(getInvoiceInfo, details);
             return ResponseEntity.ok(savedInvoice);
 
         } catch (RuntimeException e) {

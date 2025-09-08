@@ -19,9 +19,9 @@ public class ShopDetailsService implements IShopDetailsServiceImpl{
 	}
 
 	@Override
-	public ProductDetail findSelectedProductDetail(Long productId, String size, String imageName) {
+	public ProductDetail findSelectedProductDetail(Long productId, String size, String style) {
 		// TODO Auto-generated method stub
-		return shopDetailsRepository.findSelectedProductDetail(productId, size, imageName);
+		return shopDetailsRepository.findFirstByProduct_IdAndSizeAndStyle(productId, size, style);
 	}
 
 }

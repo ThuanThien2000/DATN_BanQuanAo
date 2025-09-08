@@ -25,7 +25,7 @@ public class InvoiceDetail implements Serializable {
     private Invoice invoice;
 
     @ManyToOne
-    @JoinColumn(name = "productdetail_id", nullable = false)
+    @JoinColumn(name = "product_detail_id", nullable = false)
     private ProductDetail productDetail;
 
     @Column(nullable = false)
