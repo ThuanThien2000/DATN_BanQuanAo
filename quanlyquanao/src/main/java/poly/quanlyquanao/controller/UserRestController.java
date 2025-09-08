@@ -12,7 +12,7 @@ import poly.quanlyquanao.model.User;
 import poly.quanlyquanao.service.Impl.IUserService;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/admin/user")
 @CrossOrigin(origins = "*")
 public class UserRestController {
     @Autowired

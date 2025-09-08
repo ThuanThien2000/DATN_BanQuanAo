@@ -25,4 +25,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
     List<User> findByStatusOne();
 
     Optional<User> findByUsername(String username);
+    Optional<User> findByEmailVerificationToken(String token);
+    Optional<User> findByEmail(String email);
+    Optional<User> findByPhonenumber(String phonenumber);
 }
