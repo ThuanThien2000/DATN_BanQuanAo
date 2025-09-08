@@ -57,18 +57,36 @@ public class Product implements Serializable {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Image> images; // Mối quan hệ với bảng Images mới
 
-    public Product(String productCode, String productName, String brand, Category category, String userType, String material, String description, BigDecimal price, Integer status) {
-        this.productCode = productCode;
-        this.productName = productName;
-        this.brand = brand;
-        this.category = category;
-        this.userType = userType;
-        this.material = material;
-        this.description = description;
-        this.price = price;
-        this.status = status;
-    }
-    public Product() {}
+
+    public Product(Long id, String productCode, String productName, String brand, Category category, String userType,
+			String material, String description, BigDecimal price, Boolean isFeatured, Integer status,
+			Set<ProductDetail> productDetails, Set<Review> reviews, Set<Image> images) {
+		super();
+		this.id = id;
+		this.productCode = productCode;
+		this.productName = productName;
+		this.brand = brand;
+		this.category = category;
+		this.userType = userType;
+		this.material = material;
+		this.description = description;
+		this.price = price;
+		this.isFeatured = isFeatured;
+		this.status = status;
+		this.productDetails = productDetails;
+		this.reviews = reviews;
+		this.images = images;
+	}
+
+	public Boolean getIsFeatured() {
+		return isFeatured;
+	}
+
+	public void setIsFeatured(Boolean isFeatured) {
+		this.isFeatured = isFeatured;
+	}
+
+	public Product() {}
 
     public Long getId() {
         return id;

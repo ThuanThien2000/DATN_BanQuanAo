@@ -24,12 +24,12 @@ public class ImageController {
     
   //localhost:8080/api/product/1/image/add
     @PostMapping("/add")
-    public ResponseEntity<Image> add(@PathVariable("productId") Long productId, @RequestBody Image image) {
-        Image saved = imageService.addImage(productId, image);
-        if (saved == null) {
+    public ResponseEntity<List<Image>> add(@PathVariable("productId") Long productId, @RequestBody List<Image> images) {
+        List<Image> savedImages = imageService.addImages(productId, images);
+        if (savedImages == null || savedImages.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(saved);
+        return ResponseEntity.ok(savedImages);
     }
     
   //localhost:8080/api/product/1/image/delete/5

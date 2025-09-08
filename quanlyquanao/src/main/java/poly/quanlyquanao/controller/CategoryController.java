@@ -1,5 +1,6 @@
 package poly.quanlyquanao.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -7,7 +8,7 @@ import poly.quanlyquanao.model.Category;
 import poly.quanlyquanao.service.CategoryService;
 
 import java.util.List;
-
+import poly.quanlyquanao.dto.CategoryDTO;
 @RestController
 @RequestMapping("/api/category")
 @CrossOrigin(origins = "*")
@@ -24,8 +25,8 @@ public class CategoryController {
 
     //lấy all danh mục có trong dữ liệu localhost:8080/api/category/all
     @GetMapping("/all")
-    public ResponseEntity<List<Category>> getAll() {
-        return ResponseEntity.ok(categoryService.getAll());
+    public ResponseEntity<List<CategoryDTO>> getAll() {
+        return ResponseEntity.ok(categoryService.getAllDTO());
     }
     
     //lấy danh mục theo id localhost:8080/api/category/(id)

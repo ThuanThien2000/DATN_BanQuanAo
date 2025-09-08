@@ -1,15 +1,17 @@
 package poly.quanlyquanao.service;
 
 import poly.quanlyquanao.model.Product;
+import poly.quanlyquanao.dto.ProductDTO;
 
 import java.util.List;
-import java.util.Optional;
+import poly.quanlyquanao.dto.ProductDTO;
 
 public interface ProductService {
-    Product createProduct(Product product);
-    Product updateProduct(Long id, Product product);
+    Product createProduct(ProductDTO productDTO);
+    Product updateProduct(Long id, ProductDTO productDTO);
     boolean softDeleteProduct(Long id);
-    Product getProductById(Long id);
+    ProductDTO getProductById(Long id);
     List<Product> getAllActiveProducts();
+    List<ProductDTO> getAllActiveProductDTOs();
     List<Product> getLowStockProducts(int threshold);
 }

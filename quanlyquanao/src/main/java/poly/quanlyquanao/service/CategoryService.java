@@ -1,4 +1,6 @@
+
 package poly.quanlyquanao.service;
+import poly.quanlyquanao.dto.CategoryDTO;
 
 import poly.quanlyquanao.model.Category;
 
@@ -10,5 +12,6 @@ public interface CategoryService {
     void delete(Long id);
     Category getById(Long id);
     List<Category> getAll();
+    List<CategoryDTO> getAllDTO();
     List<Category> getByStatus(int status);
 }
