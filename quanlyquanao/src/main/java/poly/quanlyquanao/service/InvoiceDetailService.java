@@ -13,15 +13,14 @@ public class InvoiceDetailService implements IInvoiceDetailService{
 	@Autowired
 	InvoiceDetailRepository invoiceDetailRepository;
 	@Override
-	public List<InvoiceDetail> findAllInvoiceDetaiByInvoiceID(Long invoiceID) {
-		// TODO Auto-generated method stub
-		return invoiceDetailRepository.findAllByInvoice_IdAndStatus(invoiceID,1);
-	}
+    public List<InvoiceDetail> findAllInvoiceDetaiByInvoiceID(Long invoiceID) {
+        return invoiceDetailRepository.findAllByInvoice_IdAndStatus(invoiceID, 1);
+    }
 
 	@Override
-	public InvoiceDetail getInvoiceDetailById(Long id) {
-	    return invoiceDetailRepository.findById(id)
-	    		.orElseThrow(() -> new RuntimeException("Không tìm thấy InvoiceDetail với id: "+ id));
+	public InvoiceDetail getInvoiceDetailById(Long invoiceId, Long invoiceDetailId) {
+	    return invoiceDetailRepository.findByInvoice_IdAndId(invoiceId, invoiceDetailId)
+	    		.orElseThrow(() -> new RuntimeException("Không tìm thấy InvoiceDetail với id: "+ invoiceDetailId));
 	}
 <<<<<<< HEAD
 }
