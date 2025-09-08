@@ -28,7 +28,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
     Optional<User> findByUsername(String username);
     Optional<User> findByEmailVerificationToken(String token);
     Optional<User> findByEmail(String email);
-    Optional<User> findByPhonenumber(String phonenumber);
+    Optional<User> findFirstByPhonenumberAndStatus(String phonenumber, Integer status);
 
     // Danh sách chỉ nhân viên đang hoạt động
     @Query("SELECT u from User u WHERE u.role.id = 2 AND u.status = 1")

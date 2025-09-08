@@ -1,4 +1,5 @@
 package poly.quanlyquanao.controller;
+
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -6,29 +7,31 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import poly.quanlyquanao.dto.CartItem;
 import poly.quanlyquanao.dto.CheckoutRequest;
 import poly.quanlyquanao.dto.InvoiceDTO;
 import poly.quanlyquanao.dto.InvoiceInfo;
-import poly.quanlyquanao.dto.ProductDTO;
 import poly.quanlyquanao.dto.ProductDetailDTO;
-import poly.quanlyquanao.dto.UserDTO;
 import poly.quanlyquanao.model.Invoice;
-import poly.quanlyquanao.service.Impl.ICheckoutServiceImpl;
-import poly.quanlyquanao.service.Impl.IInvoiceServiceImpl;
+import poly.quanlyquanao.model.User;
+import poly.quanlyquanao.service.StaffCheckoutService;
 import poly.quanlyquanao.service.Impl.IUserService;
 import poly.quanlyquanao.service.Impl.IVoucherService;
-import poly.quanlyquanao.model.User;
-import poly.quanlyquanao.model.Voucher;
 
 @RestController
-@RequestMapping("/api/checkout")
+@RequestMapping("/api/staff-checkout")
 @CrossOrigin(origins = "*")
-public class CheckoutController {
+public class StaffCheckoutController {
     @Autowired
-    private ICheckoutServiceImpl checkoutService;
+    private StaffCheckoutService checkoutService;
     @Autowired
     private IUserService userService;
     @Autowired
@@ -42,27 +45,27 @@ public class CheckoutController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", e.getMessage()));
             }
     }
-
-    @GetMapping("/my-info")
-    public ResponseEntity<?> getMyInfo(Principal principal){
+    
+    @GetMapping("/customer-info")
+    public ResponseEntity<?> getCustomerInfo(@RequestParam String phoneNumber){
         try {
-            if (principal == null) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Unauthorized"));
-            }
-            String username = principal.getName();
-            UserDTO myInfo = checkoutService.getMyAccountInfo(username);
-            return ResponseEntity.ok(myInfo);
+            return ResponseEntity.ok(checkoutService.getAccountInfo(phoneNumber));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", e.getMessage()));
         }
     }
-
     @GetMapping("/get-product-detail")
     public ResponseEntity<?> getProductDetailByCode(@RequestParam String productDetailCode) {
         try {
             ProductDetailDTO productDetailDTO = checkoutService.getProductDetailDTOByPDCode(productDetailCode);
             if (productDetailDTO == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Product not found"));
+            }
+            if(productDetailDTO.getStatus()==0) {
+            	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "Sản phẩm đã không còn bán"));
+            }
+            if(productDetailDTO.getInventoryQuantity()<1) {
+            	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "Sản phẩm đã hết hàng"));
             }
             return ResponseEntity.ok(productDetailDTO);
         } catch (Exception e) {
@@ -97,25 +100,5 @@ public class CheckoutController {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
     }
+
 }
-//{
-//	  "invoiceInfo": {
-//	    "fullname": "Nguyễn Văn A",
-//	    "phonenumber": "0901234567",
-//	    "email": "nguyenvana@example.com",
-//	    "deliveryAddress": "123 Đường Lê Lợi, Quận 1, TP.HCM",
-//	    "paymentMethodId": 1,
-//	    "voucherId": 2,
-//	    "assignedStaffId": 5
-//	  },
-//	  "items": [
-//	    {
-//	      "productDetailId": 1,
-//	      "quantity": 2
-//	    },
-//	    {
-//	      "productDetailId": 3,
-//	      "quantity": 1
-//	    }
-//	  ]
-//	}

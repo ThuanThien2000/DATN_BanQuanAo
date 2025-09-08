@@ -166,8 +166,8 @@ public class ProductServiceImpl implements ProductService {
             if (product.getStatus() == 1) { // Chỉ đánh dấu nếu sản phẩm còn hoạt động
                 // Đếm số sản phẩm đang featured
                 long featuredCount = productRepository.countFeaturedProducts();
-                // Nếu sản phẩm này chưa được featured và đã đủ 8 sản phẩm featured thì không cho phép
-                if (!Boolean.TRUE.equals(product.getIsFeatured()) && featuredCount >= 10) {
+                // Nếu sản phẩm này chưa được featured và đã đủ 4 sản phẩm featured thì không cho phép
+                if (!Boolean.TRUE.equals(product.getIsFeatured()) && featuredCount >= 4) {
                     return false;
                 }
                 product.setIsFeatured(true);
