@@ -9,11 +9,15 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import poly.quanlyquanao.dto.CartItem;
+import poly.quanlyquanao.dto.InvoiceDTO;
 import poly.quanlyquanao.dto.InvoiceInfo;
 import poly.quanlyquanao.dto.ProductDTO;
 import poly.quanlyquanao.dto.ProductDetailDTO;
+import poly.quanlyquanao.dto.UserDTO;
+import poly.quanlyquanao.mapper.InvoiceMapper;
 import poly.quanlyquanao.mapper.ProductDetailMapper;
 import poly.quanlyquanao.mapper.ProductMapper;
+import poly.quanlyquanao.mapper.UserMapper;
 import poly.quanlyquanao.model.*;
 import poly.quanlyquanao.repository.*;
 import poly.quanlyquanao.service.Impl.ICheckoutServiceImpl;
@@ -158,4 +162,18 @@ public class CheckoutService implements ICheckoutServiceImpl {
                 .orElseThrow(() -> new RuntimeException("Sản phẩm không tồn tại"));
         return ProductDetailMapper.toDTO(productDetail);
     }
+    @Override
+    public UserDTO getMyAccountInfo(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
+        return UserMapper.toDTO(user);
+    }
+    @Override
+    public InvoiceDTO update(Invoice invoice) {
+    	return InvoiceMapper.toDTO(invoiceRepository.save(invoice));
+    }
+    @Override
+    public InvoiceDTO add(Invoice invoice) {    
+        return InvoiceMapper.toDTO(invoiceRepository.save(invoice));
+    }   
 }
