@@ -1,29 +1,32 @@
 package poly.quanlyquanao.controller;
 
-//import java.util.List;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.web.bind.annotation.*;
-//
-//import poly.quanlyquanao.model.Product;
-//import poly.quanlyquanao.service.ShopService;
+import java.util.List;
 
-//@RestController
-//@RequestMapping("/api/customer/products")
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import poly.quanlyquanao.dto.CategoryDTO;
+import poly.quanlyquanao.dto.ProductInfo;
+import poly.quanlyquanao.model.Product;
+import poly.quanlyquanao.service.CategoryService;
+import poly.quanlyquanao.service.ShopService;
+
+@RestController
+@RequestMapping("/api/shop")
+@CrossOrigin(origins = "*")
 public class ShopController {
-//	@Autowired
-//    private ShopService shopService;
-//
-//	@GetMapping("/filter-full")
-//	public List<Product> filterProducts(
-//	        @RequestParam(required = false) Long categoryId,
-//	        @RequestParam(required = false) Double minPrice,
-//	        @RequestParam(required = false) Double maxPrice,
-//	        @RequestParam(required = false) String size,
-//	        @RequestParam(required = false) String style,
-//	        @RequestParam(defaultValue = "0") int page
-//	) {
-//	    return shopService.filterProducts(categoryId, minPrice, maxPrice, size, style, page);
-//	}
+	@Autowired
+   private ShopService shopService;
+       @Autowired
+    private CategoryService categoryService;
+	@GetMapping("")
+	public ResponseEntity<List<ProductInfo>> getALLProductInfo() {
+        return ResponseEntity.ok(shopService.getAllProductInfo());
+    }
+        @GetMapping("/categories")
+    public ResponseEntity<List<CategoryDTO>> getAll() {
+        return ResponseEntity.ok(categoryService.getAllDTO());
+    }
 
 }
