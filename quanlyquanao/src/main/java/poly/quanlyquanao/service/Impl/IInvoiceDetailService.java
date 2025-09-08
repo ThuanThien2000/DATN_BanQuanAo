@@ -2,8 +2,11 @@ package poly.quanlyquanao.service.Impl;
 
 import java.util.List;
 
+import poly.quanlyquanao.dto.InvoiceDTO;
 import poly.quanlyquanao.dto.InvoiceDetailDTO;
+import poly.quanlyquanao.model.Invoice;
 public interface IInvoiceDetailService {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	List<InvoiceDetail> findAllInvoiceDetaiByInvoiceID(Long invoiceID); 
 <<<<<<< HEAD
@@ -22,3 +25,10 @@ public interface IInvoiceDetailService {
 	InvoiceDetailDTO getInvoiceDetailById(Long invoiceId, Long invoiceDetailId);
 }
 >>>>>>> cf39e873d3357a15548bf1d1e23e898620d98661
+=======
+	List<InvoiceDetailDTO> findAllInvoiceDetaiByInvoiceID(String invoiceCode);
+	InvoiceDetailDTO getInvoiceDetailById(String invoiceCode, Long invoiceDetailId);
+	InvoiceDTO getInvoiceByCode(String invoiceCode);
+	Invoice updateInvoiceStatus(String invoiceCode, Integer status);
+}
+>>>>>>> c643860c663e2524b5efbea34166a22e4699254f

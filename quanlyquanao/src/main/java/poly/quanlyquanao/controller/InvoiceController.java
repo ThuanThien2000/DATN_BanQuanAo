@@ -24,11 +24,6 @@ public class InvoiceController {
         return invoiceService.getAllInvoice();
     }
 
-    // Get today's invoices
-    @GetMapping("/today")
-    public List<InvoiceDTO> getTodayInvoices() {
-        return invoiceService.getTodayInvoice();
-    }
     @GetMapping("/{id}")
     public ResponseEntity<InvoiceDTO> getInvoiceById(@PathVariable("id") Long id){
     	return ResponseEntity.ok(invoiceService.getInvoiceById(id));
