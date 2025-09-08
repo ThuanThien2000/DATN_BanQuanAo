@@ -84,7 +84,7 @@ public class CheckoutController {
             if (principal != null) {
                 User meUser = userService.getUserByUsername(principal.getName());
                 savedInvoice.setUser(meUser);
-                newInvoice = checkoutService.add(savedInvoice);
+                newInvoice = checkoutService.update(savedInvoice);
             }
              else {
             // Nếu không đăng nhập thì gán user null hoặc 1 giá trị mặc định

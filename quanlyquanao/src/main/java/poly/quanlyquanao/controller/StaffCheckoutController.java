@@ -74,6 +74,13 @@ public class StaffCheckoutController {
     }
     @PostMapping("/add")
     public ResponseEntity<?> checkout(@RequestBody CheckoutRequest request,Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Bạn chưa đăng nhập");
+        }
+        User staffUser = userService.getUserByUsername(principal.getName());
+        if (staffUser.getRole().getRoleName().equals("CUSTOMER")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Chỉ nhân viên mới tạo được hóa đơn");
+        }
         try {
             InvoiceDTO newInvoice = null;
             InvoiceInfo getInvoiceInfo = request.getInvoiceInfo();
@@ -81,19 +88,14 @@ public class StaffCheckoutController {
             if (details == null || details.isEmpty()) {
                 return ResponseEntity.badRequest().body("Không tạo được hóa đơn: Giỏ hàng trống");
             }
-
-            // ✅ Dùng biến đã khai báo thay vì class
             Invoice savedInvoice = checkoutService.checkoutOrder(getInvoiceInfo, details);
-            if (principal != null) {
-                User meUser = userService.getUserByUsername(principal.getName());
-                savedInvoice.setUser(meUser);
-                newInvoice = checkoutService.add(savedInvoice);
+
+            User customer = checkoutService.getAccountInfo(getInvoiceInfo.getPhonenumber());
+            if (customer != null) {
+                savedInvoice.setUser(customer);
             }
-             else {
-            // Nếu không đăng nhập thì gán user null hoặc 1 giá trị mặc định
-            savedInvoice.setUser(null); 
-            // 👉 bạn có thể tạo 1 User "guest" trong DB và gán ở đây nếu muốn
-        }
+            // ✅ Dùng biến đã khai báo thay vì class
+            newInvoice = checkoutService.update(savedInvoice);
             return ResponseEntity.ok(newInvoice);
 
         } catch (RuntimeException e) {
