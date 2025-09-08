@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import poly.quanlyquanao.dto.ProductDTO;
 import poly.quanlyquanao.dto.ProductDetailDTO;
+import poly.quanlyquanao.dto.ProductInfo;
 import poly.quanlyquanao.dto.StyleDTO;
 import poly.quanlyquanao.model.ProductDetail;
 import poly.quanlyquanao.service.ShopDetailsService;
@@ -44,5 +45,10 @@ public class ShopDetailsController {
 	public ResponseEntity<List<String>> getUniqueSizes(@PathVariable Long productId) {
 	    List<String> uniqueSizes = shopDetailsService.findUniqueSizesByProductId(productId);
 	    return ResponseEntity.ok(uniqueSizes);
+	}
+	@GetMapping("/related")
+	public ResponseEntity<List<ProductInfo>> getRelatedProducts(@PathVariable Long productId) {
+		List<ProductInfo> relatedProducts = shopDetailsService.findRelatedProductsByCategoryId(productId);
+		return ResponseEntity.ok(relatedProducts);
 	}
 }
