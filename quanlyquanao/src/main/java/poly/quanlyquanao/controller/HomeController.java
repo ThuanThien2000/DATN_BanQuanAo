@@ -13,7 +13,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/home")
+@RequestMapping("/api/home")
+@CrossOrigin(origins = "*")
 public class HomeController {
 
 	@Autowired
