@@ -12,6 +12,7 @@ import poly.quanlyquanao.model.Image;
 import poly.quanlyquanao.model.Product;
 import poly.quanlyquanao.repository.CategoryRepository;
 import poly.quanlyquanao.repository.ImageRepository;
+import poly.quanlyquanao.repository.ProductDetailRepository;
 import poly.quanlyquanao.repository.ProductRepository;
 import poly.quanlyquanao.service.ProductService;
 
@@ -32,6 +33,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+        @Autowired
+    private ProductDetailRepository productDetailRepository;
     @Autowired
     private ImageRepository imageRepository;
     @Autowired
@@ -39,7 +42,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product createProduct(ProductDTO productDTO) {
         Product product = new Product();
+        if (productDTO.getProductCode() == null || productDTO.getProductCode().trim().isEmpty()) {
+            throw new RuntimeException("Mã sản phẩm không được để trống!");
+        }
         product.setProductCode(productDTO.getProductCode());
+        if (productDTO.getProductName() == null || productDTO.getProductName().trim().isEmpty()) {
+            throw new RuntimeException("Tên sản phẩm không được để trống!");
+        }
         product.setProductName(productDTO.getProductName());
         product.setBrand(productDTO.getBrand());
         // Lấy category từ id (nếu có)
@@ -58,6 +67,9 @@ public class ProductServiceImpl implements ProductService {
         }
         product.setUserType(productDTO.getUserType());
         product.setMaterial(productDTO.getMaterial());
+        if (productDTO.getPrice() == null || productDTO.getPrice().compareTo(java.math.BigDecimal.ZERO) <= 0) {
+            throw new RuntimeException("Giá sản phẩm phải lớn hơn 0!");
+        }
         product.setPrice(productDTO.getPrice());
         product.setDescription(productDTO.getDescription());
         product.setIsFeatured(productDTO.getIsFeatured());
@@ -89,7 +101,9 @@ public class ProductServiceImpl implements ProductService {
         Optional<Product> optional = productRepository.findById(id);
         if (optional.isPresent()) {
             Product product = optional.get();
-            product.setProductCode(productDTO.getProductCode());
+            if (productDTO.getProductName() == null || productDTO.getProductName().trim().isEmpty()) {
+                throw new RuntimeException("Tên sản phẩm không được để trống!");
+            }
             product.setProductName(productDTO.getProductName());
             product.setBrand(productDTO.getBrand());
             // Lấy category từ id (nếu có)
@@ -108,6 +122,9 @@ public class ProductServiceImpl implements ProductService {
             }
             product.setUserType(productDTO.getUserType());
             product.setMaterial(productDTO.getMaterial());
+            if (productDTO.getPrice() == null || productDTO.getPrice().compareTo(java.math.BigDecimal.ZERO) <= 0) {
+                throw new RuntimeException("Giá sản phẩm phải lớn hơn 0!");
+            }
             product.setPrice(productDTO.getPrice());
             product.setIsFeatured(productDTO.getIsFeatured());
             product.setDescription(productDTO.getDescription());
@@ -181,6 +198,13 @@ public class ProductServiceImpl implements ProductService {
         if (optional.isPresent()) {
             Product product = optional.get();
             product.setStatus(0);
+            // Soft delete all product details
+            if (product.getProductDetails() != null) {
+                product.getProductDetails().forEach(detail -> {
+                    detail.setStatus(0);
+                });
+            }
+            productDetailRepository.saveAll(product.getProductDetails());
             productRepository.save(product);
             return true;
         }
