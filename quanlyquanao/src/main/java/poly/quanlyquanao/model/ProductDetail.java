@@ -5,8 +5,6 @@ import lombok.*;
 import java.io.Serializable;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name = "Product_detail")
 //@Getter
@@ -25,7 +23,6 @@ public class ProductDetail implements Serializable{
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
-    @JsonIgnore
     private Product product;
 
     @Column(nullable = false, length = 50)
@@ -43,7 +40,6 @@ public class ProductDetail implements Serializable{
     private Integer status;
 
     @OneToMany(mappedBy = "productDetail", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     private Set<InvoiceDetail> invoiceDetails;
 
     public ProductDetail(String productDetailCode, Product product, String style, String size, Integer inventoryQuantity, String imgUrl, Integer status) {
