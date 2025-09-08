@@ -15,7 +15,6 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Product> findByProductCode(String productCode);
     
-    
     @Query("SELECT p FROM Product p WHERE p.status = 1")
     List<Product> findAllActive();
 

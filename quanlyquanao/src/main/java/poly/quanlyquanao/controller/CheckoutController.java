@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import poly.quanlyquanao.dto.CartItem;
 import poly.quanlyquanao.dto.CheckoutRequest;
 import poly.quanlyquanao.dto.InvoiceInfo;
+import poly.quanlyquanao.dto.ProductDTO;
+import poly.quanlyquanao.dto.ProductDetailDTO;
 import poly.quanlyquanao.model.Invoice;
 import poly.quanlyquanao.service.Impl.ICheckoutServiceImpl;
 import poly.quanlyquanao.service.Impl.IInvoiceServiceImpl;
@@ -20,6 +22,18 @@ import poly.quanlyquanao.service.Impl.IInvoiceServiceImpl;
 public class CheckoutController {
     @Autowired
     private ICheckoutServiceImpl checkoutService;
+    @GetMapping("/get-product-detail")
+    public ResponseEntity<?> getProductDetailByCode(@RequestParam String productDetailCode) {
+        try {
+            ProductDetailDTO productDTO = checkoutService.getProductDetailDTOByPDCode(productDetailCode);
+            if (productDTO == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Product not found"));
+            }
+            return ResponseEntity.ok(productDTO);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", e.getMessage()));
+        }
+    }
     @PostMapping("/add")
     public ResponseEntity<?> checkout(@RequestBody CheckoutRequest request) {
         try {

@@ -10,6 +10,10 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import poly.quanlyquanao.dto.CartItem;
 import poly.quanlyquanao.dto.InvoiceInfo;
+import poly.quanlyquanao.dto.ProductDTO;
+import poly.quanlyquanao.dto.ProductDetailDTO;
+import poly.quanlyquanao.mapper.ProductDetailMapper;
+import poly.quanlyquanao.mapper.ProductMapper;
 import poly.quanlyquanao.model.*;
 import poly.quanlyquanao.repository.*;
 import poly.quanlyquanao.service.Impl.ICheckoutServiceImpl;
@@ -145,5 +149,11 @@ public class CheckoutService implements ICheckoutServiceImpl {
         invoiceDetailRepository.saveAll(invoiceDetails);
 
         return savedInvoice;
+    }
+    @Override
+    public ProductDetailDTO getProductDetailDTOByPDCode(String code) {
+        ProductDetail productDetail = productDetailRepository.findByProductDetailCode(code)
+                .orElseThrow(() -> new RuntimeException("Sản phẩm không tồn tại"));
+        return ProductDetailMapper.toDTO(productDetail);
     }
 }
