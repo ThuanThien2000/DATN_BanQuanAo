@@ -1,5 +1,6 @@
 package poly.quanlyquanao.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class InvoiceService implements IInvoiceServiceImpl{
 	public void updateInvoiceStatus(Long id, Integer status) {
 		Invoice invoice = invoiceRepository.findById(id).orElse(null);
 		if (invoice != null) {
+			if (status == 5) {
+			invoice.setPaymentDate(LocalDateTime.now());
+		}
 			invoice.setStatus(status);
 			invoiceRepository.save(invoice);
 		} else {

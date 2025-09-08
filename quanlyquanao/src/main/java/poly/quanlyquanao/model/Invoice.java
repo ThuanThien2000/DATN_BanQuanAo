@@ -88,6 +88,13 @@ public class Invoice implements Serializable {
 		this.creationDate = creationDate;
 	}
 
+	public LocalDateTime getPaymentDate() {
+		return paymentDate;
+	}
+	public void setPaymentDate(LocalDateTime paymentDate) {
+		this.paymentDate = paymentDate;
+	}
+
 	public BigDecimal getShippingFee() {
 		return shippingFee;
 	}
@@ -142,7 +149,7 @@ public class Invoice implements Serializable {
 public Invoice() {
 	}
 	public Invoice(Long id, String invoiceCode, User user, String fullname, String phonenumber, String email,
-			String deliveryAddress, String description, PaymentMethod paymentMethod, LocalDateTime creationDate,
+			String deliveryAddress, String description, PaymentMethod paymentMethod, LocalDateTime creationDate, LocalDateTime paymentDate,
 			BigDecimal shippingFee, Voucher voucher, BigDecimal discountAmount, BigDecimal totalAmount,
 			User assignedStaff, Integer status, Set<InvoiceDetail> invoiceDetails) {
 		super();
@@ -207,6 +214,9 @@ public Invoice() {
 
     @Column(name = "creation_date", nullable = false)
     private LocalDateTime creationDate = LocalDateTime.now();
+
+	@Column(name = "payment_date")
+    private LocalDateTime paymentDate;
 
     @Column(name = "shipping_fee", nullable = false, precision = 18, scale = 2)
     private BigDecimal shippingFee = BigDecimal.ZERO;
