@@ -4,16 +4,18 @@ import java.math.BigDecimal;
 
 public class InvoiceInfo {
     private String fullname;
+
     private String phonenumber;
     private String email;
     private String deliveryAddress;
     private Long paymentMethodId;
     private Long voucherId;
     private Long assignedStaffId;
+    private String description;
 	public InvoiceInfo() {
 	}
 	public InvoiceInfo(String fullname, String phonenumber, String email, String deliveryAddress, Long paymentMethodId,
-			Long voucherId, Long assignedStaffId, BigDecimal shippingFee) {
+			Long voucherId, Long assignedStaffId, String description, BigDecimal shippingFee) {
 		super();
 		this.fullname = fullname;
 		this.phonenumber = phonenumber;
@@ -22,6 +24,7 @@ public class InvoiceInfo {
 		this.paymentMethodId = paymentMethodId;
 		this.voucherId = voucherId;
 		this.assignedStaffId = assignedStaffId;
+		this.description = description;
 	}
 	public String getFullname() {
 		return fullname;
@@ -64,6 +67,12 @@ public class InvoiceInfo {
 	}
 	public void setAssignedStaffId(Long assignedStaffId) {
 		this.assignedStaffId = assignedStaffId;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
     
 }
