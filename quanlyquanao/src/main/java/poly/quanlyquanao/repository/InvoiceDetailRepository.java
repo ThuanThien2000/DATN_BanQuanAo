@@ -9,6 +9,5 @@ import poly.quanlyquanao.model.InvoiceDetail;
 
 public interface InvoiceDetailRepository extends JpaRepository<InvoiceDetail, Long>{
 
-//	List<InvoiceDetail> findAllByStatusAndProduct_Id(int status, Long productId);
-    // Sai code
+	List<InvoiceDetail> findAllByInvoice_IdAndStatus(Long invoiceId, int status);
 }

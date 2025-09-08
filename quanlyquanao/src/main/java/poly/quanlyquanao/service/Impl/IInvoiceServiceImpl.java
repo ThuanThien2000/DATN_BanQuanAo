@@ -7,5 +7,6 @@ import poly.quanlyquanao.model.Invoice;
 public interface IInvoiceServiceImpl {
 	List<Invoice> getAllInvoice();
 	List<Invoice> getTodayInvoice();
+	Invoice getInvoiceById(Long id);
 	void updateInvoiceStatus(Long id, Integer status);
 }
