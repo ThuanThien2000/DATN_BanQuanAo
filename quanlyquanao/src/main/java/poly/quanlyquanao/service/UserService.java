@@ -3,6 +3,7 @@ package poly.quanlyquanao.service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -255,6 +256,31 @@ public class UserService implements poly.quanlyquanao.service.Impl.IUserService 
     @Override
     public List<User> searchCustomer(String keyword) {
         return userRepository.searchCustomer(keyword);
+    }
+
+    @Override
+    public User toggleUserStatus(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
+        user.setStatus(user.getStatus() == 1 ? 0 : 1);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User changeUserRole(Long id, Long roleId) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
+        Role role = new Role();
+        role.setId(roleId);
+        user.setRole(role);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public Map<String, Long> getUserStatistics() {
+        long staffCount = userRepository.countActiveStaff();
+        long customerCount = userRepository.countActiveCustomer();
+        return Map.of("staffCount", staffCount, "customerCount", customerCount);
     }
 
 }

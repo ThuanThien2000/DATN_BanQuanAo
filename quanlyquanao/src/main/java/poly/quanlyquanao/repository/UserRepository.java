@@ -62,4 +62,11 @@ public interface UserRepository extends JpaRepository<User, Long>{
     """)
     List<User> searchCustomer(String keyword);
 
+    // Thống kê số lượng người dùng gồm khách hàng và nhân viên
+    @Query("SELECT COUNT(u) FROM User u WHERE u.role.id = 2 AND u.status = 1")
+    long countActiveStaff();
+
+    @Query("SELECT COUNT(u) FROM User u WHERE u.role.id = 3 AND u.status = 1")
+    long countActiveCustomer();
+
 }
