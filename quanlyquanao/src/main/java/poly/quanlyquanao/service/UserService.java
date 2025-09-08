@@ -88,24 +88,12 @@ public class UserService implements poly.quanlyquanao.service.Impl.IUserService 
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng với : "+ username));
     }
 
-//    @Override
-//    public void deleteUser(Long id) {
-//        if (!userRepository.existsById(id)) {
-//            throw new RuntimeException("Không tìm thấy người dùng với id: " + id);
-//        }
-//        userRepository.deleteById(id);
-//    }
-
     @Override
-    public User deactivateStaff(Long id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy nhân viên"));
-
-        if (user.getRole().getId() != 2L) {
-            throw new RuntimeException("Người dùng này không phải nhân viên (STAFF)");
+    public void deleteUser(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new RuntimeException("Không tìm thấy người dùng với id: " + id);
         }
-        user.setStatus(0); // Chuyển trạng thái sang 0 (ngưng hoạt động)
-        return userRepository.save(user);
+        userRepository.deleteById(id);
     }
 
     // Xác thực bằng email

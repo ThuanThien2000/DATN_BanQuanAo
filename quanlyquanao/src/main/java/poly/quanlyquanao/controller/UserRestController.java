@@ -62,21 +62,10 @@ public class UserRestController {
         return ResponseEntity.ok(user);
     }
     
-//    @DeleteMapping("/delete/{id}")
-//    public ResponseEntity<String> deleteUser(@PathVariable("id") Long id) {
-//        _userService.deleteUser(id);
-//        return ResponseEntity.ok("Đã xóa thành công");
-//    }
-
-    @PutMapping("/deactivate-staff/{id}")
-    public ResponseEntity<?> deactivateStaff(@PathVariable Long id) {
-        try {
-            User updatedStaff = _userService.deactivateStaff(id);
-            return ResponseEntity.ok(Map.of("message", "Đã vô hiệu hóa nhân viên", "user", updatedStaff));
-        }
-        catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
-        }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable("id") Long id) {
+        _userService.deleteUser(id);
+        return ResponseEntity.ok("Đã xóa thành công");
     }
 
     @GetMapping("/staff-list")
@@ -130,7 +119,7 @@ public class UserRestController {
     }
 
     // Thống kê số lượng nhân viên và khách hàng
-    @GetMapping("/statistics")
+    @GetMapping("/statistics-user")
     public ResponseEntity<Map<String, Long>> getStatistics() {
         return ResponseEntity.ok(_userService.getUserStatistics());
     }
