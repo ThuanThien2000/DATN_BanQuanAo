@@ -1,26 +1,30 @@
 package poly.quanlyquanao.dto;
 
 public class CartItem {
-    private Long productDetailId;
-    private int quantity;
+	private String productDetailCode;
+	private int quantity;
+
 	public CartItem() {
 	}
-	public CartItem(Long productDetailId, int quantity) {
-		super();
-		this.productDetailId = productDetailId;
+
+	public CartItem(String productDetailCode, int quantity) {
+		this.productDetailCode = productDetailCode;
 		this.quantity = quantity;
 	}
-	public Long getProductDetailId() {
-		return productDetailId;
+
+	public String getProductDetailCode() {
+		return productDetailCode;
 	}
-	public void setProductDetailId(Long productDetailId) {
-		this.productDetailId = productDetailId;
+
+	public void setProductDetailCode(String productDetailCode) {
+		this.productDetailCode = productDetailCode;
 	}
+
 	public int getQuantity() {
 		return quantity;
 	}
+
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-    
 }

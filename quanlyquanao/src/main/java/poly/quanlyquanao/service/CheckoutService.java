@@ -16,7 +16,7 @@ import poly.quanlyquanao.service.Impl.ICheckoutServiceImpl;
 
 @Service
 public class CheckoutService implements ICheckoutServiceImpl {
-	private static final BigDecimal DEFAULT_SHIPPING_FEE = BigDecimal.valueOf(35000);
+    private static final BigDecimal DEFAULT_SHIPPING_FEE = BigDecimal.valueOf(35000);
     @Autowired
     private InvoiceRepository invoiceRepository;
 
@@ -90,7 +90,7 @@ public class CheckoutService implements ICheckoutServiceImpl {
         List<InvoiceDetail> invoiceDetails = new ArrayList<>();
 
         for (CartItem item : items) {
-            ProductDetail productDetail = productDetailRepository.findById(item.getProductDetailId())
+            ProductDetail productDetail = productDetailRepository.findByProductDetailCode(item.getProductDetailCode())
                     .orElseThrow(() -> new RuntimeException("Sản phẩm không tồn tại"));
 
             // Kiểm tra tồn kho

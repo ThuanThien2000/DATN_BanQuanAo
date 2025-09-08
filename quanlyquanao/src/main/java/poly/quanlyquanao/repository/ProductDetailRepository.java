@@ -1,4 +1,6 @@
+
 package poly.quanlyquanao.repository;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +16,7 @@ import java.util.List;
 public interface ProductDetailRepository extends JpaRepository<ProductDetail, Long> {
 
     boolean existsByProductDetailCode(String productDetailCode);
+    Optional<ProductDetail> findByProductDetailCode(String productDetailCode);
     
     List<ProductDetail> findByProductId(Long productId);
 
