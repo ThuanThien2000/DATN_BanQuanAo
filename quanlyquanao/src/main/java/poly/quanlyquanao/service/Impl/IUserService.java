@@ -15,15 +15,18 @@ public interface IUserService {
     User updateUser(Long id, User updatedUser);
     User getUserById(Long id);
     User getUserByUsername(String username);
-    void deleteUser(Long id);
-
+//    void deleteUser(Long id);
+    User deactivateStaff(Long id);
     User registerUser(RegisterRequestDTO registerRequest);
     String verifyUser(String token);
     void changePassword(String username, String oldPass, String newPass);
     void generateResetToken(String email);
     void resetPassword(String token, String newPassword);
 
+    // Staff
+    List<User> findStaff();
     // Customer
+    List<User> findCustomer();
     User updateCustomerProfile(String username, UpdateProfileDTO dto);
 
 }

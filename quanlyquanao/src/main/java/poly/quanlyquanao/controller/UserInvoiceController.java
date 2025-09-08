@@ -23,8 +23,8 @@ public class UserInvoiceController {
     @Autowired
     private IInvoiceServiceImpl invoiceService;
 
-    @GetMapping("")
-    @PreAuthorize("hasAuthority('CUSTOMER')")
+    //  http://localhost:8080/api/userinvoices
+    @GetMapping
     public ResponseEntity<?> getMyOrders(Principal principal) {
         List<Invoice> invoices = invoiceService.getInvoicesByCurrentUser(principal.getName());
         List<InvoiceDTO> result = invoices.stream().map(InvoiceMapper::toDTO).toList();

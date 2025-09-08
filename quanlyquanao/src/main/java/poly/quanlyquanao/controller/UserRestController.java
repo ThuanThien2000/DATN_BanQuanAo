@@ -12,7 +12,7 @@ import poly.quanlyquanao.model.User;
 import poly.quanlyquanao.service.Impl.IUserService;
 
 @RestController
-@RequestMapping("/api/admin/user")
+@RequestMapping("/api/user/admin")
 @CrossOrigin(origins = "*")
 public class UserRestController {
     @Autowired
@@ -62,10 +62,30 @@ public class UserRestController {
         return ResponseEntity.ok(user);
     }
     
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable("id") Long id) {
-        _userService.deleteUser(id);
-        return ResponseEntity.ok("Đã xóa thành công");
+//    @DeleteMapping("/delete/{id}")
+//    public ResponseEntity<String> deleteUser(@PathVariable("id") Long id) {
+//        _userService.deleteUser(id);
+//        return ResponseEntity.ok("Đã xóa thành công");
+//    }
+
+    @PutMapping("/deactivate-staff/{id}")
+    public ResponseEntity<?> deactivateStaff(@PathVariable Long id) {
+        try {
+            User updatedStaff = _userService.deactivateStaff(id);
+            return ResponseEntity.ok(Map.of("message", "Đã vô hiệu hóa nhân viên", "user", updatedStaff));
+        }
+        catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
     }
 
+    @GetMapping("/staff-list")
+    public List<User> staffList() {
+        return _userService.findStaff();
+    }
+
+    @GetMapping("/customer-list")
+    public List<User> customerList() {
+        return _userService.findCustomer();
+    }
 }
