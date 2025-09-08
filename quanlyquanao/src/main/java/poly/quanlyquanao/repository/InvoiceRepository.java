@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import org.springframework.data.repository.query.Param;
 import poly.quanlyquanao.model.Invoice;
 
 public interface InvoiceRepository  extends JpaRepository<Invoice,Long>{
@@ -19,4 +20,8 @@ public interface InvoiceRepository  extends JpaRepository<Invoice,Long>{
     Optional<Invoice> findByInvoiceCode(String invoiceCode);
 
     boolean existsByInvoiceCode(String invoiceCode);
+
+    @Query("SELECT i FROM Invoice i WHERE i.user.id = :userId ORDER BY i.creationDate DESC")
+    List<Invoice> findByUserId(@Param("userId") Long userId);
+
 }
