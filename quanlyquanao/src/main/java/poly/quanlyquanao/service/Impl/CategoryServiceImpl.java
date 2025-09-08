@@ -17,7 +17,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDTO> getAllDTO() {
-        List<Category> categories = getAll();
+        List<Category> categories = categoryRepository.findAll();
         return categories.stream().map(category -> new CategoryDTO(
             category.getId(),
             category.getCategoryName()
@@ -28,21 +28,27 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
 
     @Override
-    public Category save(Category category) {
+    public Category save(CategoryDTO categoryDTO) {
+        Category category = new Category();
+        category.setCategoryName(categoryDTO.getCategoryName());
+        category.setStatus(1); // Set default status    
         return categoryRepository.save(category);
     }
     @Override
-    public List<Category> getByStatus(int status) {
-        return categoryRepository.findByStatus(status);
+    public List<CategoryDTO> getByStatus(int status) {
+        List<Category> categories = categoryRepository.findByStatus(status);
+        return categories.stream().map(category -> new CategoryDTO(
+            category.getId(),
+            category.getCategoryName()
+        )).toList();
     }
     
     @Override
-    public Category update(Long id, Category category) {
+    public Category update(Long id, CategoryDTO categoryDTO) {
         Optional<Category> existing = categoryRepository.findById(id);
         if (existing.isPresent()) {
             Category existingCategory = existing.get();
-            existingCategory.setCategoryName(category.getCategoryName());
-            existingCategory.setStatus(category.getStatus());
+            existingCategory.setCategoryName(categoryDTO.getCategoryName());
             return categoryRepository.save(existingCategory);
         }
         return null;
@@ -58,12 +64,18 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category getById(Long id) {
-        return categoryRepository.findById(id).orElse(null);
+    public CategoryDTO getById(Long id) {
+        return categoryRepository.findById(id).map(category -> new CategoryDTO(
+            category.getId(),
+            category.getCategoryName()
+        )).orElse(null);
     }
 
     @Override
-    public List<Category> getAll() {
-        return categoryRepository.findAll();
+    public List<CategoryDTO> getAll() {
+        return categoryRepository.findAll().stream().map(category -> new CategoryDTO(
+            category.getId(),
+            category.getCategoryName()
+        )).toList();
     }
 }

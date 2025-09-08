@@ -7,11 +7,11 @@ import poly.quanlyquanao.model.Category;
 import java.util.List;
 
 public interface CategoryService {
-    Category save(Category category);
-    Category update(Long id, Category category);
+    Category save(CategoryDTO category);
+    Category update(Long id, CategoryDTO category);
     void delete(Long id);
-    Category getById(Long id);
-    List<Category> getAll();
+    CategoryDTO getById(Long id);
+    List<CategoryDTO> getAll();
     List<CategoryDTO> getAllDTO();
-    List<Category> getByStatus(int status);
+    List<CategoryDTO> getByStatus(int status);
 }

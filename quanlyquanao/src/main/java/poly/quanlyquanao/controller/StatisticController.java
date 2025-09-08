@@ -130,12 +130,28 @@ public class StatisticController {
             return ResponseEntity.badRequest().body("Error fetching summary: " + e.getMessage());
         }
     }
+    @GetMapping("/chart-all")
+    public ResponseEntity<?> getAllRevenueChart() {
+        try {
+            return ResponseEntity.ok(statisticService.getAllRevenueChart());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error fetching all revenue chart: " + e.getMessage());
+        }
+    }
     @GetMapping("/revenue-today")
     public ResponseEntity<?> getRevenueToday() {
         try {
             return ResponseEntity.ok(statisticService.getRevenueToday());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error fetching today's revenue: " + e.getMessage());
+        }
+    }
+    @GetMapping("/chart-month")
+    public ResponseEntity<?> getRevenueMonthChart() {
+        try {
+            return ResponseEntity.ok(statisticService.getRevenueMonthChart());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error fetching month's revenue chart: " + e.getMessage());
         }
     }
     @GetMapping("/revenue-month")
@@ -154,12 +170,36 @@ public class StatisticController {
             return ResponseEntity.badRequest().body("Error fetching revenue by year: " + e.getMessage());
         }
     }
+    @GetMapping("/chart-year")
+    public ResponseEntity<?> getRevenueByYearChart(@RequestParam int year) {
+        try {
+            return ResponseEntity.ok(statisticService.getRevenueYearChart(year));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error fetching year's revenue chart: " + e.getMessage());
+        }
+    }
     @GetMapping("/revenue-date")
-    public ResponseEntity<?> getRevenueByDate(LocalDateTime startDate, LocalDateTime endDate) {
+    public ResponseEntity<?> getRevenueByDate(@RequestParam LocalDateTime startDate, @RequestParam LocalDateTime endDate) {
         try {
             return ResponseEntity.ok(statisticService.getRevenueByDate(startDate, endDate));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error fetching revenue by date: " + e.getMessage());
+        }
+    }
+    @GetMapping("/chart-hour")
+    public ResponseEntity<?> getRevenueByDay() {
+        try {
+            return ResponseEntity.ok(statisticService.getRevenueDayChart());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error fetching revenue by day: " + e.getMessage());
+        }
+    }
+        @GetMapping("/chart-date")
+    public ResponseEntity<?> getRevenueByDateChart(@RequestParam LocalDateTime startDate, @RequestParam LocalDateTime endDate) {
+        try {
+            return ResponseEntity.ok(statisticService.getRevenueByDateChart(startDate, endDate));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error fetching date's revenue chart: " + e.getMessage());
         }
     }
     @GetMapping("/top-selling")

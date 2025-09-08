@@ -68,16 +68,22 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import poly.quanlyquanao.dto.ChartItem;
 import poly.quanlyquanao.dto.ProductDTO;
 import poly.quanlyquanao.dto.ProductDetailDTO;
 import poly.quanlyquanao.dto.ProductInfo;
 
 public interface StatisticServiceImpl {
-    BigDecimal getAllRevenue ();
-	BigDecimal getRevenueByDate (LocalDateTime startDate, LocalDateTime endDate);
-    BigDecimal getRevenueByMonth (int month, int year);
-    BigDecimal getRevenueByYear (int year);
-    BigDecimal getRevenueToday ();
+    ChartItem getAllRevenue ();
+	ChartItem getRevenueByDate (LocalDateTime startDate, LocalDateTime endDate);
+    ChartItem getRevenueByMonth (int month, int year);
+    ChartItem getRevenueByYear (int year);
+    ChartItem getRevenueToday ();
+    List<ChartItem> getAllRevenueChart ();
+	List<ChartItem> getRevenueByDateChart (LocalDateTime startDate, LocalDateTime endDate);
+    List<ChartItem> getRevenueYearChart (int year);
+    List<ChartItem> getRevenueMonthChart ();
+    List<ChartItem> getRevenueDayChart ();
     List<ProductDTO> getTopSellingProducts(int limit);
     List<ProductDTO> getLowestSellingProducts(int limit);
     List<ProductDTO> getTopSellingProductsByDate(LocalDateTime startDate, LocalDateTime endDate, int limit);
