@@ -35,3 +35,24 @@ public class CheckoutController {
         }
     }
 }
+//{
+//	  "invoiceInfo": {
+//	    "fullname": "Nguyễn Văn A",
+//	    "phonenumber": "0901234567",
+//	    "email": "nguyenvana@example.com",
+//	    "deliveryAddress": "123 Đường Lê Lợi, Quận 1, TP.HCM",
+//	    "paymentMethodId": 1,
+//	    "voucherId": 2,
+//	    "assignedStaffId": 5
+//	  },
+//	  "items": [
+//	    {
+//	      "productDetailId": 1,
+//	      "quantity": 2
+//	    },
+//	    {
+//	      "productDetailId": 3,
+//	      "quantity": 1
+//	    }
+//	  ]
+//	}
