@@ -88,4 +88,17 @@ public class UserRestController {
     public List<User> customerList() {
         return _userService.findCustomer();
     }
+
+    // Tìm kiếm nhân viên
+    @GetMapping("/staff-search")
+    public List<User> searchStaff(@RequestParam String keyword) {
+        return _userService.searchStaff(keyword);
+    }
+
+    // Tìm kiếm khách hàng
+    @GetMapping("/customer-search")
+    public List<User> searchCustomer(@RequestParam String keyword) {
+        return _userService.searchCustomer(keyword);
+    }
+
 }

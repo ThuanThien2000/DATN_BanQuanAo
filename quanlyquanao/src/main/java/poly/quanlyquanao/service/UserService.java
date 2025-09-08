@@ -246,4 +246,15 @@ public class UserService implements poly.quanlyquanao.service.Impl.IUserService 
 
         return userRepository.save(user);
     }
+
+    @Override
+    public List<User> searchStaff(String keyword) {
+        return userRepository.searchStaff(keyword);
+    }
+
+    @Override
+    public List<User> searchCustomer(String keyword) {
+        return userRepository.searchCustomer(keyword);
+    }
+
 }
