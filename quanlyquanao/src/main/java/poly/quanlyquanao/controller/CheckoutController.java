@@ -19,7 +19,9 @@ import poly.quanlyquanao.model.Invoice;
 import poly.quanlyquanao.service.Impl.ICheckoutServiceImpl;
 import poly.quanlyquanao.service.Impl.IInvoiceServiceImpl;
 import poly.quanlyquanao.service.Impl.IUserService;
+import poly.quanlyquanao.service.Impl.IVoucherService;
 import poly.quanlyquanao.model.User;
+import poly.quanlyquanao.model.Voucher;
 
 @RestController
 @RequestMapping("/api/checkout")
@@ -29,6 +31,17 @@ public class CheckoutController {
     private ICheckoutServiceImpl checkoutService;
     @Autowired
     private IUserService userService;
+    @Autowired
+    private IVoucherService voucherService;
+
+    @GetMapping("/get-voucher")
+    public ResponseEntity<?> getVoucher(@RequestParam String code) {
+            try {
+                return ResponseEntity.ok(voucherService.getVoucherByCode(code));
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", e.getMessage()));
+            }
+    }
 
     @GetMapping("/my-info")
     public ResponseEntity<?> getMyInfo(Principal principal){

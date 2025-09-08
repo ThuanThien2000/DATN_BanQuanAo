@@ -51,6 +51,7 @@ public class SecurityConfig {
                     .requestMatchers("/api/**").permitAll() // Công khai toàn bộ đường link api
 
                         // Công khai
+<<<<<<< HEAD
                         .requestMatchers(
                             "/api/auth/**",
                             "/api/shop/**",
@@ -81,6 +82,38 @@ public class SecurityConfig {
 ////                        ).hasAuthority("CUSTOMER")
 //
 //                        // Cấp quyền trung gian cho STAFF cùng ADMIN
+=======
+//                        .requestMatchers(
+//                            "/api/auth/**",
+//                            "/api/shop/**",
+//                            "/api/product/{productId}/image/all",
+//                            "/api/checkout/get-product-detail",
+//                            "/api/payment/**",
+//                            "/api/paymentmethods/**",
+//                            "/api/products/detail/**",
+//                            "/api/products/lowstock",
+//                            "/api/reviews",
+//                            "/api/shop/{productCode}/**"
+//                        )
+//                        .permitAll()
+
+                        // Bất kỳ ai đăng nhập đều truy cập được tức tất cả role
+//                        .requestMatchers(
+//                            "/api/auth/change-password",
+//                            "/api/user/profile/**",
+//                            "/api/userinvoices/**",
+//                            "/api/role/**",
+//                            "/api/checkout/**",
+//                            "/api/reviews/**"
+//                        ).authenticated()
+
+                        // Customer Truy cập
+//                        .requestMatchers(
+//                            ""
+//                        ).hasAuthority("CUSTOMER")
+
+                        // Cấp quyền trung gian cho STAFF cùng ADMIN
+>>>>>>> ce3658d80bb45b018b350e3dbc7bede47fe00f4b
 //                        .requestMatchers(
 //                            "/api/user/admin/customer-list",
 //                            "/api/products/all",

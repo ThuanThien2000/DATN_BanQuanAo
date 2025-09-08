@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 
 import poly.quanlyquanao.model.Voucher;
 public interface IVoucherService {
+	Voucher getVoucherByCode(String code);
 	List<Voucher> getAllVouchers();
 	List<Voucher> getAllActiveVoucher();
 	Voucher solfDeleteVoucher(Long id);

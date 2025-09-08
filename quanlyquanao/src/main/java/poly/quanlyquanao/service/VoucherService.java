@@ -6,6 +6,7 @@ import poly.quanlyquanao.model.Voucher;
 import poly.quanlyquanao.repository.VoucherRepository;
 import poly.quanlyquanao.service.Impl.IVoucherService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,10 +14,25 @@ import java.util.Optional;
 public class VoucherService implements IVoucherService{
 	@Autowired
 	VoucherRepository voucherRepository;
-	
+
+	@Override
+	public Voucher getVoucherByCode(String code) {
+		Voucher voucher = voucherRepository.findByCode(code).orElse(null);
+		//check startDate
+		if (voucher == null) {
+			throw new RuntimeException("Không tồn tại");
+		}else if (voucher.getStartDate() != null && voucher.getStartDate().isAfter(LocalDate.now()))  {
+			throw new RuntimeException("Voucher chưa bắt đầu xin chờ tới ngày " + voucher.getStartDate());
+		}else if (voucher.getEndDate() != null && voucher.getEndDate().isBefore(LocalDate.now()))  {
+			throw new RuntimeException("Voucher đã hết hạn");
+		}else{
+			return voucher;
+		}
+	}
+
 	@Override
 	public List<Voucher> getAllVouchers(){
-		return voucherRepository.findAll();
+		return voucherRepository.findActiveVoucher();
 	}
 
 	@Override
