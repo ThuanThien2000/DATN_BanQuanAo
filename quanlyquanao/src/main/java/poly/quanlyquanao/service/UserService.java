@@ -105,7 +105,7 @@ public class UserService implements poly.quanlyquanao.service.Impl.IUserService 
         if (userRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
             throw new RuntimeException("Email đã được sử dụng");
         }
-        if (userRepository.findByPhonenumber(registerRequest.getPhonenumber()).isPresent()) {
+        if (userRepository.findFirstByPhonenumberAndStatus(registerRequest.getPhonenumber(), 1).isPresent()) {
             throw new RuntimeException("Số điện thoại đã được sử dụng");
         }
 
