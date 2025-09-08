@@ -7,17 +7,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import poly.quanlyquanao.dto.InvoiceDetailDTO;
 import poly.quanlyquanao.model.InvoiceDetail;
 import poly.quanlyquanao.service.Impl.IInvoiceDetailService;
 
 @RestController
-@RequestMapping("/api/admin/invoice/{invoice_id}/detail")
+@RequestMapping("/api/invoice/{invoice_id}/detail")
 @CrossOrigin(origins = "*")
 public class InvoiceDetailController {
 	@Autowired
 	IInvoiceDetailService invoiceDetailService;
 	@GetMapping("")
-	public List<InvoiceDetail> getAllByInvoiceID(@PathVariable("invoice_id") Long invoiceId) {
+	public List<InvoiceDetailDTO> getAllByInvoiceID(@PathVariable("invoice_id") Long invoiceId) {
 		return invoiceDetailService.findAllInvoiceDetaiByInvoiceID(invoiceId);
 	}
 <<<<<<< HEAD
@@ -36,7 +37,7 @@ public class InvoiceDetailController {
             @PathVariable("invoice_id") Long invoiceId,
             @PathVariable("id") Long detailId) {
         try {
-            InvoiceDetail detail = invoiceDetailService.getInvoiceDetailById(invoiceId, detailId);
+            InvoiceDetailDTO detail = invoiceDetailService.getInvoiceDetailById(invoiceId, detailId);
             return ResponseEntity.ok(detail);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
