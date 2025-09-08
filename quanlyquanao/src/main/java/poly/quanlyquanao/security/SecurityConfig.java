@@ -50,7 +50,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/**").permitAll() // Công khai toàn bộ đường link api
 
 //                        .requestMatchers("/api/auth/change-password",
-//                                "/api/userinvoice/my-orders").authenticated()
+//                                "/api/userinvoice/my-orders",
+//                                "/api/user/profile",
+//                                "/api/user/update-profile").authenticated()
 //                        .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
 //                        .anyRequest().authenticated()
                 )

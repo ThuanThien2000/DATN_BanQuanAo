@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import poly.quanlyquanao.dto.RegisterRequestDTO;
+import poly.quanlyquanao.dto.UpdateProfileDTO;
 import poly.quanlyquanao.model.Role;
 import poly.quanlyquanao.model.User;
 import poly.quanlyquanao.repository.UserRepository;
@@ -193,5 +194,34 @@ public class UserService implements poly.quanlyquanao.service.Impl.IUserService 
         user.setTokenCreationTime(null);
 
         userRepository.save(user);
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
+    }
+
+    @Override
+    public User updateCustomerProfile(String username, UpdateProfileDTO dto) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
+
+        // Cập nhật thông tin
+        user.setFullname(dto.getFullname());
+        user.setGender(dto.getGender());
+        user.setPhonenumber(dto.getPhonenumber());
+        user.setAddress(dto.getAddress());
+        user.setEmail(dto.getEmail());
+
+        // Nếu có thay đổi mật khẩu
+        if (dto.getOldPassword() != null && dto.getNewPassword() != null) {
+            if (!passwordEncoder.matches(dto.getOldPassword(), user.getPassword())) {
+                throw new RuntimeException("Mật khẩu cũ không đúng");
+            }
+            user.setPassword(passwordEncoder.encode(dto.getNewPassword()));
+        }
+
+        return userRepository.save(user);
     }
 }
